@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>수업 자료 상세 | Learn Bridge</title>
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="layout-body">
+      <!-- 피그마: 학생 수업 자료 요일별 클릭 시 화면 — 수업/복습 자료 진입, 다운로드 -->
+      <header class="site-header">
+        <div class="header-inner">
+          <a class="logo" href="index.html"><span class="logo-mark">LB</span> Learn Bridge</a>
+          <nav class="nav-main" aria-label="주요 이동">
+            <a class="nav-link" href="materials.html">수업 자료</a>
+            <a class="nav-link is-active" href="detail.html?id=3-wed">자료 상세</a>
+            <a class="nav-link" href="review.html">복습 문제</a>
+          </nav>
+          <div class="header-actions">
+            <a class="btn btn-ghost btn-sm" href="login.html">로그아웃</a>
+          </div>
+        </div>
+      </header>
+
+      <main class="page-wrap" data-material-root>
+        <div class="toolbar-back">
+          <a href="materials.html">← 수업 자료</a>
+        </div>
+        <p class="page-sub" style="margin-bottom: 8px"><span data-field="class">바이브 코딩 실전반 A</span></p>
+        <h1 class="page-title" data-field="title">3주차 · 수요일 수업 자료</h1>
+        <p class="page-sub">당일 주제: <strong data-field="topic">JavaScript DOM 조작과 이벤트</strong></p>
+
+        <div class="detail-hero">
+          <div class="card detail-hero-main card-reveal">
+            <p data-field="desc" style="margin: 0 0 20px; color: var(--color-text-muted)">
+              당일 배운 주제 설명이 표시됩니다.
+            </p>
+            <div style="display: flex; flex-wrap: wrap; gap: 10px">
+              <a class="btn btn-primary btn-sm" href="#">수업 자료 들어가기 (데모)</a>
+              <a class="btn btn-ghost btn-sm" href="review-quiz.html">복습 자료 들어가기</a>
+            </div>
+            <p style="margin-top: 18px; font-size: 0.85rem; color: var(--color-text-muted)">현재 날짜 표시 · 달력 연동은 실서비스에서 구현합니다.</p>
+          </div>
+          <aside class="card detail-hero-side card-reveal">
+            <p style="margin: 0 0 10px; font-weight: 700">다운로드</p>
+            <ul class="curriculum-list" data-file-list></ul>
+          </aside>
+        </div>
+      </main>
+
+      <footer class="site-footer"><p>© 2026 Learn Bridge</p></footer>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>스케줄 · 타임라인 | Learn Bridge</title>
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="layout-body">
+      <!-- 피그마: 학생 스케줄 화면, 학생 타임라인 — 주/달, 오늘 이동 -->
+      <header class="site-header">
+        <div class="header-inner">
+          <a class="logo" href="index.html"><span class="logo-mark">LB</span> Learn Bridge</a>
+          <nav class="nav-main" aria-label="주요 이동">
+            <a class="nav-link" href="index.html">학생 홈</a>
+            <a class="nav-link is-active" href="schedule.html">스케줄</a>
+          </nav>
+          <div class="header-actions">
+            <a class="btn btn-ghost btn-sm" href="login.html">로그아웃</a>
+          </div>
+        </div>
+      </header>
+
+      <main class="page-wrap">
+        <div class="toolbar-back"><a href="index.html">← 학생 홈</a></div>
+        <h1 class="page-title">학생 스케줄</h1>
+        <p class="page-sub">&lt; 오늘 &gt; · 주 · 달 전환 (UI 데모)</p>
+
+        <div class="schedule-bar card-reveal">
+          <button type="button" class="schedule-day is-today">오늘</button>
+          <button type="button" class="schedule-day">주</button>
+          <button type="button" class="schedule-day">달</button>
+          <span style="font-size: 0.9rem; color: var(--color-text-muted); margin-left: 8px">2026년 4월 11일 (금)</span>
+        </div>
+
+        <section class="card card-pad card-reveal" aria-label="전체 타임라인">
+          <h2 class="section-title" style="margin-bottom: 16px">전체 타임라인</h2>
+          <div class="timeline timeline-compact">
+            <div class="timeline-item">
+              <span class="timeline-dot" aria-hidden="true"></span>
+              <div class="timeline-body">
+                <div class="timeline-time">4월 11일 (금) 19:00</div>
+                <p class="timeline-text"><strong>바이브 코딩 실전반</strong> — 실시간 강의</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <span class="timeline-dot" aria-hidden="true"></span>
+              <div class="timeline-body">
+                <div class="timeline-time">4월 10일</div>
+                <p class="timeline-text">과제 마감 — 추가 학습 과제 Q2</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <span class="timeline-dot" aria-hidden="true"></span>
+              <div class="timeline-body">
+                <div class="timeline-time">4월 9일</div>
+                <p class="timeline-text">AI 피드백 업데이트</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer"><p>© 2026 Learn Bridge</p></footer>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

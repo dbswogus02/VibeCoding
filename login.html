@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>로그인 | Learn Bridge</title>
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="login-body">
+    <!--
+      피그마 LearnBridge 웹사이트 첫 화면 흐름:
+      - 학생 로그인 / 교사 로그인 / 회원가입
+      - 학원 선택 → 학교·학원 선택 클릭 시 목록(모달)
+      - 아이디 또는 이메일, 비밀번호
+    -->
+    <div class="login-split card-reveal" data-auth-root>
+      <div class="login-split-brand">
+        <span class="brand-badge">Korea Group Network</span>
+        <h1>Learn Bridge</h1>
+        <p>
+          Korea 그룹 제휴 학원·캠퍼스에서 수업·출석·AI 피드백을 연결합니다. 로그인 전 <strong>소속 학원</strong>을 반드시 선택해 주세요.
+        </p>
+      </div>
+
+      <div class="login-split-form">
+        <!-- 역할 전환: 피그마의「학생 로그인」「교사 로그인」버튼 -->
+        <div class="auth-role-tabs" role="tablist" aria-label="로그인 유형">
+          <button type="button" class="auth-role-tab is-active" data-role-tab="student" role="tab" aria-selected="true">학생 로그인</button>
+          <button type="button" class="auth-role-tab" data-role-tab="teacher" role="tab" aria-selected="false">교사 로그인</button>
+        </div>
+
+        <!-- 회원가입: 피그마 첫 화면에 노출되는 진입점 -->
+        <div class="auth-links-row">
+          <a href="signup.html">회원가입</a>
+          <span class="auth-muted">계정이 없으신가요? 학생·강사 모두 가입 가능</span>
+        </div>
+
+        <!-- 학생 로그인 폼 → 학생 홈 index.html -->
+        <form data-login-panel="student" action="index.html" method="get" aria-label="학생 로그인">
+          <input type="hidden" name="academy" value="" data-academy-input />
+          <div class="form-field">
+            <label>학원 선택 <span style="color: #dc2626">*</span></label>
+            <button type="button" class="academy-trigger" data-modal-open="modal-academy" aria-haspopup="dialog">
+              <span data-academy-label>소속 학원을 선택하세요</span>
+              <span class="chev" aria-hidden="true">⌄</span>
+            </button>
+            <p style="margin: 8px 0 0; font-size: 0.78rem; color: var(--color-text-muted)">Korea 그룹 제휴 캠퍼스 목록에서 선택합니다.</p>
+          </div>
+          <div class="form-field">
+            <label for="stu-id">아이디 또는 이메일</label>
+            <input id="stu-id" name="login" type="text" autocomplete="username" placeholder="student@example.com" />
+          </div>
+          <div class="form-field">
+            <label for="stu-pw">비밀번호</label>
+            <input id="stu-pw" name="password" type="password" autocomplete="current-password" placeholder="비밀번호" />
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 8px">로그인</button>
+        </form>
+
+        <!-- 교사 로그인 폼 → 교사 홈 teacher.html (피그마 교사 플로우 진입) -->
+        <form data-login-panel="teacher" action="teacher.html" method="get" hidden aria-label="교사 로그인">
+          <input type="hidden" name="academy" value="" data-academy-input />
+          <div class="form-field">
+            <label>학원 선택 <span style="color: #dc2626">*</span></label>
+            <button type="button" class="academy-trigger" data-modal-open="modal-academy" aria-haspopup="dialog">
+              <span data-academy-label>소속 학원을 선택하세요</span>
+              <span class="chev" aria-hidden="true">⌄</span>
+            </button>
+          </div>
+          <div class="form-field">
+            <label for="tea-id">아이디 또는 이메일</label>
+            <input id="tea-id" name="login" type="text" autocomplete="username" placeholder="teacher@korea-academy.kr" />
+          </div>
+          <div class="form-field">
+            <label for="tea-pw">비밀번호</label>
+            <input id="tea-pw" name="password" type="password" autocomplete="current-password" placeholder="비밀번호" />
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 8px">교사 로그인</button>
+          <p style="margin-top: 12px; font-size: 0.82rem; color: var(--color-text-muted)">교사 계정은 관리자 승인 후 이용 가능합니다. (데모는 검증 생략)</p>
+        </form>
+
+        <p class="login-foot" style="margin-top: 20px">
+          교사 전용 링크: <a href="login.html#teacher">#teacher</a> · 데모이므로 미입력 시에도 이동할 수 있습니다.
+        </p>
+      </div>
+    </div>
+
+    <!-- 학원 찾기 / 학교·학원 선택 클릭 시 화면 (피그마): Korea 그룹 관련 학원 목록 -->
+    <div id="modal-academy" class="modal-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="academy-title">
+      <div class="modal-box modal-box--wide" role="document">
+        <h3 id="academy-title">학원 찾기 · Korea 그룹 제휴</h3>
+        <p style="margin-top: 0">아래 목록에서 소속 기관을 선택하면 로그인 폼에 반영됩니다.</p>
+
+        <p class="academy-group-title">Korea 그룹 · 본부 직영</p>
+        <button type="button" class="academy-pick-btn" data-academy-pick="KIT 바이브코딩 교육원 (한국공학대 본원)">KIT 바이브코딩 교육원 (한국공학대 본원)</button>
+        <button type="button" class="academy-pick-btn" data-academy-pick="Korea IT Academy — 강남 캠퍼스">Korea IT Academy — 강남 캠퍼스</button>
+        <button type="button" class="academy-pick-btn" data-academy-pick="Korea IT Academy — 분당 캠퍼스">Korea IT Academy — 분당 캠퍼스</button>
+        <button type="button" class="academy-pick-btn" data-academy-pick="Korea IT Academy — 판교 테크노밸리">Korea IT Academy — 판교 테크노밸리</button>
+
+        <p class="academy-group-title">Korea 그룹 · 지역 네트워크</p>
+        <button type="button" class="academy-pick-btn" data-academy-pick="코리아그룹 디지털인재학원 (대구)">코리아그룹 디지털인재학원 (대구)</button>
+        <button type="button" class="academy-pick-btn" data-academy-pick="코리아그룹 스마트아카데미 (부산)">코리아그룹 스마트아카데미 (부산)</button>
+        <button type="button" class="academy-pick-btn" data-academy-pick="Learn Korea 광주 ICT 캠퍼스">Learn Korea 광주 ICT 캠퍼스</button>
+        <button type="button" class="academy-pick-btn" data-academy-pick="코리아그룹 주니어개발자반 (수원)">코리아그룹 주니어개발자반 (수원)</button>
+        <button type="button" class="academy-pick-btn" data-academy-pick="Korea 글로벌 코딩 스쿨 (제주)">Korea 글로벌 코딩 스쿨 (제주)</button>
+
+        <p class="academy-group-title">온라인 · 협력</p>
+        <button type="button" class="academy-pick-btn" data-academy-pick="Korea 그룹 온라인 라이브 클래스">Korea 그룹 온라인 라이브 클래스</button>
+        <button type="button" class="academy-pick-btn" data-academy-pick="Learn Bridge 데모 (로컬)">Learn Bridge 데모 (로컬)</button>
+
+        <div class="modal-actions" style="margin-top: 16px">
+          <button type="button" class="btn btn-ghost btn-sm" data-modal-close>닫기</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="main.js"></script>
+  </body>
+</html>
