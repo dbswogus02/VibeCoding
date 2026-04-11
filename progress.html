@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>학습 진행도 | Learn Bridge</title>
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="layout-body">
+      <!-- 피그마: 학생 학습 진행도 — 전체 진행상황, n/n, 완료·진행·남은, 일별 주제 -->
+      <header class="site-header">
+        <div class="header-inner">
+          <a class="logo" href="index.html"><span class="logo-mark">LB</span> Learn Bridge</a>
+          <nav class="nav-main" aria-label="주요 이동">
+            <a class="nav-link" href="index.html">학생 홈</a>
+            <a class="nav-link is-active" href="progress.html">학습 진행도</a>
+            <a class="nav-link" href="feedback.html">AI 피드백</a>
+            <a class="nav-link" href="materials.html">수업 자료</a>
+          </nav>
+          <div class="header-actions">
+            <a class="btn btn-ghost btn-sm" href="login.html">로그아웃</a>
+          </div>
+        </div>
+      </header>
+
+      <main class="page-wrap">
+        <div class="toolbar-back">
+          <a href="index.html">← 학생 홈</a>
+        </div>
+        <h1 class="page-title">학생 학습 진행도</h1>
+        <p class="page-sub">전체 진행상황과 일별로 배운 주제를 확인합니다. (스크롤 가능 영역은 카드 내부 리스트로 표현)</p>
+
+        <section class="card card-pad card-reveal" aria-labelledby="overall">
+          <h2 id="overall" class="section-title" style="margin-bottom: 12px">전체 진행상황</h2>
+          <p style="margin: 0 0 8px; font-weight: 700; font-size: 1.1rem">14 / 28 수업 · <span style="color: var(--color-primary)">50%</span></p>
+          <div class="progress-track" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+            <div class="progress-fill" data-progress="50"></div>
+          </div>
+        </section>
+
+        <div class="progress-summary-row" aria-label="완료 진행 남은">
+          <div class="progress-summary-cell card-reveal">
+            <span style="font-size: 0.85rem; color: var(--color-text-muted)">완료된 학습</span>
+            <strong>14</strong>
+          </div>
+          <div class="progress-summary-cell card-reveal">
+            <span style="font-size: 0.85rem; color: var(--color-text-muted)">진행 중인 학습</span>
+            <strong>5</strong>
+          </div>
+          <div class="progress-summary-cell card-reveal">
+            <span style="font-size: 0.85rem; color: var(--color-text-muted)">남은 학습</span>
+            <strong>9</strong>
+          </div>
+        </div>
+
+        <section class="card card-pad card-reveal" aria-labelledby="daily">
+          <h2 id="daily" class="section-title" style="margin-bottom: 12px">일별 진행도 · 당일 배운 주제</h2>
+          <ul class="daily-topic-list">
+            <li><span>4월 7일 (월)</span><span style="color: var(--color-text-muted)">Git 브랜치 전략</span></li>
+            <li><span>4월 8일 (화)</span><span style="color: var(--color-text-muted)">HTML 시맨틱 구조</span></li>
+            <li><span>4월 9일 (수)</span><span style="color: var(--color-text-muted)">CSS Flex 레이아웃</span></li>
+            <li><span>4월 10일 (목)</span><span style="color: var(--color-text-muted)">JavaScript 변수와 함수</span></li>
+            <li><span>4월 11일 (금)</span><span style="color: var(--color-text-muted)">DOM 조작 입문</span></li>
+          </ul>
+        </section>
+
+        <section class="card card-pad card-reveal" style="margin-top: 20px" aria-label="요일별 상세 링크">
+          <h2 class="section-title" style="margin-bottom: 12px">요일별 학습 진행도 (세부)</h2>
+          <p style="margin: 0 0 14px; font-size: 0.9rem; color: var(--color-text-muted)">특정 요일을 눌러 수업 자료·복습·AI 피드백으로 이동할 수 있습니다.</p>
+          <div class="date-grid" style="max-width: 520px">
+            <a class="date-cell" href="detail.html?id=1-thu" style="text-align: center">1주 목</a>
+            <a class="date-cell" href="detail.html?id=2-mon" style="text-align: center">2주 월</a>
+            <a class="date-cell" href="detail.html?id=3-wed" style="text-align: center">3주 수</a>
+            <a class="date-cell" href="feedback.html" style="text-align: center">AI 피드백</a>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <p>© 2026 Learn Bridge</p>
+      </footer>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

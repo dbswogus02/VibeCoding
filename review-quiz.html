@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>복습 문제 시작 | Learn Bridge</title>
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="layout-body">
+      <!-- 피그마: 학생 복습문제 클릭 시 화면(복습문제 시작) -->
+      <header class="site-header">
+        <div class="header-inner">
+          <a class="logo" href="index.html"><span class="logo-mark">LB</span> Learn Bridge</a>
+          <nav class="nav-main" aria-label="주요 이동">
+            <a class="nav-link" href="review.html">복습 문제</a>
+            <a class="nav-link is-active" href="review-quiz.html">시작</a>
+          </nav>
+          <div class="header-actions">
+            <a class="btn btn-ghost btn-sm" href="login.html">로그아웃</a>
+          </div>
+        </div>
+      </header>
+
+      <main class="page-wrap">
+        <div class="toolbar-back"><a href="review.html">← 복습 문제 목록</a></div>
+        <h1 class="page-title">수업이름 — 복습 문제</h1>
+        <p class="page-sub">1주차 / 4월 9일 (수) 복습 문제 · 스크롤 가능 영역</p>
+
+        <section class="card card-pad card-reveal">
+          <h2 class="section-title" style="margin-bottom: 12px">문항 미리보기</h2>
+          <ol style="margin: 0; padding-left: 1.2rem; color: var(--color-text-muted)">
+            <li style="margin-bottom: 8px">시맨틱 태그의 역할을 한 줄로 설명하시오.</li>
+            <li style="margin-bottom: 8px">Flex와 Grid의 차이를 예시와 함께 서술하시오.</li>
+            <li>이벤트 버블링을 막는 방법을 작성하시오.</li>
+          </ol>
+          <div style="margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap">
+            <a class="btn btn-primary" href="feedback.html">풀이 후 AI 피드백으로</a>
+            <a class="btn btn-ghost" href="assignment.html">추가 과제로 이동</a>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer"><p>© 2026 Learn Bridge</p></footer>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

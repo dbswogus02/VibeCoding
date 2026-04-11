@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>공지사항 | Learn Bridge</title>
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="layout-body">
+      <!-- 피그마: 공지 1~n 목록 → 해당 공지 확인 화면 -->
+      <header class="site-header">
+        <div class="header-inner">
+          <a class="logo" href="index.html"><span class="logo-mark">LB</span> Learn Bridge</a>
+          <nav class="nav-main" aria-label="주요 이동">
+            <a class="nav-link" href="index.html">학생 홈</a>
+            <a class="nav-link is-active" href="notice.html">공지사항</a>
+          </nav>
+          <div class="header-actions">
+            <a class="btn btn-ghost btn-sm" href="login.html">로그아웃</a>
+          </div>
+        </div>
+      </header>
+
+      <main class="page-wrap" data-notice-root>
+        <div class="toolbar-back"><a href="index.html">← 학생 홈</a></div>
+        <h1 class="page-title">학생 공지사항</h1>
+        <p class="page-sub">공지 버튼을 누르면 상세 내용으로 전환됩니다.</p>
+
+        <div class="notice-list card-reveal">
+          <a href="#" class="notice-item" data-notice-id="1">
+            <div class="n-meta">2026.04.10 · 학사</div>
+            <p class="n-title">중간 점검 주간 일정 안내</p>
+          </a>
+          <a href="#" class="notice-item" data-notice-id="2">
+            <div class="n-meta">2026.04.08 · 수업</div>
+            <p class="n-title">4월 보강 일정 및 자료 업로드</p>
+          </a>
+          <a href="#" class="notice-item" data-notice-id="3">
+            <div class="n-meta">2026.04.05 · 일반</div>
+            <p class="n-title">AI 피드백 서비스 점검 (새벽)</p>
+          </a>
+        </div>
+
+        <article class="notice-detail card card-pad" data-notice-detail="1" style="margin-top: 16px">
+          <button type="button" class="btn btn-ghost btn-sm" data-notice-back style="margin-bottom: 12px">← 목록</button>
+          <h2 class="section-title">중간 점검 주간 일정 안내</h2>
+          <p style="color: var(--color-text-muted)">4월 14일~18일은 중간 점검 주간입니다. 복습 문제를 완료한 뒤 AI 피드백을 확인해 주세요.</p>
+        </article>
+        <article class="notice-detail card card-pad" data-notice-detail="2" style="margin-top: 16px">
+          <button type="button" class="btn btn-ghost btn-sm" data-notice-back style="margin-bottom: 12px">← 목록</button>
+          <h2 class="section-title">4월 보강 일정 및 자료 업로드</h2>
+          <p style="color: var(--color-text-muted)">결석생 대상 보강은 금요일 20시입니다. 수업 자료 탭에서 녹화본을 내려받을 수 있습니다.</p>
+        </article>
+        <article class="notice-detail card card-pad" data-notice-detail="3" style="margin-top: 16px">
+          <button type="button" class="btn btn-ghost btn-sm" data-notice-back style="margin-bottom: 12px">← 목록</button>
+          <h2 class="section-title">AI 피드백 서비스 점검 (새벽)</h2>
+          <p style="color: var(--color-text-muted)">4월 12일 02:00~04:00 AI 피드백 생성이 지연될 수 있습니다.</p>
+        </article>
+      </main>
+
+      <footer class="site-footer"><p>© 2026 Learn Bridge</p></footer>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

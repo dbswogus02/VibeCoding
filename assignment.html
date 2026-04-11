@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>추가 학습 과제 | Learn Bridge</title>
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="layout-body">
+      <!-- 피그마: 학생 추가 학습 과제 — 날짜 → Qn → 답 입력 (PDF와 동일 3단계 패턴) -->
+      <header class="site-header">
+        <div class="header-inner">
+          <a class="logo" href="index.html"><span class="logo-mark">LB</span> Learn Bridge</a>
+          <nav class="nav-main" aria-label="주요 이동">
+            <a class="nav-link" href="index.html">학생 홈</a>
+            <a class="nav-link is-active" href="assignment.html">추가 과제</a>
+            <a class="nav-link" href="feedback.html">AI 피드백</a>
+            <a class="nav-link" href="materials.html">수업 자료</a>
+          </nav>
+          <div class="header-actions">
+            <a class="btn btn-ghost btn-sm" href="login.html">로그아웃</a>
+          </div>
+        </div>
+      </header>
+
+      <main class="page-wrap">
+        <div class="toolbar-back"><a href="index.html">← 학생 홈</a></div>
+        <h1 class="page-title">학생 추가 학습 과제</h1>
+        <p class="page-sub">날짜 선택 → 문항 선택 → 답안 작성 순으로 진행됩니다.</p>
+
+        <div class="flow-wizard card card-pad card-reveal" data-flow-wizard>
+          <div class="flow-steps-indicator" aria-label="단계">
+            <span class="flow-step-dot is-active" data-flow-dot></span>
+            <span class="flow-step-dot" data-flow-dot></span>
+            <span class="flow-step-dot" data-flow-dot></span>
+          </div>
+
+          <div class="flow-panel is-active" data-flow-step="1">
+            <h2 class="section-title" style="margin-bottom: 12px">첫 화면 — 과제 일자</h2>
+            <div class="date-grid">
+              <button type="button" class="date-cell" data-pick-date="4월 9일 (수)">4/9 수</button>
+              <button type="button" class="date-cell" data-pick-date="4월 10일 (목)">4/10 목</button>
+              <button type="button" class="date-cell" data-pick-date="4월 11일 (금)">4/11 금</button>
+            </div>
+          </div>
+
+          <div class="flow-panel" data-flow-step="2">
+            <h2 class="section-title" style="margin-bottom: 12px">두 번째 화면 — 문항 목록</h2>
+            <p style="margin: 0 0 12px">선택: <strong data-selected-date>—</strong></p>
+            <div class="q-grid">
+              <button type="button" class="q-btn" data-pick-q="Q1">Q1</button>
+              <button type="button" class="q-btn" data-pick-q="Q2">Q2</button>
+              <button type="button" class="q-btn" data-pick-q="Q3">Q3</button>
+            </div>
+            <button type="button" class="btn btn-ghost btn-sm" style="margin-top: 16px" data-flow-back="1">← 일자 선택</button>
+          </div>
+
+          <div class="flow-panel" data-flow-step="3">
+            <h2 class="section-title" style="margin-bottom: 12px">세 번째 화면 — 답 입력</h2>
+            <p style="margin: 0 0 10px; font-size: 0.9rem"><strong data-selected-date>—</strong> · <strong data-selected-q>—</strong></p>
+            <p style="margin: 0 0 8px; font-weight: 700">문제</p>
+            <p style="margin: 0 0 14px; color: var(--color-text-muted)">Flex에서 main-axis 정렬을 담당하는 속성은 무엇인가요?</p>
+            <label class="visually-hidden" for="ans">답안 입력</label>
+            <textarea id="ans" rows="4" style="width: 100%; border-radius: 10px; border: 1px solid var(--color-border); padding: 12px; font-family: inherit" placeholder="답안을 입력하세요"></textarea>
+            <div style="margin-top: 14px; display: flex; gap: 8px; flex-wrap: wrap">
+              <button type="button" class="btn btn-primary btn-sm">사용자 답 제출하기 (데모)</button>
+              <button type="button" class="btn btn-ghost btn-sm" data-flow-back="2">← 문항 목록</button>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <footer class="site-footer"><p>© 2026 Learn Bridge</p></footer>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>
