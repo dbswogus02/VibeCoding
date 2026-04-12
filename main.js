@@ -10,12 +10,18 @@
  * - 공지: 목록에서 항목 클릭 시 상세 표시
  * - 수업 자료 주차: ?week= 쿼리 시 요일 목록 표시
  * - 로그인/회원가입: Korea 그룹 학원 선택, 학생·교사 탭, sessionStorage(lb_academy)
+ * - 역할 저장: lb_role(student|teacher) — Q&A·쪽지 뱃지
+ * - Q&A: 익명 등록, 관련 문제(AI/복습/과제) 연동, localStorage 스레드
+ * - 쪽지: 담당 강사 등에게 개인 메시지(localStorage)
  */
 
 (function () {
   "use strict";
 
   var ACADEMY_STORAGE_KEY = "lb_academy";
+  var ROLE_STORAGE_KEY = "lb_role";
+  var QA_STORAGE_KEY = "lb_qa_threads_v2";
+  var NOTES_STORAGE_KEY = "lb_notes_v1";
 
   /* ---------- 모든 페이지: 저장된 소속 학원을 라벨·hidden input에 반영 ---------- */
   function restoreAcademyFromStorage() {
@@ -90,15 +96,581 @@
     });
   }
 
-  /* ---------- 회원가입 폼: 데모 제출 시 완료 페이지로 ---------- */
+  /* ---------- 회원가입 폼: 데모 제출 시 완료 페이지로 + 역할·이름 저장 ---------- */
   function initSignupForm() {
     var form = document.querySelector("[data-signup-form]");
     if (!form) return;
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       var role = (form.querySelector('input[name="role"]:checked') || {}).value || "student";
+      var mapped = role === "teacher" ? "teacher" : "student";
+      try {
+        sessionStorage.setItem(ROLE_STORAGE_KEY, mapped);
+      } catch (err) {}
       window.location.href = "signup-complete.html?role=" + encodeURIComponent(role);
     });
+  }
+
+  /* ---------- 로그인 제출 시 역할만 저장 (표시 이름은 사용하지 않음) ---------- */
+  function initLoginRolePersistence() {
+    var stu = document.querySelector('form[data-login-panel="student"]');
+    if (stu) {
+      stu.addEventListener("submit", function () {
+        try {
+          sessionStorage.setItem(ROLE_STORAGE_KEY, "student");
+        } catch (e) {}
+      });
+    }
+
+    var teaForm = document.querySelector('form[data-login-panel="teacher"]');
+    if (teaForm) {
+      teaForm.addEventListener("submit", function () {
+        try {
+          sessionStorage.setItem(ROLE_STORAGE_KEY, "teacher");
+        } catch (err) {}
+      });
+    }
+  }
+
+  function getQaUser() {
+    var role = "student";
+    try {
+      role = sessionStorage.getItem(ROLE_STORAGE_KEY) || "student";
+    } catch (e) {}
+    if (role !== "teacher") role = "student";
+    return { role: role };
+  }
+
+  function roleLabel(role) {
+    if (role === "teacher") return "강사";
+    return "학생";
+  }
+
+  /* ---------- Q&A 메시지 표시명(익명 학생 등) ---------- */
+  function messageAuthorLabel(m) {
+    if (m.role === "teacher") return "강사";
+    if (m.anonymous) return "익명";
+    return "학생";
+  }
+
+  function messageBadgeClass(m) {
+    if (m.role === "teacher") return "teacher";
+    if (m.anonymous) return "anon";
+    return "student";
+  }
+
+  function messageBadgeText(m) {
+    if (m.role === "teacher") return "강사";
+    if (m.anonymous) return "익명";
+    return "학생";
+  }
+
+  /* ---------- 질문 등록 시 관련 문제 연동 ---------- */
+  function buildRelatedProblem(presetVal, noteExtra) {
+    var note = (noteExtra || "").trim();
+    if (!presetVal || presetVal === "none") return null;
+    var suffix = note ? " · " + note : "";
+    if (presetVal.indexOf("ai|") === 0) {
+      var q = presetVal.slice(3);
+      return { kind: "ai_feedback", label: "AI 피드백 · " + q + suffix, href: "feedback.html" };
+    }
+    if (presetVal.indexOf("review|") === 0) {
+      var r = presetVal.slice(7);
+      return { kind: "review", label: "복습 문제 · " + r + suffix, href: "review.html" };
+    }
+    if (presetVal.indexOf("assign|") === 0) {
+      var a = presetVal.slice(7);
+      return { kind: "assignment", label: "추가 학습 과제 · " + a + suffix, href: "assignment.html" };
+    }
+    if (presetVal === "material") {
+      return { kind: "material", label: "수업 자료" + suffix, href: "materials.html" };
+    }
+    if (presetVal === "custom") {
+      if (!note) return null;
+      return { kind: "custom", label: note, href: "" };
+    }
+    return null;
+  }
+
+  function migrateQaThreadsInPlace(arr) {
+    var dirty = false;
+    if (!Array.isArray(arr)) return false;
+    arr.forEach(function (t) {
+      (t.messages || []).forEach(function (m) {
+        if (m.role === "ta") {
+          m.role = "teacher";
+          dirty = true;
+        }
+      });
+    });
+    return dirty;
+  }
+
+  function uid() {
+    return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+  }
+
+  function loadQaThreads() {
+    try {
+      var raw = localStorage.getItem(QA_STORAGE_KEY);
+      if (raw) {
+        var arr = JSON.parse(raw);
+        if (Array.isArray(arr) && arr.length) {
+          if (migrateQaThreadsInPlace(arr)) saveQaThreads(arr);
+          return arr;
+        }
+      }
+      var oldKey = "lb_qa_threads_v1";
+      var oldRaw = localStorage.getItem(oldKey);
+      if (oldRaw) {
+        var oldArr = JSON.parse(oldRaw);
+        if (Array.isArray(oldArr) && oldArr.length) {
+          migrateQaThreadsInPlace(oldArr);
+          saveQaThreads(oldArr);
+          try {
+            localStorage.removeItem(oldKey);
+          } catch (x) {}
+          return oldArr;
+        }
+      }
+    } catch (e) {}
+    var seed = qaSeedThreads();
+    saveQaThreads(seed);
+    return seed;
+  }
+
+  function qaSeedThreads() {
+    return [
+      {
+        id: "seed-1",
+        title: "Flex에서 gap과 margin의 차이는?",
+        className: "바이브 코딩 실전반 A",
+        relatedProblem: { kind: "review", label: "복습 문제 · 2주차 월요일", href: "review.html" },
+        messages: [
+          {
+            id: "m1",
+            role: "student",
+            name: "김민수",
+            body: "둘 다 간격처럼 보이는데 실무에서는 어떻게 구분해서 쓰면 될까요?",
+            at: new Date(Date.now() - 86400000 * 2).toISOString(),
+          },
+          {
+            id: "m2",
+            role: "teacher",
+            name: "박강사",
+            body: "gap은 flex·grid 컨테이너 안에서 자식 요소 사이의 균일한 간격을 줄 때 쓰고, margin은 각 박스의 외곽 여백이라 레이아웃 밖으로 밀어낼 때 씁니다.",
+            at: new Date(Date.now() - 86400000).toISOString(),
+          },
+        ],
+      },
+      {
+        id: "seed-2",
+        title: "과제 제출은 어디서 하나요?",
+        className: "바이브 코딩 실전반 A",
+        relatedProblem: { kind: "assignment", label: "추가 학습 과제 · 4/9 수", href: "assignment.html" },
+        messages: [
+          {
+            id: "m3",
+            role: "student",
+            name: "이서연",
+            body: "추가 학습 과제 메뉴에서 제출하면 될까요?",
+            at: new Date(Date.now() - 3600000 * 5).toISOString(),
+          },
+          {
+            id: "m4",
+            role: "teacher",
+            name: "강사",
+            body: "네, 학생 홈 → 추가 학습 과제에서 제출해 주시면 강사진이 확인합니다.",
+            at: new Date(Date.now() - 3600000 * 3).toISOString(),
+          },
+        ],
+      },
+    ];
+  }
+
+  function saveQaThreads(threads) {
+    try {
+      localStorage.setItem(QA_STORAGE_KEY, JSON.stringify(threads));
+    } catch (e) {}
+  }
+
+  /* ---------- Q&A 페이지: 목록·상세·작성·답글·익명·관련 문제 ---------- */
+  function initQAForum() {
+    var root = document.querySelector("[data-qa-root]");
+    if (!root) return;
+
+    var listView = root.querySelector("[data-qa-list-view]");
+    var detailView = root.querySelector("[data-qa-detail-view]");
+    var threadListEl = root.querySelector("[data-qa-thread-list]");
+    var detailTitle = root.querySelector("[data-qa-detail-title]");
+    var detailClass = root.querySelector("[data-qa-detail-class]");
+    var detailRelated = root.querySelector("[data-qa-detail-related]");
+    var msgListEl = root.querySelector("[data-qa-messages]");
+    var formNew = root.querySelector("[data-qa-form-new]");
+    var formReply = root.querySelector("[data-qa-form-reply]");
+    var backBtn = root.querySelector("[data-qa-back-list]");
+    var anonNewRow = root.querySelector("[data-qa-anon-new-row]");
+    var anonReplyRow = root.querySelector("[data-qa-anon-reply-row]");
+    var relatedNoteRow = root.querySelector("[data-qa-related-note-row]");
+    var currentThreadId = null;
+
+    var user = getQaUser();
+    var homeHref = user.role === "teacher" ? "teacher.html" : "index.html";
+    root.querySelectorAll("[data-qa-back-home]").forEach(function (a) {
+      a.setAttribute("href", homeHref);
+    });
+
+    var badgeEl = root.querySelector("[data-qa-role-badge]");
+    if (badgeEl) {
+      badgeEl.textContent = roleLabel(user.role);
+      badgeEl.className = "role-badge role-badge--" + user.role;
+    }
+
+    if (anonNewRow) anonNewRow.hidden = user.role !== "student";
+    if (anonReplyRow) anonReplyRow.hidden = user.role !== "student";
+
+    var relSel = formNew && formNew.querySelector("[name=qa_related]");
+    if (relSel && relatedNoteRow) {
+      relSel.addEventListener("change", function () {
+        relatedNoteRow.hidden = relSel.value !== "custom";
+      });
+      relatedNoteRow.hidden = relSel.value !== "custom";
+    }
+
+    function renderThreadList(threads) {
+      if (!threadListEl) return;
+      threadListEl.innerHTML = "";
+      threads.forEach(function (t) {
+        var first = t.messages && t.messages[0];
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "qa-thread-item card-reveal";
+        btn.setAttribute("data-thread-id", t.id);
+        var meta = document.createElement("div");
+        meta.className = "qa-thread-meta";
+        var metaText = t.className + " · 답글 " + (t.messages ? t.messages.length : 0) + "건";
+        if (t.relatedProblem && t.relatedProblem.label) {
+          metaText += " · " + t.relatedProblem.label;
+        }
+        meta.textContent = metaText;
+        var h = document.createElement("p");
+        h.className = "qa-thread-title";
+        h.textContent = t.title;
+        var sn = document.createElement("p");
+        sn.className = "qa-thread-snippet";
+        sn.textContent = first ? first.body : "";
+        btn.appendChild(meta);
+        btn.appendChild(h);
+        btn.appendChild(sn);
+        threadListEl.appendChild(btn);
+      });
+    }
+
+    function formatTime(iso) {
+      try {
+        var d = new Date(iso);
+        return d.toLocaleString("ko-KR", {
+          month: "short",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+      } catch (e) {
+        return "";
+      }
+    }
+
+    function renderMessages(thread) {
+      if (!msgListEl) return;
+      msgListEl.innerHTML = "";
+      (thread.messages || []).forEach(function (m) {
+        var wrap = document.createElement("article");
+        var bc = messageBadgeClass(m);
+        wrap.className = "qa-msg qa-msg--" + (bc === "anon" ? "student" : bc);
+        if (m.anonymous) wrap.classList.add("qa-msg--anonymous");
+        var head = document.createElement("div");
+        head.className = "qa-msg-head";
+        var b = document.createElement("span");
+        b.className = "role-badge role-badge--" + bc;
+        b.textContent = messageBadgeText(m);
+        var nm = document.createElement("span");
+        nm.className = "qa-msg-name";
+        nm.textContent = messageAuthorLabel(m);
+        var tm = document.createElement("span");
+        tm.className = "qa-msg-time";
+        tm.textContent = formatTime(m.at);
+        head.appendChild(b);
+        head.appendChild(nm);
+        head.appendChild(tm);
+        var body = document.createElement("p");
+        body.className = "qa-msg-body";
+        body.textContent = m.body;
+        wrap.appendChild(head);
+        wrap.appendChild(body);
+        msgListEl.appendChild(wrap);
+      });
+      msgListEl.scrollTop = msgListEl.scrollHeight;
+    }
+
+    function renderDetailRelated(t) {
+      if (!detailRelated) return;
+      detailRelated.innerHTML = "";
+      detailRelated.hidden = true;
+      if (!t.relatedProblem || !t.relatedProblem.label) return;
+      detailRelated.hidden = false;
+      var p = document.createElement("p");
+      p.className = "qa-related-banner";
+      var strong = document.createElement("strong");
+      strong.textContent = "연동된 문제 · ";
+      p.appendChild(strong);
+      p.appendChild(document.createTextNode(t.relatedProblem.label + " "));
+      if (t.relatedProblem.href) {
+        var a = document.createElement("a");
+        a.href = t.relatedProblem.href;
+        a.textContent = "바로가기";
+        p.appendChild(a);
+      }
+      detailRelated.appendChild(p);
+    }
+
+    function openThread(id) {
+      var threads = loadQaThreads();
+      var t = threads.filter(function (x) {
+        return x.id === id;
+      })[0];
+      if (!t) return;
+      currentThreadId = id;
+      if (listView) listView.hidden = true;
+      if (detailView) detailView.hidden = false;
+      if (detailTitle) detailTitle.textContent = t.title;
+      if (detailClass) detailClass.textContent = t.className;
+      renderDetailRelated(t);
+      renderMessages(t);
+      if (formReply) {
+        var hint = formReply.querySelector("[data-qa-reply-hint]");
+        if (hint) {
+          hint.textContent =
+            user.role === "student"
+              ? "추가 질문·감사 인사를 남길 수 있습니다. 익명으로 답글을 남길 수도 있습니다."
+              : "학생 질문에 답글을 남깁니다.";
+        }
+        var ca = formReply.querySelector("[name=qa_reply_anonymous]");
+        if (ca) ca.checked = false;
+      }
+    }
+
+    function showList() {
+      currentThreadId = null;
+      if (listView) listView.hidden = false;
+      if (detailView) detailView.hidden = true;
+      renderThreadList(loadQaThreads());
+    }
+
+    if (threadListEl) {
+      threadListEl.addEventListener("click", function (e) {
+        var btn = e.target.closest("[data-thread-id]");
+        if (!btn) return;
+        openThread(btn.getAttribute("data-thread-id"));
+      });
+    }
+
+    if (backBtn) backBtn.addEventListener("click", showList);
+
+    if (formNew) {
+      formNew.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var titleIn = formNew.querySelector("[name=qa_title]");
+        var bodyIn = formNew.querySelector("[name=qa_body]");
+        var title = titleIn && titleIn.value ? titleIn.value.trim() : "";
+        var body = bodyIn && bodyIn.value ? bodyIn.value.trim() : "";
+        if (!title || !body) return;
+        var preset = (formNew.querySelector("[name=qa_related]") || {}).value || "none";
+        var note = (formNew.querySelector("[name=qa_related_note]") || {}).value || "";
+        if (preset === "custom" && !note.trim()) {
+          alert("「기타」를 선택한 경우 보조 설명란에 연동할 문제를 입력해 주세요.");
+          return;
+        }
+        var related = buildRelatedProblem(preset, note);
+        var anonCb = formNew.querySelector("[name=qa_anonymous]");
+        var wantAnon = user.role === "student" && anonCb && anonCb.checked;
+        var threads = loadQaThreads();
+        var u = getQaUser();
+        threads.unshift({
+          id: "t-" + uid(),
+          title: title,
+          className: "바이브 코딩 실전반 A",
+          relatedProblem: related || undefined,
+          messages: [
+            {
+              id: "m-" + uid(),
+              role: u.role,
+              anonymous: !!(wantAnon && u.role === "student"),
+              body: body,
+              at: new Date().toISOString(),
+            },
+          ],
+        });
+        saveQaThreads(threads);
+        if (titleIn) titleIn.value = "";
+        if (bodyIn) bodyIn.value = "";
+        if (anonCb) anonCb.checked = false;
+        var noteIn = formNew.querySelector("[name=qa_related_note]");
+        if (noteIn) noteIn.value = "";
+        var rel = formNew.querySelector("[name=qa_related]");
+        if (rel) rel.value = "none";
+        if (relatedNoteRow) relatedNoteRow.hidden = true;
+        showList();
+      });
+    }
+
+    if (formReply) {
+      formReply.addEventListener("submit", function (e) {
+        e.preventDefault();
+        if (!currentThreadId) return;
+        var bodyIn = formReply.querySelector("[name=qa_reply]");
+        var body = bodyIn && bodyIn.value ? bodyIn.value.trim() : "";
+        if (!body) return;
+        var threads = loadQaThreads();
+        var t = threads.filter(function (x) {
+          return x.id === currentThreadId;
+        })[0];
+        if (!t) return;
+        var u = getQaUser();
+        var anonRep = formReply.querySelector("[name=qa_reply_anonymous]");
+        var wantAnon = u.role === "student" && anonRep && anonRep.checked;
+        t.messages = t.messages || [];
+        t.messages.push({
+          id: "m-" + uid(),
+          role: u.role,
+          anonymous: !!(wantAnon && u.role === "student"),
+          body: body,
+          at: new Date().toISOString(),
+        });
+        saveQaThreads(threads);
+        if (bodyIn) bodyIn.value = "";
+        if (anonRep) anonRep.checked = false;
+        renderMessages(t);
+      });
+    }
+
+    showList();
+  }
+
+  /* ---------- 쪽지함: 개인 메시지(localStorage) ---------- */
+  function loadNotes() {
+    try {
+      var raw = localStorage.getItem(NOTES_STORAGE_KEY);
+      if (raw) {
+        var arr = JSON.parse(raw);
+        if (Array.isArray(arr)) return arr;
+      }
+    } catch (e) {}
+    return [];
+  }
+
+  function saveNotes(arr) {
+    try {
+      localStorage.setItem(NOTES_STORAGE_KEY, JSON.stringify(arr));
+    } catch (e) {}
+  }
+
+  function initNotesMailbox() {
+    var root = document.querySelector("[data-notes-root]");
+    if (!root) return;
+
+    var listEl = root.querySelector("[data-notes-list]");
+    var form = root.querySelector("[data-notes-compose]");
+    var user = getQaUser();
+    var homeHref = user.role === "teacher" ? "teacher.html" : "index.html";
+    root.querySelectorAll("[data-notes-back-home]").forEach(function (a) {
+      a.setAttribute("href", homeHref);
+    });
+
+    var anonRow = root.querySelector("[data-notes-anon-row]");
+    if (anonRow) anonRow.hidden = user.role !== "student";
+
+    function partnerLabel() {
+      return user.role === "teacher" ? "학생(수강생)" : "담당 강사·교무";
+    }
+
+    function renderNotes() {
+      if (!listEl) return;
+      var all = loadNotes();
+      var filtered = all.filter(function (n) {
+        if (user.role === "student") {
+          return n.fromRole === "student" || (n.fromRole === "teacher" && n.audience === "student");
+        }
+        return n.fromRole === "teacher" || (n.fromRole === "student" && n.audience === "staff");
+      });
+      filtered.sort(function (a, b) {
+        return new Date(a.at) - new Date(b.at);
+      });
+      listEl.innerHTML = "";
+      if (!filtered.length) {
+        var empty = document.createElement("p");
+        empty.className = "page-sub";
+        empty.style.margin = "0";
+        empty.textContent = "아직 쪽지가 없습니다. 아래에서 첫 쪽지를 보내 보세요.";
+        listEl.appendChild(empty);
+        return;
+      }
+      filtered.forEach(function (n) {
+        var row = document.createElement("article");
+        row.className = "notes-msg card-reveal";
+        if (n.fromRole === user.role) row.classList.add("notes-msg--mine");
+        var head = document.createElement("div");
+        head.className = "notes-msg-head";
+        var badge = document.createElement("span");
+        var isAnon = n.anonymous && n.fromRole === "student";
+        badge.className = "role-badge " + (isAnon ? "role-badge--anon" : n.fromRole === "teacher" ? "role-badge--teacher" : "role-badge--student");
+        badge.textContent = isAnon ? "익명" : n.fromRole === "teacher" ? "강사" : "학생";
+        var to = document.createElement("span");
+        to.className = "notes-msg-to";
+        to.textContent = "→ " + n.toLabel;
+        var tm = document.createElement("time");
+        tm.className = "notes-msg-time";
+        tm.textContent = new Date(n.at).toLocaleString("ko-KR");
+        head.appendChild(badge);
+        head.appendChild(to);
+        head.appendChild(tm);
+        var body = document.createElement("p");
+        body.className = "notes-msg-body";
+        body.textContent = n.body;
+        row.appendChild(head);
+        row.appendChild(body);
+        listEl.appendChild(row);
+      });
+      listEl.scrollTop = listEl.scrollHeight;
+    }
+
+    if (form) {
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var toSel = form.querySelector("[name=notes_to]");
+        var bodyIn = form.querySelector("[name=notes_body]");
+        var body = bodyIn && bodyIn.value ? bodyIn.value.trim() : "";
+        if (!body) return;
+        var toLabel = (toSel && toSel.options[toSel.selectedIndex] && toSel.options[toSel.selectedIndex].text) || partnerLabel();
+        var audience = user.role === "student" ? "staff" : "student";
+        var anonCb = form.querySelector("[name=notes_anonymous]");
+        var all = loadNotes();
+        all.push({
+          id: "n-" + uid(),
+          at: new Date().toISOString(),
+          fromRole: user.role,
+          anonymous: user.role === "student" && anonCb && anonCb.checked,
+          toLabel: toLabel,
+          audience: audience,
+          body: body,
+        });
+        saveNotes(all);
+        if (bodyIn) bodyIn.value = "";
+        if (anonCb) anonCb.checked = false;
+        renderNotes();
+      });
+    }
+
+    renderNotes();
   }
 
   /* ---------- IntersectionObserver: 카드가 화면에 보이면 .is-visible 부여 ---------- */
@@ -392,6 +964,9 @@
     initAuthLogin();
     initAcademyPickButtons();
     initSignupForm();
+    initLoginRolePersistence();
+    initQAForum();
+    initNotesMailbox();
     initCardReveal();
     initProgressBars();
     initCourseFilter();

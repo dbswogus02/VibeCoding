@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>쪽지함 | Learn Bridge</title>
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="layout-body">
+      <!-- 담당 강사·교무 등에게 개인 쪽지(데모: 브라우저 localStorage 저장) -->
+      <header class="site-header">
+        <div class="header-inner">
+          <a class="logo" href="index.html"><span class="logo-mark">LB</span> Learn Bridge</a>
+          <nav class="nav-main" aria-label="주요 이동">
+            <a class="nav-link is-active" href="messages.html">쪽지함</a>
+            <a class="nav-link" href="qa.html">Q&amp;A</a>
+            <a class="nav-link" href="index.html">학생 홈</a>
+            <a class="nav-link" href="teacher.html">교사 홈</a>
+          </nav>
+          <div class="header-actions">
+            <a class="btn btn-ghost btn-sm" href="login.html">로그아웃</a>
+          </div>
+        </div>
+      </header>
+
+      <main class="page-wrap" data-notes-root>
+        <div class="toolbar-back">
+          <a data-notes-back-home href="index.html">← 홈으로</a>
+        </div>
+        <h1 class="page-title">쪽지함</h1>
+        <p class="page-sub">공개 Q&amp;A가 부담스러울 때 담당 강사·교무진에게만 내용을 전달합니다. 학생은 익명으로 보낼 수 있습니다.</p>
+
+        <section class="card card-pad card-reveal" style="margin-bottom: 20px">
+          <h2 class="section-title" style="margin-bottom: 12px; font-size: 1.05rem">대화</h2>
+          <div data-notes-list class="notes-thread"></div>
+        </section>
+
+        <section class="card card-pad card-reveal" aria-labelledby="compose-h">
+          <h2 id="compose-h" class="section-title" style="margin-bottom: 12px; font-size: 1.05rem">쪽지 보내기</h2>
+          <form data-notes-compose>
+            <div class="form-field">
+              <label for="notes_to">받는 사람</label>
+              <select id="notes_to" name="notes_to">
+                <option>담당 강사</option>
+                <option>학원 교무·운영팀</option>
+                <option>기술 지원</option>
+              </select>
+            </div>
+            <div class="form-field" data-notes-anon-row>
+              <label style="display: flex; align-items: center; gap: 8px; font-weight: 500; cursor: pointer">
+                <input type="checkbox" name="notes_anonymous" value="1" />
+                익명으로 보내기 (학생만)
+              </label>
+            </div>
+            <div class="form-field">
+              <label for="notes_body">내용</label>
+              <textarea id="notes_body" name="notes_body" placeholder="개인적으로 전달할 내용을 적어 주세요." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-sm">보내기</button>
+          </form>
+        </section>
+      </main>
+
+      <footer class="site-footer"><p>© 2026 Learn Bridge</p></footer>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>
