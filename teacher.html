@@ -17,57 +17,64 @@
       <!-- 피그마 교사 플로우 진입 화면(요약 허브): 스케줄, 학습진행도, 출석, 수업자료, 복습, 과제, 공지, Q&A 등 -->
       <header class="site-header">
         <div class="header-inner">
-          <a class="logo" href="teacher.html"><span class="logo-mark">LB</span> Learn Bridge <span style="font-size: 0.75rem; color: var(--color-text-muted); font-weight: 600">교사</span></a>
-          <nav class="nav-main" aria-label="교사 메뉴">
-            <a class="nav-link is-active" href="teacher.html">교사 홈</a>
-            <a class="nav-link" href="qa.html">Q&amp;A</a>
-            <a class="nav-link" href="progress.html">학습 진행도(조회)</a>
-            <a class="nav-link" href="materials.html">수업 자료</a>
-            <a class="nav-link" href="notice.html">공지</a>
-          </nav>
-          <div class="header-actions">
-            <span style="font-size: 0.82rem; color: var(--color-text-muted); max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap" data-home-academy>소속 학원</span>
-            <a class="btn btn-ghost btn-sm" href="login.html">로그아웃</a>
+          <div class="header-left">
+            <h1 class="page-title">교사 로그인 화면</h1>
+            <nav class="nav-main" aria-label="교사 메뉴">
+              <a class="nav-link" href="#">셀프체크</a>
+              <a class="nav-link" href="#">수업</a>
+              <a class="nav-link" href="#">커뮤니티</a>
+              <a class="nav-link" href="#">수업 이름</a>
+            </nav>
+          </div>
+          <div class="header-right">
+            <div class="profile-section">
+              <button class="profile-btn">프로필</button>
+              <a class="schedule-link" href="#">스케쥴</a>
+            </div>
           </div>
         </div>
       </header>
 
       <main class="page-wrap">
-        <h1 class="page-title">교사 대시보드</h1>
-        <p class="page-sub">소속: <strong data-home-academy>Korea 그룹 제휴 학원</strong> · 피그마의 교사 메뉴(수업·출석·자료·복습·과제·공지·Q&amp;A·커뮤니티)로 확장 가능한 허브입니다.</p>
-
-        <div class="stats-grid">
-          <article class="stat-card card-reveal">
-            <p class="stat-value">2</p>
-            <p class="stat-label">담당 반</p>
-          </article>
-          <article class="stat-card card-reveal">
-            <p class="stat-value">48</p>
-            <p class="stat-label">전체 수강생</p>
-          </article>
-          <article class="stat-card card-reveal">
-            <p class="stat-value">5</p>
-            <p class="stat-label">미제출 과제</p>
-          </article>
+        <div class="main-layout">
+          <div class="content-area">
+            <div class="promo-background">
+              <h2>배경(수강자가 수강한 학원내의 수업 홍보/광고)</h2>
+              <div class="promo-content">
+                <p>수업 홍보 및 광고 영역</p>
+              </div>
+            </div>
+          </div>
+          
+          <aside class="sidebar">
+            <div class="ranking-section">
+              <h3>진행도/이해도 랭킹</h3>
+              <p class="ranking-desc">시험점수, 문제풀이 횟수</p>
+              <p class="ranking-note">닉네임 (실명) 으로 보이게</p>
+              <div class="ranking-list">
+                <div class="ranking-item">
+                  <span class="rank">1</span>
+                  <span class="name">김학생 (김민준)</span>
+                  <span class="score">95점</span>
+                </div>
+                <div class="ranking-item">
+                  <span class="rank">2</span>
+                  <span class="name">이학생 (이서아)</span>
+                  <span class="score">92점</span>
+                </div>
+                <div class="ranking-item">
+                  <span class="rank">3</span>
+                  <span class="name">박학생 (박도윤)</span>
+                  <span class="score">88점</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="academy-link">
+              <a href="#">학원 사이트 링크</a>
+            </div>
+          </aside>
         </div>
-
-        <section class="card card-pad card-reveal" style="margin-top: 8px">
-          <h2 class="section-title" style="margin-bottom: 12px">빠른 이동 (교사)</h2>
-          <ul class="hub-menu" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px">
-            <li><a href="schedule.html">교사 스케줄</a></li>
-            <li><a href="attendance.html">출석 체크방</a></li>
-            <li><a href="materials.html">수업 자료 업로드·관리</a></li>
-            <li><a href="review.html">복습 문제 관리</a></li>
-            <li><a href="assignment.html">추가 학습 과제</a></li>
-            <li><a href="notice.html">공지사항</a></li>
-            <li><a href="qa.html">Q&amp;A</a></li>
-            <li><a href="community.html">커뮤니티</a></li>
-          </ul>
-        </section>
-
-        <p style="margin-top: 20px; font-size: 0.88rem; color: var(--color-text-muted)">
-          학생 화면은 <a href="index.html">index.html</a>에서 확인할 수 있습니다.
-        </p>
       </main>
 
       <footer class="site-footer"><p>© 2026 Learn Bridge · 교사 모드 데모</p></footer>
