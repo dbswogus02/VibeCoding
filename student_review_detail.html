@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>학생 복습 문제 상세 | Learn Bridge</title>
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="layout-body">
+      <!-- Student Review Quiz Day-based Screen -->
+      <header class="site-header">
+        <div class="header-inner">
+          <a class="logo" href="index.html"><span class="logo-mark">LB</span> Learn Bridge</a>
+          <nav class="nav-main" aria-label="학생 메뉴">
+            <a class="nav-link" href="index.html">학생 홈</a>
+            <a class="nav-link is-active" href="student_review_list.html">복습 문제</a>
+            <a class="nav-link" href="feedback.html">AI 피드백</a>
+          </nav>
+          <div class="header-actions">
+            <a class="btn btn-ghost btn-sm" href="login.html">로그아웃</a>
+          </div>
+        </div>
+      </header>
+
+      <main class="page-wrap">
+        <div class="toolbar-back"><a href="student_review_list.html">← 복습 문제 목록</a></div>
+        <h1 class="page-title">수업이름 — 복습 문제</h1>
+        
+        <div class="quiz-info card-reveal">
+          <p class="page-sub" id="week-info">1주차 / 4월 6일 (월요일) - 4월 10일 (금요일) 복습 문제</p>
+        </div>
+
+        <section class="card card-list-group card-reveal">
+          <div class="card-list-group-header">
+            <span class="text-muted">요일</span>
+            <span class="text-muted">복습 문제</span>
+          </div>
+          <ul class="card-list-group-body" id="day-list">
+            <!-- JavaScript to dynamically generate day-based list -->
+          </ul>
+        </section>
+      </main>
+
+      <footer class="site-footer"><p>© 2026 Learn Bridge</p></footer>
+    </div>
+    <script>
+      // Get URL parameters for week and day information
+      function getQueryParams() {
+        const params = new URLSearchParams(window.location.search);
+        return {
+          week: params.get('week') || '1',
+          start: params.get('start') || null,
+          startDay: params.get('startDay') || null,
+          end: params.get('end') || null,
+          endDay: params.get('endDay') || null,
+          days: params.getAll('day') || []
+        };
+      }
+
+      // Week data for student interface
+      const weekData = {
+        1: { days: ['6', '10'], month: '4월', startDay: 6, endDay: 10, weekDay: '월' },
+        2: { days: ['4', '16'], month: '4월', startDay: 16, endDay: 16, weekDay: '수' },
+        3: { days: ['4', '23'], month: '4월', startDay: 23, endDay: 23, weekDay: '수' },
+        4: { days: ['4', '30'], month: '4월', startDay: 30, endDay: 30, weekDay: '수' },
+        5: { days: ['5', '7'], month: '5월', startDay: 7, endDay: 7, weekDay: '수' },
+        6: { days: ['5', '14'], month: '5월', startDay: 14, endDay: 14, weekDay: '수' },
+        7: { days: ['5', '21'], month: '5월', startDay: 21, endDay: 21, weekDay: '수' },
+        8: { days: ['5', '28'], month: '5월', startDay: 28, endDay: 28, weekDay: '수' },
+        9: { days: ['6', '4'], month: '6월', startDay: 4, endDay: 4, weekDay: '수' },
+        10: { days: ['6', '11'], month: '6월', startDay: 11, endDay: 11, weekDay: '수' },
+        11: { days: ['6', '18'], month: '6월', startDay: 18, endDay: 18, weekDay: '수' },
+        12: { days: ['6', '25'], month: '6월', startDay: 25, endDay: 25, weekDay: '수' },
+        13: { days: ['7', '2'], month: '7월', startDay: 2, endDay: 2, weekDay: '수' },
+        14: { days: ['7', '9'], month: '7월', startDay: 9, endDay: 9, weekDay: '수' },
+        15: { days: ['7', '16'], month: '7월', startDay: 16, endDay: 16, weekDay: '수' },
+        16: { days: ['7', '23'], month: '7월', startDay: 23, endDay: 23, weekDay: '수' },
+        17: { days: ['7', '30'], month: '7월', startDay: 30, endDay: 30, weekDay: '수' },
+        18: { days: ['8', '6'], month: '8월', startDay: 6, endDay: 6, weekDay: '수' }
+      };
+
+      // Generate day-based list on page load
+      function generateDayList() {
+        const params = getQueryParams();
+        const data = weekData[params.week] || weekData[1];
+        
+        if (!data) return;
+
+        // Update week information
+        const weekInfo = document.getElementById('week-info');
+        if (weekInfo) {
+          let displayText = `${params.week}주차 / ${data.month}`;
+          
+          if (params.start && params.startDay && params.end && params.endDay) {
+            displayText += ` ${params.start}월 ${params.startDay}일 (${getWeekdayName(params.startDay)}요일) - ${params.end}월 ${params.endDay}일 (${getWeekdayName(params.endDay)}요일) 복습 문제`;
+          } else if (params.start && params.startDay) {
+            displayText += ` ${params.start}월 ${params.startDay}일 (${getWeekdayName(params.startDay)}요일) 복습 문제`;
+          } else {
+            displayText += ` 복습 문제`;
+          }
+          
+          weekInfo.textContent = displayText;
+        }
+
+        // Generate day-based list
+        const dayList = document.getElementById('day-list');
+        if (dayList) {
+          dayList.innerHTML = '';
+          
+          data.days.forEach((day, index) => {
+            const li = document.createElement('li');
+            li.className = 'card-list-group-item';
+            
+            const a = document.createElement('a');
+            a.href = `review-quiz.html?week=${params.week}&day=${day}`;
+            a.innerHTML = `
+              <span class="text-strong">${day}일 (${getWeekdayName(day)}요일)</span>
+              <span>복습 문제</span>
+            `;
+            
+            li.appendChild(a);
+            dayList.appendChild(li);
+          });
+        }
+      }
+
+      // Get weekday name
+      function getWeekdayName(day) {
+        const weekdays = { '1': '월', '2': '화', '3': '수', '4': '목', '5': '금', '6': '토' };
+        
+        const dayNum = parseInt(day);
+        if (dayNum >= 1 && dayNum <= 7) {
+          return weekdays[dayNum.toString()] || '?';
+        }
+        return '?';
+      }
+
+      // Execute on page load
+      document.addEventListener('DOMContentLoaded', generateDayList);
+    </script>
+    <script src="main.js"></script>
+  </body>
+</html>

@@ -308,6 +308,12 @@ img {
 
 .progress-fill.is-animated {
   /* 인라인 style width와 함께 사용 */
+  animation: progressGrow 0.85s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+@keyframes progressGrow {
+  from { width: 0; }
+  to { width: var(--progress-width, 0%); }
 }
 
 /* ---------- 대시보드: 2열 레이아웃 ---------- */
@@ -1309,6 +1315,647 @@ img {
   color: #991b1b;
 }
 
+/* ----- 교사 로그인 화면 레이아웃 ----- */
+.site-header {
+  height: auto;
+  min-height: var(--header-h);
+  padding: 16px 0;
+}
+
+.header-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 32px;
+  padding: 0 24px;
+}
+
+.header-left {
+  display: flex;
+ flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.header-left .page-title {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.2;
+}
+
+.header-left .nav-main {
+  display: flex;
+  gap: 16px;
+  margin-top: 4px;
+}
+
+.header-right {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.profile-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.profile-btn {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: transform var(--transition), box-shadow var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.schedule-link {
+  padding: 6px 12px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  color: var(--color-text);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.85rem;
+  transition: all var(--transition);
+  white-space: nowrap;
+}
+
+.schedule-link:hover {
+  background: var(--color-primary-soft);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+
+.page-wrap {
+  padding: 20px 24px 32px;
+}
+
+.main-layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 32px;
+  height: calc(100vh - 160px);
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+@media (max-width: 1024px) {
+  .main-layout {
+    grid-template-columns: 1fr;
+    height: auto;
+    gap: 24px;
+  }
+  
+  .header-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  
+  .header-right {
+    align-self: flex-end;
+  }
+}
+
+.content-area {
+  display: flex;
+  flex-direction: column;
+}
+
+.promo-background {
+  flex: 1;
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #dbeafe 100%);
+  border-radius: var(--radius-lg);
+  padding: 48px 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border: 2px dashed var(--color-border);
+  min-height: 400px;
+}
+
+.promo-background h2 {
+  margin: 0 0 24px;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.3;
+}
+
+.promo-content {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 32px 40px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  max-width: 600px;
+  width: 100%;
+}
+
+.promo-content p {
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.ranking-section {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+}
+
+.ranking-section h3 {
+  margin: 0 0 12px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.3;
+}
+
+.ranking-desc {
+  margin: 0 0 4px;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+.ranking-note {
+  margin: 0 0 20px;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  font-style: italic;
+  padding: 8px 12px;
+  background: var(--color-bg);
+  border-radius: var(--radius);
+  border-left: 3px solid var(--color-primary);
+}
+
+.ranking-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ranking-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  background: var(--color-bg);
+  border-radius: var(--radius);
+  border: 1px solid var(--color-border);
+  transition: all var(--transition);
+}
+
+.ranking-item:hover {
+  background: var(--color-primary-soft);
+  border-color: var(--color-primary);
+  transform: translateX(4px);
+  box-shadow: var(--shadow-sm);
+}
+
+.rank {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+.name {
+  flex: 1;
+  font-weight: 500;
+  color: var(--color-text);
+  font-size: 0.9rem;
+}
+
+.score {
+  font-weight: 700;
+  color: var(--color-primary);
+  font-size: 0.95rem;
+  flex-shrink: 0;
+}
+
+.academy-link {
+  text-align: center;
+  padding: 20px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.academy-link a {
+  display: inline-block;
+  padding: 14px 28px;
+  background: var(--color-primary);
+  color: white;
+  text-decoration: none;
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all var(--transition);
+  width: 100%;
+  text-align: center;
+}
+
+.academy-link a:hover {
+  background: var(--color-primary-hover);
+  transform: translateY(-2px);
+  text-decoration: none;
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+}
+
+/* ----- 학생 스케줄 화면 ----- */
+.calendar-nav {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-sm);
+}
+
+.calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.nav-arrow {
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-arrow:hover {
+  background: var(--color-primary-soft);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.calendar-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.month-year {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.date-display {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}
+
+.calendar-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.today-btn {
+  padding: 8px 16px;
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.today-btn:hover {
+  background: var(--color-primary-hover);
+  transform: translateY(-1px);
+}
+
+.view-toggles {
+  display: flex;
+  gap: 4px;
+}
+
+.view-toggle {
+  padding: 8px 12px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.view-toggle:hover,
+.view-toggle.active {
+  background: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary);
+}
+
+.schedule-section {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-sm);
+}
+
+.schedule-section .section-title {
+  margin: 0 0 16px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.schedule-table {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.table-header {
+  display: grid;
+  grid-template-columns: 80px 80px 1fr 1fr;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--color-bg);
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.table-row {
+  display: grid;
+  grid-template-columns: 80px 80px 1fr 1fr;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  transition: all var(--transition);
+}
+
+.table-row:hover {
+  background: var(--color-primary-soft);
+  border-color: rgba(37, 99, 235, 0.3);
+  transform: translateY(-1px);
+}
+
+.col-date {
+  font-weight: 600;
+  color: var(--color-primary);
+  font-size: 0.9rem;
+}
+
+.col-time {
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.col-subject {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.col-details {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+  .calendar-header {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .calendar-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .table-header,
+  .table-row {
+    grid-template-columns: 60px 60px 1fr;
+  }
+  
+  .col-details {
+    grid-column: span 1;
+  }
+}
+
+/* ----- 복습 문제 화면 ----- */
+.quiz-info {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-sm);
+}
+
+.quiz-info .page-sub {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+.quiz-content {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 40px;
+  min-height: 400px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quiz-content p {
+  margin: 0;
+  font-size: 1.2rem;
+  color: var(--color-text-muted);
+  font-weight: 500;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .quiz-content {
+    padding: 24px;
+    min-height: 300px;
+  }
+  
+  .quiz-content p {
+    font-size: 1.1rem;
+  }
+}
+
+/* ----- 복습 문제 목록 화면 ----- */
+.card-list-group {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 0;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.card-list-group-header {
+  display: flex;
+  padding: 16px 20px;
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}
+
+.card-list-group-header span:first-child {
+  flex: 0 0 80px;
+}
+
+.card-list-group-header span:last-child {
+  flex: 1;
+}
+
+.card-list-group-body {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.card-list-group-item {
+  border-bottom: 1px solid var(--color-border);
+  transition: background var(--transition);
+}
+
+.card-list-group-item:last-child {
+  border-bottom: none;
+}
+
+.card-list-group-item:hover {
+  background: var(--color-primary-soft);
+}
+
+.card-list-group-item a {
+  display: flex;
+  align-items: center;
+  padding: 16px 20px;
+  color: var(--color-text);
+  text-decoration: none;
+  transition: all var(--transition);
+}
+
+.card-list-group-item a:hover {
+  text-decoration: none;
+  color: var(--color-primary);
+  transform: translateX(4px);
+}
+
+.text-strong {
+  flex: 0 0 80px;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.text-muted {
+  flex: 1;
+  color: var(--color-text);
+}
+
+/* 스크롤바 스타일링 */
+.card-list-group-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.card-list-group-body::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+
+.card-list-group-body::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+
+.card-list-group-body::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}
+
+@media (max-width: 768px) {
+  .card-list-group-header {
+    padding: 12px 16px;
+  }
+  
+  .card-list-group-item a {
+    padding: 12px 16px;
+  }
+  
+  .text-strong {
+    flex: 0 0 60px;
+    font-size: 0.85rem;
+  }
+  
+  .text-muted {
+    font-size: 0.85rem;
+  }
+}
+
 /* ----- 수업 자료: 주차 그리드 ----- */
 .week-grid {
   display: grid;
@@ -1646,6 +2293,7 @@ img {
   color: var(--color-text-muted);
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
