@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>교사 공지사항 | Learn Bridge</title>
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="layout-body">
+      <!-- Teacher Notices Page -->
+      <header class="site-header">
+        <div class="header-inner">
+          <a class="logo" href="teacher.html"><span class="logo-mark">LB</span> Learn Bridge</a>
+          <nav class="nav-main" aria-label="교사 내비게이션">
+            <a class="nav-link" href="teacher.html">교사 홈</a>
+            <a class="nav-link" href="teacher_attendance.html">출석체크</a>
+            <a class="nav-link" href="teacher_materials.html">수업자료</a>
+            <a class="nav-link" href="teacher_review.html">복습문제</a>
+          </nav>
+          <div class="header-actions">
+            <a class="btn btn-ghost btn-sm" href="login.html">로그아웃</a>
+          </div>
+        </div>
+      </header>
+
+      <main class="page-wrap">
+        <div class="toolbar-back"><a href="teacher.html">교사 홈으로</a></div>
+        <h1 class="page-title">커뮤니티 공지사항</h1>
+        
+        <div class="notice-controls card-reveal">
+          <div class="filter-section">
+            <label for="notice-filter">필터:</label>
+            <select id="notice-filter" class="form-select">
+              <option value="all">모든 공지</option>
+              <option value="important">중요</option>
+              <option value="general">일반</option>
+              <option value="event">이벤트</option>
+            </select>
+          </div>
+          <div class="create-section">
+            <button class="btn btn-primary" id="create-notice">공지 작성</button>
+          </div>
+        </div>
+
+        <section class="card card-list-group card-reveal">
+          <div class="card-list-group-header">
+            <span class="text-muted">날짜</span>
+            <span class="text-muted">제목</span>
+            <span class="text-muted">작성자</span>
+            <span class="text-muted">유형</span>
+            <span class="text-muted">조회</span>
+            <span class="text-muted">댓글</span>
+          </div>
+          <ul class="card-list-group-body">
+            <li class="card-list-group-item">
+              <div class="notice-item important">
+                <span class="notice-date text-strong">2026-04-12</span>
+                <span class="notice-title">중간고사 시간표 공지</span>
+                <span class="notice-type important text-muted">중요</span>
+                <span class="notice-author text-muted">관리자</span>
+                <span class="views text-muted">156 조회</span>
+                <span class="comments text-muted">12 댓글</span>
+                <div class="notice-actions">
+                  <button class="btn btn-sm btn-ghost">편집</button>
+                  <button class="btn btn-sm btn-danger">삭제</button>
+                </div>
+              </div>
+            </li>
+            
+            <li class="card-list-group-item">
+              <div class="notice-item general">
+                <span class="notice-date text-strong">2026-04-10</span>
+                <span class="notice-title">이번 주 추가 수학 수업</span>
+                <span class="notice-type general text-muted">일반</span>
+                <span class="notice-author text-muted">수학 선생님</span>
+                <span class="views text-muted">89 조회</span>
+                <span class="comments text-muted">5 댓글</span>
+                <div class="notice-actions">
+                  <button class="btn btn-sm btn-ghost">편집</button>
+                  <button class="btn btn-sm btn-danger">삭제</button>
+                </div>
+              </div>
+            </li>
+            
+            <li class="card-list-group-item">
+              <div class="notice-item event">
+                <span class="notice-date text-strong">2026-04-08</span>
+                <span class="notice-title">과학 전시회 등록 시작</span>
+                <span class="notice-type event text-muted">이벤트</span>
+                <span class="notice-author text-muted">관리자</span>
+                <span class="views text-muted">234 조회</span>
+                <span class="comments text-muted">18 댓글</span>
+                <div class="notice-actions">
+                  <button class="btn btn-sm btn-ghost">편집</button>
+                  <button class="btn btn-sm btn-danger">삭제</button>
+                </div>
+              </div>
+            </li>
+            
+            <li class="card-list-group-item">
+              <div class="notice-item general">
+                <span class="notice-date text-strong">2026-04-05</span>
+                <span class="notice-title">독서 자료 업데이트</span>
+                <span class="notice-type general text-muted">일반</span>
+                <span class="notice-author text-muted">영어 선생님</span>
+                <span class="views text-muted">67 조회</span>
+                <span class="comments text-muted">3 댓글</span>
+                <div class="notice-actions">
+                  <button class="btn btn-sm btn-ghost">편집</button>
+                  <button class="btn btn-sm btn-danger">삭제</button>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </section>
+
+        <div class="notice-management">
+          <button class="btn btn-secondary" id="archive-notices">이전 공지 보관</button>
+          <button class="btn btn-secondary" id="export-notices">공지 내보내기</button>
+        </div>
+      </main>
+
+      <footer class="site-footer"><p>© 2026 Learn Bridge</p></footer>
+    </div>
+    
+    <script>
+      // Notice management functionality
+      document.addEventListener('DOMContentLoaded', function() {
+        const createNoticeBtn = document.getElementById('create-notice');
+        const noticeFilter = document.getElementById('notice-filter');
+        const archiveBtn = document.getElementById('archive-notices');
+        const exportBtn = document.getElementById('export-notices');
+        
+        // Handle create notice
+        createNoticeBtn.addEventListener('click', function() {
+          console.log('Creating new notice');
+          
+          // In a real application, this would open a notice creation modal
+          this.textContent = 'Opening Editor...';
+          this.disabled = true;
+          
+          setTimeout(() => {
+            this.textContent = 'Create Notice';
+            this.disabled = false;
+            showNotification('Notice editor opened!');
+          }, 1000);
+        });
+        
+        // Handle filter change
+        noticeFilter.addEventListener('change', function() {
+          const filterValue = this.value;
+          console.log('Filtering notices:', filterValue);
+          
+          // In a real application, this would filter the notice list
+          filterNotices(filterValue);
+        });
+        
+        // Handle archive notices
+        archiveBtn.addEventListener('click', function() {
+          console.log('Archiving old notices');
+          
+          // In a real application, this would archive notices older than 30 days
+          this.textContent = 'Archiving...';
+          this.disabled = true;
+          
+          setTimeout(() => {
+            this.textContent = 'Archive Old Notices';
+            this.disabled = false;
+            showNotification('Old notices archived!');
+          }, 1500);
+        });
+        
+        // Handle export notices
+        exportBtn.addEventListener('click', function() {
+          console.log('Exporting notices');
+          
+          // In a real application, this would generate and download a PDF or Excel file
+          this.textContent = 'Exporting...';
+          this.disabled = true;
+          
+          setTimeout(() => {
+            this.textContent = 'Export Notices';
+            this.disabled = false;
+            showNotification('Notices exported successfully!');
+          }, 2000);
+        });
+        
+        // Handle notice actions
+        document.querySelectorAll('.notice-actions button').forEach(button => {
+          button.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const action = this.textContent.toLowerCase();
+            const noticeItem = this.closest('.notice-item');
+            const noticeTitle = noticeItem.querySelector('.notice-title').textContent;
+            
+            console.log(`${action} notice:`, noticeTitle);
+            
+            if (action === 'delete') {
+              if (confirm(`Are you sure you want to delete "${noticeTitle}"?`)) {
+                noticeItem.style.opacity = '0.5';
+                setTimeout(() => {
+                  noticeItem.remove();
+                  showNotification('Notice deleted!');
+                }, 300);
+              }
+            } else if (action === 'edit') {
+              showNotification(`Editing: ${noticeTitle}`);
+            }
+          });
+        });
+        
+        // Filter notices
+        function filterNotices(filter) {
+          const noticeItems = document.querySelectorAll('.notice-item');
+          
+          noticeItems.forEach(item => {
+            if (filter === 'all') {
+              item.style.display = 'block';
+            } else {
+              const noticeType = item.querySelector('.notice-type').textContent.toLowerCase();
+              if (noticeType === filter) {
+                item.style.display = 'block';
+              } else {
+                item.style.display = 'none';
+              }
+            }
+          });
+        }
+        
+        // Show notification
+        function showNotification(message) {
+          const notification = document.createElement('div');
+          notification.className = 'notification';
+          notification.textContent = message;
+          notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--color-primary);
+            color: white;
+            padding: 12px 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+          `;
+          
+          document.body.appendChild(notification);
+          
+          setTimeout(() => {
+            notification.style.animation = 'slideOut 0.3s ease';
+            setTimeout(() => {
+              notification.remove();
+            }, 300);
+          }, 3000);
+        }
+      });
+    </script>
+    <script src="main.js"></script>
+  </body>
+</html>

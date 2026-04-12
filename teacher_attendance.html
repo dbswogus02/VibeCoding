@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>교사 출석체크 | Learn Bridge</title>
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="layout-body">
+      <!-- Teacher Attendance Check Page -->
+      <header class="site-header">
+        <div class="header-inner">
+          <a class="logo" href="teacher.html"><span class="logo-mark">LB</span> Learn Bridge</a>
+          <nav class="nav-main" aria-label="교사 내비게이션">
+            <a class="nav-link" href="teacher.html">교사 홈</a>
+            <a class="nav-link is-active" href="teacher_attendance.html">출석체크</a>
+            <a class="nav-link" href="teacher_materials.html">수업자료</a>
+            <a class="nav-link" href="teacher_review.html">복습문제</a>
+          </nav>
+          <div class="header-actions">
+            <a class="btn btn-ghost btn-sm" href="login.html">로그아웃</a>
+          </div>
+        </div>
+      </header>
+
+      <main class="page-wrap">
+        <div class="toolbar-back"><a href="teacher.html">교사 홈으로</a></div>
+        <h1 class="page-title">출석체크</h1>
+        
+        <div class="attendance-controls card-reveal">
+          <div class="date-selector">
+            <label for="attendance-date">날짜 선택:</label>
+            <input type="date" id="attendance-date" class="form-input" value="2026-04-12">
+          </div>
+          <div class="class-selector">
+            <label for="class-select">반:</label>
+            <select id="class-select" class="form-select">
+              <option value="math">수학</option>
+              <option value="english">영어</option>
+              <option value="science">과학</option>
+            </select>
+          </div>
+        </div>
+
+        <section class="card card-list-group card-reveal">
+          <div class="card-list-group-header">
+            <span class="text-muted">학생</span>
+            <span class="text-muted">출결 상태</span>
+          </div>
+          <ul class="card-list-group-body">
+            <li class="card-list-group-item">
+              <div class="attendance-item">
+                <span class="student-name text-strong">김민준</span>
+                <span class="student-id text-muted">2021001</span>
+                <div class="attendance-status">
+                  <button class="status-btn present" data-student="2021001">출석</button>
+                  <button class="status-btn late" data-student="2021001">지각</button>
+                  <button class="status-btn absent" data-student="2021001">결석</button>
+                </div>
+              </div>
+            </li>
+            <li class="card-list-group-item">
+              <div class="attendance-item">
+                <span class="student-name text-strong">이서아</span>
+                <span class="student-id text-muted">2021002</span>
+                <div class="attendance-status">
+                  <button class="status-btn present" data-student="2021002">출석</button>
+                  <button class="status-btn late" data-student="2021002">지각</button>
+                  <button class="status-btn absent" data-student="2021002">결석</button>
+                </div>
+              </div>
+            </li>
+            <li class="card-list-group-item">
+              <div class="attendance-item">
+                <span class="student-name text-strong">박도윤</span>
+                <span class="student-id text-muted">2021003</span>
+                <div class="attendance-status">
+                  <button class="status-btn present" data-student="2021003">출석</button>
+                  <button class="status-btn late" data-student="2021003">지각</button>
+                  <button class="status-btn absent" data-student="2021003">결석</button>
+                </div>
+              </div>
+            </li>
+            <li class="card-list-group-item">
+              <div class="attendance-item">
+                <span class="student-name text-strong">최지현</span>
+                <span class="student-id text-muted">2021004</span>
+                <div class="attendance-status">
+                  <button class="status-btn present" data-student="2021004">출석</button>
+                  <button class="status-btn late" data-student="2021004">지각</button>
+                  <button class="status-btn absent" data-student="2021004">결석</button>
+                </div>
+              </div>
+            </li>
+            <li class="card-list-group-item">
+              <div class="attendance-item">
+                <span class="student-name text-strong">정민우</span>
+                <span class="student-id text-muted">2021005</span>
+                <div class="attendance-status">
+                  <button class="status-btn present" data-student="2021005">출석</button>
+                  <button class="status-btn late" data-student="2021005">지각</button>
+                  <button class="status-btn absent" data-student="2021005">결석</button>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </section>
+
+        <div class="attendance-actions">
+          <button class="btn btn-primary" id="save-attendance">출석 저장</button>
+          <button class="btn btn-secondary" id="export-attendance">Excel로 내보내기</button>
+        </div>
+      </main>
+
+      <footer class="site-footer"><p>© 2026 Learn Bridge</p></footer>
+    </div>
+    <script>
+      // Attendance management functionality
+      document.addEventListener('DOMContentLoaded', function() {
+        const statusButtons = document.querySelectorAll('.status-btn');
+        const saveButton = document.getElementById('save-attendance');
+        const exportButton = document.getElementById('export-attendance');
+        const attendanceData = {};
+        
+        // Initialize attendance data
+        statusButtons.forEach(button => {
+          const studentId = button.dataset.student;
+          if (!attendanceData[studentId]) {
+            attendanceData[studentId] = 'present';
+          }
+          
+          // Set initial state
+          if (button.classList.contains('present')) {
+            button.classList.add('active');
+          }
+        });
+        
+        // Handle status button clicks
+        statusButtons.forEach(button => {
+          button.addEventListener('click', function() {
+            const studentId = this.dataset.student;
+            const status = this.classList.contains('present') ? 'present' : 
+                          this.classList.contains('late') ? 'late' : 'absent';
+            
+            // Remove active class from all buttons for this student
+            document.querySelectorAll(`[data-student="${studentId}"]`).forEach(btn => {
+              btn.classList.remove('active');
+            });
+            
+            // Add active class to clicked button
+            this.classList.add('active');
+            
+            // Update attendance data
+            attendanceData[studentId] = status;
+            
+            // Update summary
+            updateSummary();
+          });
+        });
+        
+        // Update attendance summary
+        function updateSummary() {
+          const summary = { present: 0, late: 0, absent: 0 };
+          
+          Object.values(attendanceData).forEach(status => {
+            summary[status]++;
+          });
+          
+          document.querySelector('.summary-item.present').textContent = `Present: ${summary.present}`;
+          document.querySelector('.summary-item.late').textContent = `Late: ${summary.late}`;
+          document.querySelector('.summary-item.absent').textContent = `Absent: ${summary.absent}`;
+        }
+        
+        // Save attendance
+        saveButton.addEventListener('click', function() {
+          const date = document.getElementById('attendance-date').value;
+          const classId = document.getElementById('class-select').value;
+          
+          // In a real application, this would send data to server
+          console.log('Saving attendance:', {
+            date: date,
+            class: classId,
+            attendance: attendanceData
+          });
+          
+          // Show success message
+          this.textContent = 'Saved!';
+          this.classList.add('btn-success');
+          
+          setTimeout(() => {
+            this.textContent = 'Save Attendance';
+            this.classList.remove('btn-success');
+          }, 2000);
+        });
+        
+        // Export attendance
+        exportButton.addEventListener('click', function() {
+          // In a real application, this would generate and download Excel file
+          console.log('Exporting attendance data');
+          
+          // Show export message
+          this.textContent = 'Exported!';
+          
+          setTimeout(() => {
+            this.textContent = 'Export to Excel';
+          }, 2000);
+        });
+        
+        // Initialize summary
+        updateSummary();
+      });
+    </script>
+    <script src="main.js"></script>
+  </body>
+</html>

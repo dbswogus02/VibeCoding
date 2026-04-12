@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>교사 수업자료 | Learn Bridge</title>
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="layout-body">
+      <!-- Teacher Class Materials Page -->
+      <header class="site-header">
+        <div class="header-inner">
+          <a class="logo" href="teacher.html"><span class="logo-mark">LB</span> Learn Bridge</a>
+          <nav class="nav-main" aria-label="교사 내비게이션">
+            <a class="nav-link" href="teacher.html">교사 홈</a>
+            <a class="nav-link" href="teacher_attendance.html">출석체크</a>
+            <a class="nav-link is-active" href="teacher_materials.html">수업자료</a>
+            <a class="nav-link" href="teacher_review.html">복습문제</a>
+          </nav>
+          <div class="header-actions">
+            <a class="btn btn-ghost btn-sm" href="login.html">로그아웃</a>
+          </div>
+        </div>
+      </header>
+
+      <main class="page-wrap">
+        <div class="toolbar-back"><a href="teacher.html">교사 홈으로</a></div>
+        <h1 class="page-title">수업자료</h1>
+        
+        <div class="materials-controls card-reveal">
+          <div class="week-selector">
+            <label for="week-select">주차:</label>
+            <select id="week-select" class="form-select">
+              <option value="1">1주차</option>
+              <option value="2">2주차</option>
+              <option value="3">3주차</option>
+              <option value="4">4주차</option>
+              <option value="5">5주차</option>
+              <option value="6">6주차</option>
+              <option value="7">7주차</option>
+              <option value="8">8주차</option>
+            </select>
+          </div>
+          <div class="upload-section">
+            <button class="btn btn-primary" id="upload-btn">자료 업로드</button>
+          </div>
+        </div>
+
+        <section class="card card-list-group card-reveal">
+          <div class="card-list-group-header">
+            <span class="text-muted">자료명</span>
+            <span class="text-muted">유형</span>
+            <span class="text-muted">크기</span>
+            <span class="text-muted">업로드일</span>
+          </div>
+          <ul class="card-list-group-body">
+            <li class="card-list-group-item">
+              <div class="material-item">
+                <span class="material-title text-strong">수학 1장 노트</span>
+                <span class="material-type text-muted">PDF</span>
+                <span class="file-size text-muted">2.3 MB</span>
+                <span class="upload-date text-muted">2026-04-10</span>
+                <div class="material-actions">
+                  <button class="btn btn-sm btn-ghost">보기</button>
+                  <button class="btn btn-sm btn-ghost">다운로드</button>
+                  <button class="btn btn-sm btn-danger">삭제</button>
+                </div>
+              </div>
+            </li>
+            
+            <li class="card-list-group-item">
+              <div class="material-item">
+                <span class="material-title text-strong">소개 발표자료</span>
+                <span class="material-type text-muted">PPT</span>
+                <span class="file-size text-muted">5.8 MB</span>
+                <span class="upload-date text-muted">2026-04-08</span>
+                <div class="material-actions">
+                  <button class="btn btn-sm btn-ghost">보기</button>
+                  <button class="btn btn-sm btn-ghost">다운로드</button>
+                  <button class="btn btn-sm btn-danger">삭제</button>
+                </div>
+              </div>
+            </li>
+            
+            <li class="card-list-group-item">
+              <div class="material-item">
+                <span class="material-title text-strong">연습 문제집</span>
+                <span class="material-type text-muted">DOC</span>
+                <span class="file-size text-muted">1.2 MB</span>
+                <span class="upload-date text-muted">2026-04-05</span>
+                <div class="material-actions">
+                  <button class="btn btn-sm btn-ghost">보기</button>
+                  <button class="btn btn-sm btn-ghost">다운로드</button>
+                  <button class="btn btn-sm btn-danger">삭제</button>
+                </div>
+              </div>
+            </li>
+            
+            <li class="card-list-group-item">
+              <div class="material-item">
+                <span class="material-title text-strong">기하학 도표</span>
+                <span class="material-type text-muted">IMG</span>
+                <span class="file-size text-muted">8.7 MB</span>
+                <span class="upload-date text-muted">2026-04-03</span>
+                <div class="material-actions">
+                  <button class="btn btn-sm btn-ghost">보기</button>
+                  <button class="btn btn-sm btn-ghost">다운로드</button>
+                  <button class="btn btn-sm btn-danger">삭제</button>
+                </div>
+              </div>
+            </li>
+            
+            <li class="card-list-group-item">
+              <div class="material-item">
+                <span class="material-title text-strong">수업 녹화</span>
+                <span class="material-type text-muted">VID</span>
+                <span class="file-size text-muted">125.4 MB</span>
+                <span class="upload-date text-muted">2026-04-01</span>
+                <div class="material-actions">
+                  <button class="btn btn-sm btn-ghost">재생</button>
+                  <button class="btn btn-sm btn-ghost">다운로드</button>
+                  <button class="btn btn-sm btn-danger">삭제</button>
+                </div>
+              </div>
+            </li>
+            
+            <li class="card-list-group-item">
+              <div class="material-item">
+                <span class="material-title text-strong">자료 모음</span>
+                <span class="material-type text-muted">ZIP</span>
+                <span class="file-size text-muted">23.1 MB</span>
+                <span class="upload-date text-muted">2026-03-28</span>
+                <div class="material-actions">
+                  <button class="btn btn-sm btn-ghost">보기</button>
+                  <button class="btn btn-sm btn-ghost">다운로드</button>
+                  <button class="btn btn-sm btn-danger">삭제</button>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </section>
+
+        <div class="materials-actions">
+          <button class="btn btn-secondary" id="bulk-download">전체 다운로드</button>
+          <button class="btn btn-secondary" id="organize-files">파일 정리</button>
+        </div>
+      </main>
+
+      <footer class="site-footer"><p>© 2026 Learn Bridge</p></footer>
+    </div>
+    
+    <!-- Hidden file upload input -->
+    <input type="file" id="file-input" multiple style="display: none;" accept=".pdf,.ppt,.pptx,.doc,.docx,.jpg,.jpeg,.png,.mp4,.zip">
+    
+    <script>
+      // Materials management functionality
+      document.addEventListener('DOMContentLoaded', function() {
+        const uploadBtn = document.getElementById('upload-btn');
+        const fileInput = document.getElementById('file-input');
+        const weekSelect = document.getElementById('week-select');
+        const bulkDownloadBtn = document.getElementById('bulk-download');
+        const organizeBtn = document.getElementById('organize-files');
+        
+        // Handle file upload
+        uploadBtn.addEventListener('click', function() {
+          fileInput.click();
+        });
+        
+        fileInput.addEventListener('change', function(e) {
+          const files = Array.from(e.target.files);
+          if (files.length > 0) {
+            console.log('Uploading files:', files);
+            
+            // In a real application, this would upload files to server
+            uploadBtn.textContent = `Uploading ${files.length} file(s)...`;
+            uploadBtn.disabled = true;
+            
+            setTimeout(() => {
+              uploadBtn.textContent = 'Upload Materials';
+              uploadBtn.disabled = false;
+              fileInput.value = '';
+              
+              // Show success message
+              showNotification('Files uploaded successfully!');
+            }, 2000);
+          }
+        });
+        
+        // Handle week selection
+        weekSelect.addEventListener('change', function() {
+          const selectedWeek = this.value;
+          console.log('Loading materials for week:', selectedWeek);
+          
+          // In a real application, this would load materials for selected week
+          updateMaterialsDisplay(selectedWeek);
+        });
+        
+        // Handle bulk download
+        bulkDownloadBtn.addEventListener('click', function() {
+          console.log('Downloading all materials');
+          
+          // In a real application, this would create and download a zip file
+          this.textContent = 'Preparing download...';
+          this.disabled = true;
+          
+          setTimeout(() => {
+            this.textContent = 'Download All';
+            this.disabled = false;
+            showNotification('Download started!');
+          }, 1500);
+        });
+        
+        // Handle organize files
+        organizeBtn.addEventListener('click', function() {
+          console.log('Organizing files');
+          
+          // In a real application, this would organize files by type/date
+          this.textContent = 'Organizing...';
+          this.disabled = true;
+          
+          setTimeout(() => {
+            this.textContent = 'Organize Files';
+            this.disabled = false;
+            showNotification('Files organized!');
+          }, 1000);
+        });
+        
+        // Handle material actions
+        document.querySelectorAll('.material-actions button').forEach(button => {
+          button.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const action = this.textContent.toLowerCase();
+            const materialItem = this.closest('.material-item');
+            const materialTitle = materialItem.querySelector('.material-title').textContent;
+            
+            console.log(`${action} material:`, materialTitle);
+            
+            if (action === 'delete') {
+              if (confirm(`Are you sure you want to delete "${materialTitle}"?`)) {
+                materialItem.style.opacity = '0.5';
+                setTimeout(() => {
+                  materialItem.remove();
+                  showNotification('Material deleted!');
+                }, 300);
+              }
+            } else {
+              // Handle view, download, play actions
+              showNotification(`${action.charAt(0).toUpperCase() + action.slice(1)}: ${materialTitle}`);
+            }
+          });
+        });
+        
+        // Update materials display based on week
+        function updateMaterialsDisplay(week) {
+          // In a real application, this would fetch and display materials for the selected week
+          const materialsGrid = document.querySelector('.materials-grid');
+          materialsGrid.style.opacity = '0.5';
+          
+          setTimeout(() => {
+            materialsGrid.style.opacity = '1';
+          }, 300);
+        }
+        
+        // Show notification
+        function showNotification(message) {
+          const notification = document.createElement('div');
+          notification.className = 'notification';
+          notification.textContent = message;
+          notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--color-primary);
+            color: white;
+            padding: 12px 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+          `;
+          
+          document.body.appendChild(notification);
+          
+          setTimeout(() => {
+            notification.style.animation = 'slideOut 0.3s ease';
+            setTimeout(() => {
+              notification.remove();
+            }, 300);
+          }, 3000);
+        }
+      });
+    </script>
+    <script src="main.js"></script>
+  </body>
+</html>

@@ -20,9 +20,28 @@
           <div class="header-left">
             <h1 class="page-title">교사 로그인 화면</h1>
             <nav class="nav-main" aria-label="교사 메뉴">
-              <a class="nav-link" href="#">셀프체크</a>
-              <a class="nav-link" href="#">수업</a>
-              <a class="nav-link" href="#">커뮤니티</a>
+              <div class="nav-dropdown">
+                <button class="nav-link dropdown-toggle" data-dropdown="selfcheck">셀프체크</button>
+                <div class="dropdown-menu" id="selfcheck-dropdown">
+                  <a class="dropdown-item" href="teacher_progress.html">학습진행도</a>
+                  <a class="dropdown-item" href="teacher_assignments.html">추가학습과제</a>
+                </div>
+              </div>
+              <div class="nav-dropdown">
+                <button class="nav-link dropdown-toggle" data-dropdown="class">수업</button>
+                <div class="dropdown-menu" id="class-dropdown">
+                  <a class="dropdown-item" href="teacher_attendance.html">출석체크방</a>
+                  <a class="dropdown-item" href="teacher_materials.html">수업자료</a>
+                  <a class="dropdown-item" href="teacher_review.html">복습문제</a>
+                </div>
+              </div>
+              <div class="nav-dropdown">
+                <button class="nav-link dropdown-toggle" data-dropdown="community">커뮤니티</button>
+                <div class="dropdown-menu" id="community-dropdown">
+                  <a class="dropdown-item" href="teacher_notices.html">공지사항</a>
+                  <a class="dropdown-item" href="teacher_qna.html">Q&A</a>
+                </div>
+              </div>
               <a class="nav-link" href="#">수업 이름</a>
             </nav>
           </div>
@@ -79,6 +98,57 @@
 
       <footer class="site-footer"><p>© 2026 Learn Bridge · 교사 모드 데모</p></footer>
     </div>
+    <script>
+      // Dropdown functionality
+      document.addEventListener('DOMContentLoaded', function() {
+        const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+        
+        dropdownToggles.forEach(toggle => {
+          toggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const dropdownId = this.getAttribute('data-dropdown');
+            const dropdownMenu = document.getElementById(dropdownId + '-dropdown');
+            
+            // Close all other dropdowns
+            document.querySelectorAll('.dropdown-menu').forEach(menu => {
+              if (menu !== dropdownMenu) {
+                menu.classList.remove('show');
+                menu.previousElementSibling.setAttribute('aria-expanded', 'false');
+              }
+            });
+            
+            // Toggle current dropdown
+            if (dropdownMenu) {
+              const isShowing = dropdownMenu.classList.contains('show');
+              dropdownMenu.classList.toggle('show');
+              this.setAttribute('aria-expanded', !isShowing);
+            }
+          });
+        });
+        
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(e) {
+          if (!e.target.closest('.nav-dropdown')) {
+            document.querySelectorAll('.dropdown-menu').forEach(menu => {
+              menu.classList.remove('show');
+              menu.previousElementSibling.setAttribute('aria-expanded', 'false');
+            });
+          }
+        });
+        
+        // Close dropdowns when pressing Escape key
+        document.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape') {
+            document.querySelectorAll('.dropdown-menu').forEach(menu => {
+              menu.classList.remove('show');
+              menu.previousElementSibling.setAttribute('aria-expanded', 'false');
+            });
+          }
+        });
+      });
+    </script>
     <script src="main.js"></script>
   </body>
 </html>
