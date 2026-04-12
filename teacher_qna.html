@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>교사 Q&A | Learn Bridge</title>
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="layout-body">
+      <!-- Teacher Q&A Page -->
+      <header class="site-header">
+        <div class="header-inner">
+          <a class="logo" href="teacher.html"><span class="logo-mark">LB</span> Learn Bridge</a>
+          <nav class="nav-main" aria-label="교사 내비게이션">
+            <a class="nav-link" href="teacher.html">교사 홈</a>
+            <a class="nav-link" href="teacher_attendance.html">출석체크</a>
+            <a class="nav-link" href="teacher_materials.html">수업자료</a>
+            <a class="nav-link" href="teacher_review.html">복습문제</a>
+          </nav>
+          <div class="header-actions">
+            <a class="btn btn-ghost btn-sm" href="login.html">로그아웃</a>
+          </div>
+        </div>
+      </header>
+
+      <main class="page-wrap">
+        <div class="toolbar-back"><a href="teacher.html">교사 홈으로</a></div>
+        <h1 class="page-title">Q&A 관리</h1>
+        
+        <div class="qna-controls card-reveal">
+          <div class="filter-section">
+            <label for="qna-filter">상태:</label>
+            <select id="qna-filter" class="form-select">
+              <option value="all">모든 질문</option>
+              <option value="pending">답변 대기</option>
+              <option value="answered">답변 완료</option>
+              <option value="resolved">해결됨</option>
+            </select>
+          </div>
+          <div class="search-section">
+            <input type="text" id="qna-search" class="form-input" placeholder="질문 검색...">
+            <button class="btn btn-primary" id="search-btn">검색</button>
+          </div>
+        </div>
+
+        <section class="card card-list-group card-reveal">
+          <div class="card-list-group-header">
+            <span class="text-muted">날짜</span>
+            <span class="text-muted">학생</span>
+            <span class="text-muted">과목</span>
+            <span class="text-muted">제목</span>
+            <span class="text-muted">상태</span>
+            <span class="text-muted">조회</span>
+            <span class="text-muted">추천</span>
+          </div>
+          <ul class="card-list-group-body">
+            <li class="card-list-group-item">
+              <div class="qna-item pending">
+                <span class="qna-date text-strong">2026-04-12</span>
+                <span class="qna-author text-muted">김민준</span>
+                <span class="qna-subject text-muted">수학</span>
+                <span class="qna-title">복근이 있는 이차 방정식을 어떻게 풀어요?</span>
+                <span class="qna-status pending text-muted">대기</span>
+                <span class="views text-muted">23 조회</span>
+                <span class="upvotes text-muted">5 추천</span>
+                <div class="qna-actions">
+                  <button class="btn btn-sm btn-primary">답변</button>
+                  <button class="btn btn-sm btn-ghost">상세 보기</button>
+                </div>
+              </div>
+            </li>
+            
+            <li class="card-list-group-item">
+              <div class="qna-item answered">
+                <span class="qna-date text-strong">2026-04-11</span>
+                <span class="qna-author text-muted">이서아</span>
+                <span class="qna-subject text-muted">영어</span>
+                <span class="qna-title">"affect"와 "effect"의 차이점이 무엇인가요?</span>
+                <span class="qna-status answered text-muted">답변 완료</span>
+                <span class="views text-muted">45 조회</span>
+                <span class="upvotes text-muted">12 추천</span>
+                <span class="comments text-muted">3 댓글</span>
+                <div class="qna-actions">
+                  <button class="btn btn-sm btn-ghost">상세 보기</button>
+                  <button class="btn btn-sm btn-success">해결됨 표시</button>
+                </div>
+              </div>
+            </li>
+            
+            <li class="card-list-group-item">
+              <div class="qna-item pending">
+                <span class="qna-date text-strong">2026-04-10</span>
+                <span class="qna-author text-muted">박도윤</span>
+                <span class="qna-subject text-muted">과학</span>
+                <span class="qna-title">질량에 관계없이 물체가 같은 속도로 떨어지는 이유는 무엇인가요?</span>
+                <span class="qna-status pending text-muted">대기</span>
+                <span class="views text-muted">67 조회</span>
+                <span class="upvotes text-muted">8 추천</span>
+                <div class="qna-actions">
+                  <button class="btn btn-sm btn-primary">답변</button>
+                  <button class="btn btn-sm btn-ghost">상세 보기</button>
+                </div>
+              </div>
+            </li>
+            
+            <li class="card-list-group-item">
+              <div class="qna-item resolved">
+                <span class="qna-date text-strong">2026-04-08</span>
+                <span class="qna-author text-muted">최지현</span>
+                <span class="qna-subject text-muted">수학</span>
+                <span class="qna-title">사다리꼴의 면적을 어떻게 계산하나요?</span>
+                <span class="qna-status resolved text-muted">해결됨</span>
+                <span class="views text-muted">89 조회</span>
+                <span class="upvotes text-muted">15 추천</span>
+                <span class="comments text-muted">2 댓글</span>
+                <div class="qna-actions">
+                  <button class="btn btn-sm btn-ghost">상세 보기</button>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </section>
+
+        <div class="qna-management">
+          <button class="btn btn-secondary" id="bulk-answer">일괄 답변</button>
+          <button class="btn btn-secondary" id="export-questions">질문 내보내기</button>
+        </div>
+      </main>
+
+      <footer class="site-footer"><p>© 2026 Learn Bridge</p></footer>
+    </div>
+    
+    <script>
+      // Q&A management functionality
+      document.addEventListener('DOMContentLoaded', function() {
+        const qnaFilter = document.getElementById('qna-filter');
+        const searchInput = document.getElementById('qna-search');
+        const searchBtn = document.getElementById('search-btn');
+        const bulkAnswerBtn = document.getElementById('bulk-answer');
+        const exportBtn = document.getElementById('export-questions');
+        
+        // Handle filter change
+        qnaFilter.addEventListener('change', function() {
+          const filterValue = this.value;
+          console.log('Filtering Q&A:', filterValue);
+          
+          // In a real application, this would filter the Q&A list
+          filterQna(filterValue);
+        });
+        
+        // Handle search
+        searchBtn.addEventListener('click', function() {
+          const searchTerm = searchInput.value.trim();
+          console.log('Searching Q&A:', searchTerm);
+          
+          if (searchTerm) {
+            // In a real application, this would search the Q&A list
+            searchQna(searchTerm);
+          }
+        });
+        
+        searchInput.addEventListener('keypress', function(e) {
+          if (e.key === 'Enter') {
+            searchBtn.click();
+          }
+        });
+        
+        // Handle bulk answer
+        bulkAnswerBtn.addEventListener('click', function() {
+          console.log('Opening bulk answer interface');
+          
+          // In a real application, this would open a bulk answer interface
+          this.textContent = 'Loading...';
+          this.disabled = true;
+          
+          setTimeout(() => {
+            this.textContent = 'Bulk Answer';
+            this.disabled = false;
+            showNotification('Bulk answer interface opened!');
+          }, 1000);
+        });
+        
+        // Handle export questions
+        exportBtn.addEventListener('click', function() {
+          console.log('Exporting Q&A data');
+          
+          // In a real application, this would generate and download a file
+          this.textContent = 'Exporting...';
+          this.disabled = true;
+          
+          setTimeout(() => {
+            this.textContent = 'Export Questions';
+            this.disabled = false;
+            showNotification('Q&A data exported successfully!');
+          }, 2000);
+        });
+        
+        // Handle Q&A actions
+        document.querySelectorAll('.qna-actions button').forEach(button => {
+          button.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const action = this.textContent.toLowerCase();
+            const qnaItem = this.closest('.qna-item');
+            const qnaTitle = qnaItem.querySelector('.qna-title').textContent;
+            
+            console.log(`${action} Q&A:`, qnaTitle);
+            
+            if (action === 'answer') {
+              // In a real application, this would open an answer modal
+              showNotification(`Answering: ${qnaTitle}`);
+            } else if (action === 'view details') {
+              showNotification(`Viewing details for: ${qnaTitle}`);
+            } else if (action.includes('resolved')) {
+              qnaItem.querySelector('.qna-status').className = 'qna-status resolved';
+              qnaItem.querySelector('.qna-status').textContent = 'Resolved';
+              this.textContent = 'Resolved';
+              this.disabled = true;
+              showNotification('Question marked as resolved!');
+            }
+          });
+        });
+        
+        // Filter Q&A items
+        function filterQna(filter) {
+          const qnaItems = document.querySelectorAll('.qna-item');
+          
+          qnaItems.forEach(item => {
+            if (filter === 'all') {
+              item.style.display = 'block';
+            } else {
+              const qnaStatus = item.querySelector('.qna-status').textContent.toLowerCase();
+              if (qnaStatus === filter) {
+                item.style.display = 'block';
+              } else {
+                item.style.display = 'none';
+              }
+            }
+          });
+        }
+        
+        // Search Q&A items
+        function searchQna(searchTerm) {
+          const qnaItems = document.querySelectorAll('.qna-item');
+          const term = searchTerm.toLowerCase();
+          
+          qnaItems.forEach(item => {
+            const title = item.querySelector('.qna-title').textContent.toLowerCase();
+            const desc = item.querySelector('.qna-desc').textContent.toLowerCase();
+            
+            if (title.includes(term) || desc.includes(term)) {
+              item.style.display = 'block';
+            } else {
+              item.style.display = 'none';
+            }
+          });
+        }
+        
+        // Show notification
+        function showNotification(message) {
+          const notification = document.createElement('div');
+          notification.className = 'notification';
+          notification.textContent = message;
+          notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--color-primary);
+            color: white;
+            padding: 12px 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+          `;
+          
+          document.body.appendChild(notification);
+          
+          setTimeout(() => {
+            notification.style.animation = 'slideOut 0.3s ease';
+            setTimeout(() => {
+              notification.remove();
+            }, 300);
+          }, 3000);
+        }
+      });
+    </script>
+    <script src="main.js"></script>
+  </body>
+</html>

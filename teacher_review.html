@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>교사 복습문제 | Learn Bridge</title>
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="layout-body">
+      <!-- Teacher Review Quiz Page -->
+      <header class="site-header">
+        <div class="header-inner">
+          <a class="logo" href="teacher.html"><span class="logo-mark">LB</span> Learn Bridge</a>
+          <nav class="nav-main" aria-label="교사 내비게이션">
+            <a class="nav-link" href="teacher.html">교사 홈</a>
+            <a class="nav-link" href="teacher_attendance.html">출석체크</a>
+            <a class="nav-link" href="teacher_materials.html">수업자료</a>
+            <a class="nav-link is-active" href="teacher_review.html">복습문제</a>
+          </nav>
+          <div class="header-actions">
+            <a class="btn btn-ghost btn-sm" href="login.html">로그아웃</a>
+          </div>
+        </div>
+      </header>
+
+      <main class="page-wrap">
+        <div class="toolbar-back"><a href="teacher.html">교사 홈으로</a></div>
+        <h1 class="page-title">복습문제 관리</h1>
+        
+        <div class="quiz-controls card-reveal">
+          <div class="week-selector">
+            <label for="quiz-week-select">주차:</label>
+            <select id="quiz-week-select" class="form-select">
+              <option value="1">1주차</option>
+              <option value="2">2주차</option>
+              <option value="3">3주차</option>
+              <option value="4">4주차</option>
+              <option value="5">5주차</option>
+              <option value="6">6주차</option>
+              <option value="7">7주차</option>
+              <option value="8">8주차</option>
+            </select>
+          </div>
+          <div class="quiz-actions">
+            <button class="btn btn-primary" id="create-quiz">새 퀴즈 생성</button>
+            <button class="btn btn-secondary" id="view-stats">통계 보기</button>
+          </div>
+        </div>
+
+        <section class="card card-list-group card-reveal">
+          <div class="card-list-group-header">
+            <span class="text-muted">주차</span>
+            <span class="text-muted">퀴즈</span>
+            <span class="text-muted">문제수</span>
+            <span class="text-muted">난이도</span>
+            <span class="text-muted">마감일</span>
+            <span class="text-muted">완료율</span>
+          </div>
+          <ul class="card-list-group-body">
+            <li class="card-list-group-item">
+              <div class="quiz-item">
+                <span class="quiz-title text-strong">1주차 - 기본 대수</span>
+                <span class="questions-count text-muted">10문제</span>
+                <span class="difficulty text-muted">쉬움</span>
+                <span class="due-date text-muted">2026-04-15</span>
+                <span class="completion-rate text-muted">85%</span>
+                <div class="quiz-actions">
+                  <button class="btn btn-sm btn-ghost">편집</button>
+                  <button class="btn btn-sm btn-ghost">결과 보기</button>
+                  <button class="btn btn-sm btn-danger">삭제</button>
+                </div>
+              </div>
+            </li>
+            
+            <li class="card-list-group-item">
+              <div class="quiz-item">
+                <span class="quiz-title text-strong">2주차 - 선형 방정식</span>
+                <span class="questions-count text-muted">12문제</span>
+                <span class="difficulty text-muted">보통</span>
+                <span class="due-date text-muted">2026-04-22</span>
+                <span class="completion-rate text-muted">72%</span>
+                <div class="quiz-actions">
+                  <button class="btn btn-sm btn-ghost">편집</button>
+                  <button class="btn btn-sm btn-ghost">결과 보기</button>
+                  <button class="btn btn-sm btn-danger">삭제</button>
+                </div>
+              </div>
+            </li>
+            
+            <li class="card-list-group-item">
+              <div class="quiz-item">
+                <span class="quiz-title text-strong">3주차 - 이차 방정식</span>
+                <span class="questions-count text-muted">8문제</span>
+                <span class="difficulty text-muted">어려움</span>
+                <span class="due-date text-muted">2026-04-29</span>
+                <span class="completion-rate text-muted">45%</span>
+                <div class="quiz-actions">
+                  <button class="btn btn-sm btn-ghost">편집</button>
+                  <button class="btn btn-sm btn-ghost">결과 보기</button>
+                  <button class="btn btn-sm btn-danger">삭제</button>
+                </div>
+              </div>
+            </li>
+            
+            <li class="card-list-group-item">
+              <div class="quiz-item">
+                <span class="quiz-title text-strong">4주차 - 기하학 기초</span>
+                <span class="questions-count text-muted">15문제</span>
+                <span class="difficulty text-muted">쉬움</span>
+                <span class="due-date text-muted">2026-05-06</span>
+                <span class="completion-rate text-muted">90%</span>
+                <div class="quiz-actions">
+                  <button class="btn btn-sm btn-ghost">편집</button>
+                  <button class="btn btn-sm btn-ghost">결과 보기</button>
+                  <button class="btn btn-sm btn-danger">삭제</button>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </section>
+
+        <div class="quiz-management">
+          <button class="btn btn-secondary" id="export-results">결과 내보내기</button>
+          <button class="btn btn-secondary" id="batch-assign">일괄 배정</button>
+        </div>
+      </main>
+
+      <footer class="site-footer"><p>© 2026 Learn Bridge</p></footer>
+    </div>
+    
+    <script>
+      // Quiz management functionality
+      document.addEventListener('DOMContentLoaded', function() {
+        const createQuizBtn = document.getElementById('create-quiz');
+        const viewStatsBtn = document.getElementById('view-stats');
+        const weekSelect = document.getElementById('quiz-week-select');
+        const exportResultsBtn = document.getElementById('export-results');
+        const batchAssignBtn = document.getElementById('batch-assign');
+        
+        // Handle create new quiz
+        createQuizBtn.addEventListener('click', function() {
+          console.log('Creating new quiz');
+          
+          // In a real application, this would open a quiz creation modal
+          this.textContent = 'Opening Editor...';
+          this.disabled = true;
+          
+          setTimeout(() => {
+            this.textContent = 'Create New Quiz';
+            this.disabled = false;
+            showNotification('Quiz editor opened!');
+          }, 1000);
+        });
+        
+        // Handle view statistics
+        viewStatsBtn.addEventListener('click', function() {
+          console.log('Viewing quiz statistics');
+          
+          // In a real application, this would show detailed statistics
+          this.textContent = 'Loading Stats...';
+          this.disabled = true;
+          
+          setTimeout(() => {
+            this.textContent = 'View Statistics';
+            this.disabled = false;
+            showNotification('Statistics loaded!');
+          }, 1500);
+        });
+        
+        // Handle week selection
+        weekSelect.addEventListener('change', function() {
+          const selectedWeek = this.value;
+          console.log('Loading quizzes for week:', selectedWeek);
+          
+          // In a real application, this would load quizzes for selected week
+          updateQuizDisplay(selectedWeek);
+        });
+        
+        // Handle export results
+        exportResultsBtn.addEventListener('click', function() {
+          console.log('Exporting quiz results');
+          
+          // In a real application, this would generate and download results
+          this.textContent = 'Exporting...';
+          this.disabled = true;
+          
+          setTimeout(() => {
+            this.textContent = 'Export Results';
+            this.disabled = false;
+            showNotification('Results exported successfully!');
+          }, 2000);
+        });
+        
+        // Handle batch assign
+        batchAssignBtn.addEventListener('click', function() {
+          console.log('Batch assigning quizzes');
+          
+          // In a real application, this would open batch assignment interface
+          this.textContent = 'Assigning...';
+          this.disabled = true;
+          
+          setTimeout(() => {
+            this.textContent = 'Batch Assign';
+            this.disabled = false;
+            showNotification('Quizzes assigned to all students!');
+          }, 1500);
+        });
+        
+        // Handle quiz actions
+        document.querySelectorAll('.quiz-actions button').forEach(button => {
+          button.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const action = this.textContent.toLowerCase();
+            const quizItem = this.closest('.quiz-item');
+            const quizTitle = quizItem.querySelector('.quiz-title').textContent;
+            
+            console.log(`${action} quiz:`, quizTitle);
+            
+            if (action === 'delete') {
+              if (confirm(`Are you sure you want to delete "${quizTitle}"?`)) {
+                quizItem.style.opacity = '0.5';
+                setTimeout(() => {
+                  quizItem.remove();
+                  showNotification('Quiz deleted!');
+                }, 300);
+              }
+            } else if (action === 'edit') {
+              showNotification(`Editing: ${quizTitle}`);
+            } else if (action === 'view results') {
+              showNotification(`Loading results for: ${quizTitle}`);
+            }
+          });
+        });
+        
+        // Update quiz display based on week
+        function updateQuizDisplay(week) {
+          // In a real application, this would fetch and display quizzes for the selected week
+          const quizList = document.querySelector('.quiz-list');
+          quizList.style.opacity = '0.5';
+          
+          setTimeout(() => {
+            quizList.style.opacity = '1';
+          }, 300);
+        }
+        
+        // Show notification
+        function showNotification(message) {
+          const notification = document.createElement('div');
+          notification.className = 'notification';
+          notification.textContent = message;
+          notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--color-primary);
+            color: white;
+            padding: 12px 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+          `;
+          
+          document.body.appendChild(notification);
+          
+          setTimeout(() => {
+            notification.style.animation = 'slideOut 0.3s ease';
+            setTimeout(() => {
+              notification.remove();
+            }, 300);
+          }, 3000);
+        }
+      });
+    </script>
+    <script src="main.js"></script>
+  </body>
+</html>

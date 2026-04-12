@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>교사 과제 | Learn Bridge</title>
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="layout-body">
+      <!-- Teacher Assignments Page -->
+      <header class="site-header">
+        <div class="header-inner">
+          <a class="logo" href="teacher.html"><span class="logo-mark">LB</span> Learn Bridge</a>
+          <nav class="nav-main" aria-label="교사 내비게이션">
+            <a class="nav-link" href="teacher.html">교사 홈</a>
+            <a class="nav-link" href="teacher_attendance.html">출석체크</a>
+            <a class="nav-link" href="teacher_materials.html">수업자료</a>
+            <a class="nav-link" href="teacher_review.html">복습문제</a>
+          </nav>
+          <div class="header-actions">
+            <a class="btn btn-ghost btn-sm" href="login.html">로그아웃</a>
+          </div>
+        </div>
+      </header>
+
+      <main class="page-wrap">
+        <div class="toolbar-back"><a href="teacher.html">교사 홈으로</a></div>
+        <h1 class="page-title">추가 학습 과제</h1>
+        
+        <div class="assignment-controls card-reveal">
+          <div class="class-selector">
+            <label for="assignment-class">반:</label>
+            <select id="assignment-class" class="form-select">
+              <option value="math">수학</option>
+              <option value="english">영어</option>
+              <option value="science">과학</option>
+            </select>
+          </div>
+          <div class="difficulty-selector">
+            <label for="assignment-difficulty">난이도:</label>
+            <select id="assignment-difficulty" class="form-select">
+              <option value="all">모든 수준</option>
+              <option value="beginner">초급</option>
+              <option value="intermediate">중급</option>
+              <option value="advanced">고급</option>
+            </select>
+          </div>
+          <div class="create-section">
+            <button class="btn btn-primary" id="create-assignment">과제 생성</button>
+          </div>
+        </div>
+
+        <section class="card card-list-group card-reveal">
+          <div class="card-list-group-header">
+            <span class="text-muted">과제명</span>
+            <span class="text-muted">유형</span>
+            <span class="text-muted">난이도</span>
+            <span class="text-muted">문제수</span>
+            <span class="text-muted">예상시간</span>
+            <span class="text-muted">배정/완료</span>
+          </div>
+          <ul class="card-list-group-body">
+            <li class="card-list-group-item">
+              <div class="assignment-card">
+                <span class="assignment-title text-strong">기본 대수 연습</span>
+                <span class="assignment-type text-muted">연습</span>
+                <span class="assignment-difficulty text-muted">초급</span>
+                <span class="questions-count text-muted">15문제</span>
+                <span class="estimated-time text-muted">30분</span>
+                <span class="completion-stats text-muted">8 배정됨 / 5 완료됨</span>
+                <div class="assignment-actions">
+                  <button class="btn btn-sm btn-primary">배정</button>
+                  <button class="btn btn-sm btn-ghost">미리보기</button>
+                </div>
+              </div>
+            </li>
+            
+            <li class="card-list-group-item">
+              <div class="assignment-card">
+                <span class="assignment-title text-strong">복소수 연산</span>
+                <span class="assignment-type text-muted">도전</span>
+                <span class="assignment-difficulty text-muted">고급</span>
+                <span class="questions-count text-muted">10문제</span>
+                <span class="estimated-time text-muted">45분</span>
+                <span class="completion-stats text-muted">3 배정됨 / 1 완료됨</span>
+                <div class="assignment-actions">
+                  <button class="btn btn-sm btn-primary">배정</button>
+                  <button class="btn btn-sm btn-ghost">미리보기</button>
+                </div>
+              </div>
+            </li>
+            
+            <li class="card-list-group-item">
+              <div class="assignment-card">
+                <span class="assignment-title text-strong">기하학 복습 세트</span>
+                <span class="assignment-type text-muted">복습</span>
+                <span class="assignment-difficulty text-muted">중급</span>
+                <span class="questions-count text-muted">20문제</span>
+                <span class="estimated-time text-muted">40분</span>
+                <span class="completion-stats text-muted">12 배정됨 / 8 완료됨</span>
+                <div class="assignment-actions">
+                  <button class="btn btn-sm btn-primary">배정</button>
+                  <button class="btn btn-sm btn-ghost">미리보기</button>
+                </div>
+              </div>
+            </li>
+            
+            <li class="card-list-group-item">
+              <div class="assignment-card">
+                <span class="assignment-title text-strong">문제 풀이 모음</span>
+                <span class="assignment-type text-muted">연습</span>
+                <span class="assignment-difficulty text-muted">중급</span>
+                <span class="questions-count text-muted">12문제</span>
+                <span class="estimated-time text-muted">35분</span>
+                <span class="completion-stats text-muted">6 배정됨 / 4 완료됨</span>
+                <div class="assignment-actions">
+                  <button class="btn btn-sm btn-primary">배정</button>
+                  <button class="btn btn-sm btn-ghost">미리보기</button>
+                </div>
+              </div>
+            </li>
+            
+            <li class="card-list-group-item">
+              <div class="assignment-card">
+                <span class="assignment-title text-strong">기본 기능 확인</span>
+                <span class="assignment-type text-muted">평가</span>
+                <span class="assignment-difficulty text-muted">초급</span>
+                <span class="questions-count text-muted">25문제</span>
+                <span class="estimated-time text-muted">50분</span>
+                <span class="completion-stats text-muted">15 배정됨 / 12 완료됨</span>
+                <div class="assignment-actions">
+                  <button class="btn btn-sm btn-primary">배정</button>
+                  <button class="btn btn-sm btn-ghost">미리보기</button>
+                </div>
+              </div>
+            </li>
+            
+            <li class="card-list-group-item">
+              <div class="assignment-card">
+                <span class="assignment-title text-strong">미적분학 소개</span>
+                <span class="assignment-type text-muted">도전</span>
+                <span class="assignment-difficulty text-muted">고급</span>
+                <span class="questions-count text-muted">8문제</span>
+                <span class="estimated-time text-muted">60분</span>
+                <span class="completion-stats text-muted">2 배정됨 / 0 완료됨</span>
+                <div class="assignment-actions">
+                  <button class="btn btn-sm btn-primary">배정</button>
+                  <button class="btn btn-sm btn-ghost">미리보기</button>
+                </div>
+              </div>
+            </li>
+          </div>
+        </section>
+
+        
+              </main>
+
+      <footer class="site-footer"><p>© 2026 Learn Bridge</p></footer>
+    </div>
+    
+    <script>
+      // Assignment management functionality
+      document.addEventListener('DOMContentLoaded', function() {
+        const classSelect = document.getElementById('assignment-class');
+        const difficultySelect = document.getElementById('assignment-difficulty');
+        const createAssignmentBtn = document.getElementById('create-assignment');
+        
+        // Handle class selection
+        classSelect.addEventListener('change', function() {
+          const selectedClass = this.value;
+          console.log('Filtering assignments for class:', selectedClass);
+          
+          // In a real application, this would filter assignments for selected class
+          filterAssignments('class', selectedClass);
+        });
+        
+        // Handle difficulty selection
+        difficultySelect.addEventListener('change', function() {
+          const selectedDifficulty = this.value;
+          console.log('Filtering assignments by difficulty:', selectedDifficulty);
+          
+          // In a real application, this would filter assignments by difficulty
+          filterAssignments('difficulty', selectedDifficulty);
+        });
+        
+        // Handle create assignment
+        createAssignmentBtn.addEventListener('click', function() {
+          console.log('Creating new assignment');
+          
+          // In a real application, this would open an assignment creation modal
+          this.textContent = 'Opening Editor...';
+          this.disabled = true;
+          
+          setTimeout(() => {
+            this.textContent = 'Create Assignment';
+            this.disabled = false;
+            showNotification('Assignment editor opened!');
+          }, 1000);
+        });
+        
+                
+        // Handle assignment actions
+        document.querySelectorAll('.assignment-actions button').forEach(button => {
+          button.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const action = this.textContent.toLowerCase();
+            const assignmentCard = this.closest('.assignment-card');
+            const assignmentTitle = assignmentCard.querySelector('.assignment-title').textContent;
+            
+            console.log(`${action} assignment:`, assignmentTitle);
+            
+            if (action === 'assign') {
+              // In a real application, this would open a student selection modal
+              showNotification(`Assigning: ${assignmentTitle}`);
+            } else if (action === 'preview') {
+              showNotification(`Previewing: ${assignmentTitle}`);
+            }
+          });
+        });
+        
+                
+        // Filter assignments
+        function filterAssignments(filterType, filterValue) {
+          const assignmentCards = document.querySelectorAll('.assignment-card');
+          
+          assignmentCards.forEach(card => {
+            if (filterValue === 'all') {
+              card.style.display = 'block';
+            } else {
+              const filterElement = filterType === 'class' ? 
+                card.querySelector('.assignment-meta') : 
+                card.querySelector('.assignment-difficulty');
+              
+              if (filterElement && filterElement.textContent.toLowerCase().includes(filterValue.toLowerCase())) {
+                card.style.display = 'block';
+              } else {
+                card.style.display = 'none';
+              }
+            }
+          });
+        }
+        
+        // Show notification
+        function showNotification(message) {
+          const notification = document.createElement('div');
+          notification.className = 'notification';
+          notification.textContent = message;
+          notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--color-primary);
+            color: white;
+            padding: 12px 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+          `;
+          
+          document.body.appendChild(notification);
+          
+          setTimeout(() => {
+            notification.style.animation = 'slideOut 0.3s ease';
+            setTimeout(() => {
+              notification.remove();
+            }, 300);
+          }, 3000);
+        }
+      });
+    </script>
+    <script src="main.js"></script>
+  </body>
+</html>
