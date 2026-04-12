@@ -884,6 +884,79 @@
     });
   }
 
+  /* ---------- 과제 제출 기능 ---------- */
+  function initAssignmentSubmission() {
+    var submitBtn = document.querySelector("[data-assignment-submit]");
+    if (!submitBtn) return;
+
+    submitBtn.addEventListener("click", function () {
+      var wizard = submitBtn.closest("[data-flow-wizard]");
+      if (!wizard) return;
+
+      var selectedDateEl = wizard.querySelector("[data-selected-date]");
+      var selectedQEl = wizard.querySelector("[data-selected-q]");
+      var answerTextarea = wizard.querySelector("#ans");
+
+      var selectedDate = selectedDateEl ? selectedDateEl.textContent : "";
+      var selectedQ = selectedQEl ? selectedQEl.textContent : "";
+      var answer = answerTextarea ? answerTextarea.value.trim() : "";
+
+      if (!selectedDate || selectedDate === "—") {
+        alert("날짜를 선택해주세요.");
+        return;
+      }
+
+      if (!selectedQ || selectedQ === "—") {
+        alert("문항을 선택해주세요.");
+        return;
+      }
+
+      if (!answer) {
+        alert("답안을 입력해주세요.");
+        return;
+      }
+
+      // 제출 데이터 저장 (localStorage 사용)
+      try {
+        var submissions = JSON.parse(localStorage.getItem("lb_assignments") || "[]");
+        submissions.push({
+          id: "assign-" + Date.now().toString(36),
+          date: selectedDate,
+          question: selectedQ,
+          answer: answer,
+          submittedAt: new Date().toISOString()
+        });
+        localStorage.setItem("lb_assignments", JSON.stringify(submissions));
+      } catch (e) {
+        console.error("Failed to save submission:", e);
+      }
+
+      // 제출 완료 피드백
+      alert("답안이 제출되었습니다!\n\n날짜: " + selectedDate + "\n문항: " + selectedQ + "\n답안: " + answer.substring(0, 50) + (answer.length > 50 ? "..." : ""));
+
+      // 폼 초기화 및 첫 화면으로 이동
+      if (answerTextarea) answerTextarea.value = "";
+      
+      // 첫 화면으로 돌아가기
+      var panels = wizard.querySelectorAll("[data-flow-step]");
+      var dots = wizard.querySelectorAll("[data-flow-dot]");
+      
+      panels.forEach(function (p) {
+        p.classList.toggle("is-active", p.getAttribute("data-flow-step") === "1");
+      });
+      
+      dots.forEach(function (d, i) {
+        var stepNum = i + 1;
+        d.classList.toggle("is-active", stepNum === 1);
+        d.classList.toggle("is-done", false);
+      });
+
+      // 선택된 날짜/문항 초기화
+      if (selectedDateEl) selectedDateEl.textContent = "—";
+      if (selectedQEl) selectedQEl.textContent = "—";
+    });
+  }
+
   /* ---------- 출석 체크방 데모 ---------- */
   function initAttendanceDemo() {
     var root = document.querySelector("[data-attendance-root]");
@@ -973,6 +1046,7 @@
     renderMaterialDetail();
     initFlowWizard();
     initModals();
+    initAssignmentSubmission();
     initAttendanceDemo();
     initNoticeList();
     initMaterialsWeekView();

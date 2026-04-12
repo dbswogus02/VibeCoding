@@ -113,31 +113,48 @@
 
     <!-- 모달들: 새 창 대체 -->
     <div id="modal-more" class="modal-overlay" aria-hidden="true" role="dialog" aria-modal="true">
-      <div class="modal-box" role="document">
+      <div class="modal-box" role="document" style="max-width: 500px;">
         <h3>더 자세한 설명</h3>
-        <p>시맨틱 태그는 문서의 의미 구조를 드러냅니다. div/span은 의미가 중립적이므로 남용 시 접근성과 SEO에 불리할 수 있습니다.</p>
-        <div class="modal-actions">
+        <div style="background: #f8f9fa; padding: 16px; border-radius: 8px; margin: 12px 0;">
+          <p style="margin: 0 0 12px 0; font-weight: 600;">시맨틱 태그의 이해</p>
+          <p style="margin: 0; font-size: 0.9rem; line-height: 1.5;">시맨틱 태그는 문서의 의미 구조를 드러냅니다. div/span은 의미가 중립적이므로 남용 시 접근성과 SEO에 불리할 수 있습니다.</p>
+        </div>
+        <div style="background: #fff3cd; padding: 12px; border-radius: 8px; border-left: 4px solid #ffc107;">
+          <p style="margin: 0; font-size: 0.85rem;"><strong>💡 팁:</strong> 문제의 의도를 파악하는 것이 중요합니다. "시맨틱에 해당하지 않는" 태그를 고르는 문제이므로 의미가 없는 태그를 선택하는 것이 정답일 가능성이 높습니다.</p>
+        </div>
+        <div class="modal-actions" style="margin-top: 20px;">
           <button type="button" class="btn btn-primary btn-sm" data-modal-close>닫기</button>
         </div>
       </div>
     </div>
     <div id="modal-ai" class="modal-overlay" aria-hidden="true" role="dialog" aria-modal="true">
-      <div class="modal-box">
-        <h3>자체 AI에게 물어보기</h3>
-        <p>실서비스에서는 GPT/제미나이 등과 연동해 추가 질문을 처리합니다. 여기서는 UI 데모입니다.</p>
-        <textarea rows="3" style="width: 100%; border-radius: 10px; border: 1px solid var(--color-border); padding: 10px; font-family: inherit" placeholder="추가 질문을 입력하세요"></textarea>
-        <div class="modal-actions" style="margin-top: 12px">
-          <button type="button" class="btn btn-ghost btn-sm" data-modal-close>창닫기</button>
-          <button type="button" class="btn btn-primary btn-sm" data-modal-close>보내기 (데모)</button>
+      <div class="modal-box" style="max-width: 500px;">
+        <h3>학생 AI 피드백 새로운 창</h3>
+        <p style="margin-bottom: 16px; color: var(--color-text-muted); font-size: 0.9rem;">문제를 보면서 편하게 질문하기 위해서 새로운 창 만들기</p>
+        <textarea rows="4" style="width: 100%; border-radius: 10px; border: 1px solid var(--color-border); padding: 12px; font-family: inherit; resize: vertical;" placeholder="궁금한 점을 편하게 질문해보세요..."></textarea>
+        <div class="modal-actions" style="margin-top: 16px; display: flex; gap: 8px; justify-content: flex-end;">
+          <button type="button" class="btn btn-ghost btn-sm" data-modal-close>취소</button>
+          <button type="button" class="btn btn-primary btn-sm" data-modal-close>보내기</button>
         </div>
       </div>
     </div>
     <div id="modal-pdf" class="modal-overlay" aria-hidden="true" role="dialog" aria-modal="true">
-      <div class="modal-box">
+      <div class="modal-box" style="max-width: 450px;">
         <h3>AI 피드백 다운로드</h3>
-        <p>PDF 형태로 저장하는 기능입니다. 실제 파일 생성은 백엔드 연동 시 구현합니다.</p>
-        <div class="modal-actions">
-          <button type="button" class="btn btn-primary btn-sm" data-modal-close>확인</button>
+        <div style="background: #e3f2fd; padding: 16px; border-radius: 8px; margin: 12px 0; border-left: 4px solid #2196f3;">
+          <p style="margin: 0 0 8px 0; font-weight: 600;">📄 다운로드 정보</p>
+          <p style="margin: 0; font-size: 0.9rem;">현재 AI 피드백 내용을 PDF 파일로 저장할 수 있습니다.</p>
+        </div>
+        <div style="display: flex; align-items: center; gap: 12px; margin: 16px 0; padding: 12px; background: #f8f9fa; border-radius: 8px;">
+          <span style="font-size: 1.5rem;">📋</span>
+          <div>
+            <p style="margin: 0 0 4px 0; font-weight: 600; font-size: 0.9rem;">AI_피드백_4월9일_Q1.pdf</p>
+            <p style="margin: 0; font-size: 0.8rem; color: var(--color-text-muted);">크기: ~125KB | 생성일: 2026-04-11</p>
+          </div>
+        </div>
+        <div class="modal-actions" style="display: flex; gap: 8px; justify-content: flex-end;">
+          <button type="button" class="btn btn-ghost btn-sm" data-modal-close>취소</button>
+          <button type="button" class="btn btn-primary btn-sm" data-modal-close>다운로드</button>
         </div>
       </div>
     </div>
