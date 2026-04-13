@@ -42,12 +42,22 @@
                   <a class="dropdown-item" href="teacher_qna.html">Q&A</a>
                 </div>
               </div>
-              <a class="nav-link" href="#">수업 이름</a>
+              <div class="nav-dropdown">
+                <button class="nav-link dropdown-toggle" data-dropdown="class-name">수업이름</button>
+                <div class="dropdown-menu" id="class-name-dropdown">
+                  <a class="dropdown-item class-item" href="#" data-class="math101">수학 101 - 대수학</a>
+                  <a class="dropdown-item class-item" href="#" data-class="math201">수학 201 - 기하학</a>
+                  <a class="dropdown-item class-item" href="#" data-class="math301">수학 301 - 미적분</a>
+                  <a class="dropdown-item class-item" href="#" data-class="eng101">영어 101 - 문법</a>
+                  <a class="dropdown-item class-item" href="#" data-class="sci101">과학 101 - 물리</a>
+                  <a class="dropdown-item class-item" href="#" data-class="sci201">과학 201 - 화학</a>
+                </div>
+              </div>
             </nav>
           </div>
           <div class="header-right">
             <div class="profile-section">
-              <button class="profile-btn">프로필</button>
+              <a class="profile-btn" href="teacher_profile.html">프로필</a>
               <a class="schedule-link" href="teacher_schedule.html">스케줄</a>
             </div>
           </div>
@@ -73,18 +83,18 @@
               <div class="ranking-list">
                 <div class="ranking-item">
                   <span class="rank">1</span>
-                  <span class="name">김학생 (김민준)</span>
-                  <span class="score">95점</span>
+                  <span class="name">Kim Student (Kim Minjun)</span>
+                  <span class="score">95 points</span>
                 </div>
                 <div class="ranking-item">
                   <span class="rank">2</span>
-                  <span class="name">이학생 (이서아)</span>
-                  <span class="score">92점</span>
+                  <span class="name">Lee Student (Lee Seoa)</span>
+                  <span class="score">92 points</span>
                 </div>
                 <div class="ranking-item">
                   <span class="rank">3</span>
-                  <span class="name">박학생 (박도윤)</span>
-                  <span class="score">88점</span>
+                  <span class="name">Park Student (Park Doyun)</span>
+                  <span class="score">88 points</span>
                 </div>
               </div>
             </div>
@@ -135,15 +145,34 @@
                       e.preventDefault();
                       const href = this.getAttribute('href');
                       const text = this.textContent;
-                      console.log(`Navigating to: ${href}`);
+                      const classData = this.getAttribute('data-class');
                       
-                      // Show notification before navigation
-                      showNotification(`${text} 페이지로 이동합니다.`);
-                      
-                      // Navigate to the page
-                      setTimeout(() => {
-                        window.location.href = href;
-                      }, 500);
+                      // Check if this is a class selection dropdown
+                      if (classData) {
+                        // Handle class selection
+                        console.log(`Class selected: ${classData}`);
+                        showNotification(`${text} selected!`);
+                        
+                        // Update button text with selected class
+                        const button = dropdownMenu.previousElementSibling;
+                        button.textContent = text;
+                        
+                        // Store selected class for future use
+                        localStorage.setItem('selectedClass', classData);
+                        
+                        // Close dropdown
+                        dropdownMenu.classList.remove('show');
+                        button.setAttribute('aria-expanded', 'false');
+                      } else {
+                        // Handle normal navigation
+                        console.log(`Navigating to: ${href}`);
+                        showNotification(`${text} selected!`);
+                        
+                        // Navigate to the page
+                        setTimeout(() => {
+                          window.location.href = href;
+                        }, 500);
+                      }
                     });
                   });
                 }, 100);
@@ -152,6 +181,7 @@
           });
         });
         
+                
         // Close dropdowns when clicking outside
         document.addEventListener('click', function(e) {
           if (!e.target.closest('.nav-dropdown')) {
