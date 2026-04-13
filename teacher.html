@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>교사 홈 | Learn Bridge</title>
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="layout-body">
+      <!-- 피그마 교사 플로우 진입 화면(요약 허브): 스케줄, 학습진행도, 출석, 수업자료, 복습, 과제, 공지, Q&A 등 -->
+      <header class="site-header">
+        <div class="header-inner">
+          <div class="header-left">
+            <h1 class="page-title">교사 로그인 화면</h1>
+            <nav class="nav-main" aria-label="교사 메뉴">
+              <div class="nav-dropdown">
+                <button class="nav-link dropdown-toggle" data-dropdown="selfcheck">셀프체크</button>
+                <div class="dropdown-menu" id="selfcheck-dropdown">
+                  <a class="dropdown-item" href="teacher_progress.html">학습진행도</a>
+                  <a class="dropdown-item" href="teacher_assignments.html">추가학습과제</a>
+                </div>
+              </div>
+              <div class="nav-dropdown">
+                <button class="nav-link dropdown-toggle" data-dropdown="class">수업</button>
+                <div class="dropdown-menu" id="class-dropdown">
+                  <a class="dropdown-item" href="teacher_attendance.html">출석체크방</a>
+                  <a class="dropdown-item" href="teacher_materials.html">수업자료</a>
+                  <a class="dropdown-item" href="teacher_review.html">복습문제</a>
+                </div>
+              </div>
+              <div class="nav-dropdown">
+                <button class="nav-link dropdown-toggle" data-dropdown="community">커뮤니티</button>
+                <div class="dropdown-menu" id="community-dropdown">
+                  <a class="dropdown-item" href="teacher_notices.html">공지사항</a>
+                  <a class="dropdown-item" href="teacher_qna.html">Q&A</a>
+                </div>
+              </div>
+              <div class="nav-dropdown">
+                <button class="nav-link dropdown-toggle" data-dropdown="class-name">수업이름</button>
+                <div class="dropdown-menu" id="class-name-dropdown">
+                  <a class="dropdown-item class-item" href="#" data-class="math101">수학 101 - 대수학</a>
+                  <a class="dropdown-item class-item" href="#" data-class="math201">수학 201 - 기하학</a>
+                  <a class="dropdown-item class-item" href="#" data-class="math301">수학 301 - 미적분</a>
+                  <a class="dropdown-item class-item" href="#" data-class="eng101">영어 101 - 문법</a>
+                  <a class="dropdown-item class-item" href="#" data-class="sci101">과학 101 - 물리</a>
+                  <a class="dropdown-item class-item" href="#" data-class="sci201">과학 201 - 화학</a>
+                </div>
+              </div>
+            </nav>
+          </div>
+          <div class="header-right">
+            <div class="profile-section">
+              <a class="profile-btn" href="teacher_profile.html">프로필</a>
+              <a class="schedule-link" href="teacher_schedule.html">스케줄</a>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="page-wrap">
+        <div class="main-layout">
+          <div class="content-area">
+            <div class="promo-background">
+              <h2>배경(수강자가 수강한 학원내의 수업 홍보/광고)</h2>
+              <div class="promo-content">
+                <p>수업 홍보 및 광고 영역</p>
+              </div>
+            </div>
+          </div>
+          
+          <aside class="sidebar">
+            <div class="ranking-section">
+              <h3>진행도/이해도 랭킹</h3>
+              <p class="ranking-desc">시험점수, 문제풀이 횟수</p>
+              <p class="ranking-note">닉네임 (실명) 으로 보이게</p>
+              <div class="ranking-list">
+                <div class="ranking-item">
+                  <span class="rank">1</span>
+                  <span class="name">Kim Student (Kim Minjun)</span>
+                  <span class="score">95 points</span>
+                </div>
+                <div class="ranking-item">
+                  <span class="rank">2</span>
+                  <span class="name">Lee Student (Lee Seoa)</span>
+                  <span class="score">92 points</span>
+                </div>
+                <div class="ranking-item">
+                  <span class="rank">3</span>
+                  <span class="name">Park Student (Park Doyun)</span>
+                  <span class="score">88 points</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="academy-link">
+              <a href="#">학원 사이트 링크</a>
+            </div>
+          </aside>
+        </div>
+      </main>
+
+      <footer class="site-footer"><p>© 2026 Learn Bridge · 교사 모드 데모</p></footer>
+    </div>
+    <script>
+      // Enhanced dropdown functionality for teacher.html navigation
+      document.addEventListener('DOMContentLoaded', function() {
+        // Handle navigation dropdowns with enhanced functionality
+        const navDropdownToggles = document.querySelectorAll('.nav-dropdown .dropdown-toggle');
+        
+        navDropdownToggles.forEach(toggle => {
+          toggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const dropdownId = this.getAttribute('data-dropdown');
+            const dropdownMenu = document.getElementById(dropdownId + '-dropdown');
+            
+            // Close all other dropdowns
+            document.querySelectorAll('.dropdown-menu').forEach(menu => {
+              if (menu !== dropdownMenu) {
+                menu.classList.remove('show');
+                menu.previousElementSibling.setAttribute('aria-expanded', 'false');
+              }
+            });
+            
+            // Toggle current dropdown
+            if (dropdownMenu) {
+              const isShowing = dropdownMenu.classList.contains('show');
+              dropdownMenu.classList.toggle('show');
+              this.setAttribute('aria-expanded', !isShowing);
+              
+              // Add functionality for dropdown items
+              if (!isShowing) {
+                setTimeout(() => {
+                  const dropdownItems = dropdownMenu.querySelectorAll('.dropdown-item');
+                  dropdownItems.forEach(item => {
+                    item.addEventListener('click', function(e) {
+                      e.preventDefault();
+                      const href = this.getAttribute('href');
+                      const text = this.textContent;
+                      const classData = this.getAttribute('data-class');
+                      
+                      // Check if this is a class selection dropdown
+                      if (classData) {
+                        // Handle class selection
+                        console.log(`Class selected: ${classData}`);
+                        showNotification(`${text} selected!`);
+                        
+                        // Update button text with selected class
+                        const button = dropdownMenu.previousElementSibling;
+                        button.textContent = text;
+                        
+                        // Store selected class for future use
+                        localStorage.setItem('selectedClass', classData);
+                        
+                        // Close dropdown
+                        dropdownMenu.classList.remove('show');
+                        button.setAttribute('aria-expanded', 'false');
+                      } else {
+                        // Handle normal navigation
+                        console.log(`Navigating to: ${href}`);
+                        showNotification(`${text} selected!`);
+                        
+                        // Navigate to the page
+                        setTimeout(() => {
+                          window.location.href = href;
+                        }, 500);
+                      }
+                    });
+                  });
+                }, 100);
+              }
+            }
+          });
+        });
+        
+                
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(e) {
+          if (!e.target.closest('.nav-dropdown')) {
+            document.querySelectorAll('.dropdown-menu').forEach(menu => {
+              menu.classList.remove('show');
+              menu.previousElementSibling.setAttribute('aria-expanded', 'false');
+            });
+          }
+        });
+        
+        // Close dropdowns when pressing Escape key
+        document.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape') {
+            document.querySelectorAll('.dropdown-menu').forEach(menu => {
+              menu.classList.remove('show');
+              menu.previousElementSibling.setAttribute('aria-expanded', 'false');
+            });
+          }
+        });
+        
+        // Show notification
+        function showNotification(message) {
+          const notification = document.createElement('div');
+          notification.className = 'notification';
+          notification.textContent = message;
+          notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--color-primary);
+            color: white;
+            padding: 12px 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+          `;
+          
+          document.body.appendChild(notification);
+          
+          setTimeout(() => {
+            notification.style.animation = 'slideOut 0.3s ease';
+            setTimeout(() => {
+              notification.remove();
+            }, 300);
+          }, 3000);
+        }
+      });
+    </script>
+    <script src="main.js"></script>
+  </body>
+</html>

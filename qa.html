@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Q&amp;A | Learn Bridge</title>
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="layout-body">
+      <!--
+        피그마: QA 작성·확인·답글(채팅 형식)
+        학생: 익명 질문/답글 가능, 관련 문제(AI·복습·과제) 연동
+        강사: 공개 답변(익명 옵션 없음)
+      -->
+      <header class="site-header">
+        <div class="header-inner">
+          <a class="logo" href="index.html"><span class="logo-mark">LB</span> Learn Bridge</a>
+          <nav class="nav-main" aria-label="주요 이동">
+            <a class="nav-link is-active" href="qa.html">Q&amp;A</a>
+            <a class="nav-link" href="messages.html">쪽지함</a>
+            <a class="nav-link" href="index.html">학생 홈</a>
+          </nav>
+          <div class="header-actions">
+            <a class="btn btn-ghost btn-sm" href="login.html">로그아웃</a>
+          </div>
+        </div>
+      </header>
+
+      <main class="page-wrap" data-qa-root>
+        <div data-qa-list-view>
+          <div class="toolbar-back">
+            <a data-qa-back-home href="index.html">← 홈으로</a>
+          </div>
+          <p class="qa-class-line">바이브 코딩 실전반 A — Q&amp;A</p>
+          <h1 class="page-title">Q&amp;A</h1>
+          <p class="page-sub">수업 전체가 보는 공개 질문입니다. 민감한 내용은 <a href="messages.html">쪽지함</a>을 이용해 주세요.</p>
+
+          <div class="qa-user-strip card-reveal" aria-live="polite">
+            <span data-qa-role-badge class="role-badge role-badge--student">학생</span>
+            <span>현재 계정 유형으로 글을 남깁니다. (로그인: <a href="login.html">학생 / 강사</a>)</span>
+            <p class="qa-hint">학생은 질문·답글을 <strong>익명</strong>으로 올릴 수 있습니다.</p>
+          </div>
+
+          <section class="card card-pad card-reveal qa-new-card" aria-labelledby="qa-new-h">
+            <h2 id="qa-new-h" class="section-title" style="margin-bottom: 12px">질문 올리기</h2>
+            <form data-qa-form-new>
+              <div class="form-field">
+                <label for="qa_related">관련 문제 연동 (선택)</label>
+                <select id="qa_related" name="qa_related">
+                  <option value="none">연동 없음</option>
+                  <option value="ai|Q1">AI 피드백 · Q1</option>
+                  <option value="ai|Q2">AI 피드백 · Q2</option>
+                  <option value="ai|Q3">AI 피드백 · Q3</option>
+                  <option value="ai|Q4">AI 피드백 · Q4</option>
+                  <option value="ai|Q5">AI 피드백 · Q5</option>
+                  <option value="ai|Q6">AI 피드백 · Q6</option>
+                  <option value="review|2주차 월요일">복습 문제 · 2주차 월요일</option>
+                  <option value="review|3주차 수요일">복습 문제 · 3주차 수요일</option>
+                  <option value="assign|4/9 추가 과제">추가 학습 과제 · 4/9</option>
+                  <option value="material">수업 자료 (일반)</option>
+                  <option value="custom">기타 (아래 보조 설명에 입력)</option>
+                </select>
+                <p style="margin: 6px 0 0; font-size: 0.78rem; color: var(--color-text-muted)">선택 시 목록·상세에 링크와 함께 표시됩니다.</p>
+              </div>
+              <div class="form-field" data-qa-related-note-row hidden>
+                <label for="qa_related_note">연동 보조 설명 (기타·메모)</label>
+                <input id="qa_related_note" name="qa_related_note" type="text" placeholder="예: 4월 9일 복습 세트 B" />
+              </div>
+              <div class="form-field">
+                <label for="qa_title">제목</label>
+                <input id="qa_title" name="qa_title" type="text" placeholder="예: 과제 제출 형식이 궁금합니다" required />
+              </div>
+              <div class="form-field">
+                <label for="qa_body">내용</label>
+                <textarea id="qa_body" name="qa_body" placeholder="질문 내용을 입력하세요." required></textarea>
+              </div>
+              <div class="form-field" data-qa-anon-new-row>
+                <label style="display: flex; align-items: center; gap: 8px; font-weight: 500; cursor: pointer">
+                  <input type="checkbox" name="qa_anonymous" value="1" />
+                  익명으로 등록 (학생만)
+                </label>
+              </div>
+              <button type="submit" class="btn btn-primary btn-sm">질문 등록</button>
+            </form>
+          </section>
+
+          <h2 class="section-title" style="margin: 24px 0 12px">질문 목록</h2>
+          <div data-qa-thread-list class="qa-thread-list"></div>
+        </div>
+
+        <div data-qa-detail-view hidden>
+          <div class="toolbar-back">
+            <button type="button" class="btn btn-ghost btn-sm" data-qa-back-list style="padding-left: 0">← 목록으로</button>
+          </div>
+          <div class="qa-detail-header">
+            <div>
+              <p class="qa-class-line" data-qa-detail-class>바이브 코딩 실전반 A</p>
+              <h1 class="page-title" style="margin-bottom: 4px" data-qa-detail-title>제목</h1>
+              <div data-qa-detail-related hidden></div>
+            </div>
+          </div>
+
+          <section class="card card-pad card-reveal">
+            <h2 class="section-title" style="margin-bottom: 10px; font-size: 1rem">답변 · 답글</h2>
+            <div data-qa-messages class="qa-msg-list" role="log" aria-label="대화"></div>
+
+            <div class="qa-reply-box">
+              <p class="page-sub" style="margin-bottom: 8px" data-qa-reply-hint>답글을 입력하세요.</p>
+              <form data-qa-form-reply>
+                <div class="form-field" data-qa-anon-reply-row>
+                  <label style="display: flex; align-items: center; gap: 8px; font-weight: 500; cursor: pointer">
+                    <input type="checkbox" name="qa_reply_anonymous" value="1" />
+                    익명으로 답글 (학생만)
+                  </label>
+                </div>
+                <div class="form-field">
+                  <label class="visually-hidden" for="qa_reply">답글 입력</label>
+                  <textarea id="qa_reply" name="qa_reply" placeholder="답글을 작성합니다." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-sm">답글 달기</button>
+              </form>
+            </div>
+          </section>
+        </div>
+      </main>
+
+      <footer class="site-footer"><p>© 2026 Learn Bridge</p></footer>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

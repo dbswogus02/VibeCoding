@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>출석 체크방 | Learn Bridge</title>
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="layout-body">
+      <!-- 피그마: 출석 체크방 첫 화면 → 출석완료 / 지각 / 결석 분기 (데모는 랜덤) -->
+      <header class="site-header">
+        <div class="header-inner">
+          <a class="logo" href="index.html"><span class="logo-mark">LB</span> Learn Bridge</a>
+          <nav class="nav-main" aria-label="주요 이동">
+            <a class="nav-link" href="index.html">학생 홈</a>
+            <a class="nav-link is-active" href="attendance.html">출석</a>
+            <a class="nav-link" href="materials.html">수업 자료</a>
+          </nav>
+          <div class="header-actions">
+            <a class="btn btn-ghost btn-sm" href="login.html">로그아웃</a>
+          </div>
+        </div>
+      </header>
+
+      <main class="page-wrap">
+        <div class="toolbar-back"><a href="index.html">← 학생 홈</a></div>
+        <h1 class="page-title">학생 출석 체크방</h1>
+        <p class="page-sub">수업 출석 시간·인정 시간 내 클릭 시 출석 완료, 지각/결석은 별도 화면으로 분기 (PDF 명세).</p>
+
+        <section class="card attendance-card card-reveal" data-attendance-root aria-live="polite">
+          <h2 class="section-title" style="margin-bottom: 8px">[바이브 코딩 실전반 A]</h2>
+          <p style="margin: 0 0 20px; color: var(--color-text-muted)">2026.04.11 (금) — 19:00 수업</p>
+          <button type="button" class="btn btn-primary" data-check-in>출석 체크</button>
+
+          <div class="attendance-status attendance-status--ok" data-attendance-result="ok">출석완료!</div>
+          <div class="attendance-status attendance-status--late" data-attendance-result="late">지각!</div>
+          <div class="attendance-status attendance-status--absent" data-attendance-result="absent">결석!</div>
+        </section>
+      </main>
+
+      <footer class="site-footer"><p>© 2026 Learn Bridge</p></footer>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

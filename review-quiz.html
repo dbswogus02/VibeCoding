@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>복습 문제 시작 | Learn Bridge</title>
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="layout-body">
+      <!-- 피그마: 학생 복습문제 클릭 시 화면(복습문제 시작) -->
+      <header class="site-header">
+        <div class="header-inner">
+          <a class="logo" href="index.html"><span class="logo-mark">LB</span> Learn Bridge</a>
+          <nav class="nav-main" aria-label="Main Navigation">
+            <a class="nav-link" href="student_review_list.html">복습 문제</a>
+            <a class="nav-link is-active" href="review-quiz.html">시작</a>
+          </nav>
+          <div class="header-actions">
+            <a class="btn btn-ghost btn-sm" href="login.html">로그아웃</a>
+          </div>
+        </div>
+      </header>
+
+      <main class="page-wrap">
+        <div class="toolbar-back"><a href="student_review_detail.html" id="back-link">복습 문제 목록</a></div>
+        <h1 class="page-title">수업이름 - 복습 문제</h1>
+        
+        <div class="quiz-info card-reveal">
+          <p class="page-sub" id="quiz-info">1st Week / April 9 (Wed) Review Problems</p>
+        </div>
+
+        <section class="quiz-content card-reveal card-pad">
+          <div id="quiz-container">
+            <h2 class="section-title" style="margin-bottom: 16px;">복습 퀴즈</h2>
+            <div id="quiz-questions">
+              <!-- Quiz questions will be dynamically loaded here -->
+            </div>
+            <div class="quiz-actions" style="margin-top: 24px; display: flex; gap: 8px;">
+              <button type="button" class="btn btn-primary" id="submit-quiz">답안 제출</button>
+              <button type="button" class="btn btn-ghost" id="reset-quiz">초기화</button>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer"><p> 2026 Learn Bridge</p></footer>
+    </div>
+    <script>
+      // Get URL parameters
+      function getQueryParams() {
+        const params = new URLSearchParams(window.location.search);
+        return {
+          week: params.get('week') || '1',
+          day: params.get('day') || '9'
+        };
+      }
+
+      // Week data for quiz content
+      const weekQuizData = {
+        1: {
+          '9': {
+            title: 'HTML/CSS 기초',
+            questions: [
+              {
+                id: 1,
+                question: '다음 중 시맨틱 HTML 요소가 아닌 것은 무엇인가요?',
+                options: ['header', 'div', 'nav', 'main'],
+                correct: 1
+              },
+              {
+                id: 2,
+                question: '텍스트 색상을 변경하는 데 사용되는 CSS 속성은 무엇인가요?',
+                options: ['text-color', 'color', 'font-color', 'text-style'],
+                correct: 1
+              },
+              {
+                id: 3,
+                question: '가장 큰 제목에 사용되는 HTML 태그는 무엇인가요?',
+                options: ['<h6>', '<h1>', '<header>', '<heading>'],
+                correct: 1
+              }
+            ]
+          }
+        },
+        2: {
+          '16': {
+            title: 'JavaScript 기초',
+            questions: [
+              {
+                id: 1,
+                question: 'JavaScript에서 변수를 선언하는 올바른 방법은 무엇인가요?',
+                options: ['var myVar = 5;', 'variable myVar = 5;', 'v myVar = 5;', 'declare myVar = 5;'],
+                correct: 0
+              },
+              {
+                id: 2,
+                question: '배열의 끝에 요소를 추가하는 데 사용되는 메서드는 무엇인가요?',
+                options: ['push()', 'pop()', 'shift()', 'unshift()'],
+                correct: 0
+              }
+            ]
+          }
+        }
+      };
+
+      // Load quiz content
+      function loadQuiz() {
+        const params = getQueryParams();
+        const weekData = weekQuizData[params.week];
+        
+        if (!weekData || !weekData[params.day]) {
+          // Default quiz if no specific data found
+          loadDefaultQuiz(params);
+          return;
+        }
+
+        const quizData = weekData[params.day];
+        updateQuizInfo(params, quizData.title);
+        renderQuestions(quizData.questions);
+      }
+
+      // Load default quiz
+      function loadDefaultQuiz(params) {
+        const defaultQuiz = {
+          title: '복습 퀴즈',
+          questions: [
+            {
+              id: 1,
+              question: 'HTML의 목적은 무엇인가요?',
+              options: ['To structure content', 'To style content', 'To add interactivity', 'To store data'],
+              correct: 0
+            },
+            {
+              id: 2,
+              question: '레이아웃을 제어하는 CSS 속성은 무엇인가요?',
+              options: ['display', 'color', 'font-size', 'margin'],
+              correct: 0
+            }
+          ]
+        };
+
+        updateQuizInfo(params, defaultQuiz.title);
+        renderQuestions(defaultQuiz.questions);
+      }
+
+      // Update quiz information display
+      function updateQuizInfo(params, title) {
+        const quizInfo = document.getElementById('quiz-info');
+        if (quizInfo) {
+          quizInfo.textContent = `${params.week}주차 / 복습 퀴즈 - ${title}`;
+        }
+      }
+
+      // Render quiz questions
+      function renderQuestions(questions) {
+        const container = document.getElementById('quiz-questions');
+        if (!container) return;
+
+        container.innerHTML = '';
+
+        questions.forEach((q, index) => {
+          const questionDiv = document.createElement('div');
+          questionDiv.className = 'quiz-question';
+          questionDiv.style.marginBottom = '24px';
+          
+          questionDiv.innerHTML = `
+            <div style="margin-bottom: 12px;">
+              <strong>문제 ${index + 1}:</strong> ${q.question}
+            </div>
+            <div class="quiz-options" style="display: flex; flex-direction: column; gap: 8px;">
+              ${q.options.map((option, optIndex) => `
+                <label style="display: flex; align-items: center; gap: 8px; padding: 8px; background: #f8f9fa; border-radius: 6px; cursor: pointer;">
+                  <input type="radio" name="question_${q.id}" value="${optIndex}" style="margin: 0;">
+                  <span>${option}</span>
+                </label>
+              `).join('')}
+            </div>
+          `;
+          
+          container.appendChild(questionDiv);
+        });
+      }
+
+      // Submit quiz
+      function submitQuiz() {
+        const params = getQueryParams();
+        const weekData = weekQuizData[params.week];
+        
+        if (!weekData || !weekData[params.day]) {
+          alert('퀴즈가 성공적으로 제출되었습니다! (데모 모드)');
+          return;
+        }
+
+        const quizData = weekData[params.day];
+        let score = 0;
+        let total = quizData.questions.length;
+
+        quizData.questions.forEach(q => {
+          const selected = document.querySelector(`input[name="question_${q.id}"]:checked`);
+          if (selected && parseInt(selected.value) === q.correct) {
+            score++;
+          }
+        });
+
+        const percentage = Math.round((score / total) * 100);
+        alert(`퀴즈 제출 완료!\n\n점수: ${score}/${total} (${percentage}%)\n\n복습 완료를 축하합니다!`);
+      }
+
+      // Reset quiz
+      function resetQuiz() {
+        const radios = document.querySelectorAll('input[type="radio"]');
+        radios.forEach(radio => radio.checked = false);
+      }
+
+      // Initialize quiz on page load
+      document.addEventListener('DOMContentLoaded', function() {
+        loadQuiz();
+        updateBackLink();
+        
+        // Add event listeners
+        const submitBtn = document.getElementById('submit-quiz');
+        const resetBtn = document.getElementById('reset-quiz');
+        
+        if (submitBtn) {
+          submitBtn.addEventListener('click', submitQuiz);
+        }
+        
+        if (resetBtn) {
+          resetBtn.addEventListener('click', resetQuiz);
+        }
+      });
+
+      // Update back link with proper parameters
+      function updateBackLink() {
+        const backLink = document.getElementById('back-link');
+        if (backLink) {
+          const params = getQueryParams();
+          backLink.href = `student_review_detail.html?week=${params.week}`;
+        }
+      }
+    </script>
+    <script src="main.js"></script>
+  </body>
+</html>

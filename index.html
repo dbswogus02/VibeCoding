@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>학생 홈 | Learn Bridge</title>
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="layout-body">
+      <!--
+        피그마 메인 허브: 수업 이름, 셀프체크, 학습 진행도/AI/과제, 수업(출석·자료·복습),
+        공지/Q&A/커뮤니티, 스케줄, 학원 링크, 프로필, 로그아웃
+      -->
+      <header class="site-header">
+        <div class="header-inner">
+          <a class="logo" href="index.html" aria-label="Learn Bridge 홈">
+            <span class="logo-mark">LB</span>
+            Learn Bridge
+          </a>
+          <nav class="nav-main" aria-label="주요 이동">
+            <a class="nav-link is-active" href="index.html">학생 홈</a>
+            <a class="nav-link" href="progress.html">학습 진행도</a>
+            <a class="nav-link" href="feedback.html">AI 피드백</a>
+            <a class="nav-link" href="materials.html">수업 자료</a>
+            <a class="nav-link" href="schedule.html">스케줄</a>
+            <a class="nav-link" href="qa.html">Q&amp;A</a>
+          </nav>
+          <div class="header-actions">
+            <a class="btn btn-ghost btn-sm" href="https://www.koreaedugroup.com/" target="_blank" rel="noopener">학원 사이트</a>
+            <a class="btn btn-ghost btn-sm" href="signup.html">회원가입</a>
+            <a class="btn btn-ghost btn-sm" href="login.html">로그아웃</a>
+          </div>
+        </div>
+      </header>
+
+      <main class="hub-layout">
+        <!-- 좌측: 수업 선택 + 메뉴 그룹 (PDF의 펼침 리스트를 링크 그룹으로 구현) -->
+        <aside class="hub-sidebar" aria-label="학생 메뉴">
+          <div class="hub-side-card card-reveal">
+            <h3>수업 이름</h3>
+            <p style="margin: 0 0 10px; font-size: 0.82rem; color: var(--color-text-muted)">클릭하면 수강 중인 다른 수업으로 전환(데모)</p>
+            <label class="visually-hidden" for="classPick">수업 선택</label>
+            <select id="classPick" class="class-select" title="수업 선택">
+              <option>바이브 코딩 실전반 A</option>
+              <option>Python 데이터 스터디 B</option>
+              <option>UX 포트폴리오 C</option>
+            </select>
+          </div>
+
+          <div class="hub-side-card card-reveal">
+            <h3>학습 · 진행</h3>
+            <ul class="hub-menu">
+              <li><a href="progress.html">학습 진행도</a></li>
+              <li><a href="feedback.html">AI 피드백</a></li>
+              <li><a href="assignment.html">추가 학습 과제</a></li>
+            </ul>
+          </div>
+
+          <div class="hub-side-card card-reveal">
+            <h3>수업</h3>
+            <ul class="hub-menu">
+              <li><a href="attendance.html">출석 체크방</a></li>
+              <li><a href="materials.html">수업 자료</a></li>
+              <li><a href="student_review_list.html">복습 문제</a></li>
+            </ul>
+          </div>
+
+          <div class="hub-side-card card-reveal">
+            <h3>커뮤니티</h3>
+            <ul class="hub-menu">
+              <li><a href="notice.html">공지사항</a></li>
+              <li><a href="qa.html">Q&amp;A</a></li>
+            </ul>
+          </div>
+
+          <div class="hub-side-card card-reveal">
+            <h3>기타</h3>
+            <ul class="hub-menu">
+              <li><a href="schedule.html">스케줄 · 타임라인</a></li>
+            </ul>
+          </div>
+        </aside>
+
+        <div class="hub-main-col">
+          <!-- Login time selected Korea Education Group affiliated academy display (sessionStorage) -->
+          <p class="page-sub" style="margin: 0 0 4px">
+            <strong data-home-academy>Korea Education Group Affiliated Academy</strong> · Hello, Sujin! 👋
+          </p>
+
+          <!-- 배너: PDF의 학원 홍보/광고 영역 대체 -->
+          <div class="promo-banner card-reveal" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: 1px solid #667eea;">
+            <div>
+              <strong style="font-size: 1.1rem; color: #fff;">4월 기수 모집 — 바이브 코딩 심화</strong>
+              <p style="color: rgba(255,255,255,0.9);">조기 등록 시 복습 AI 피드백 이용권이 제공됩니다.</p>
+            </div>
+            <a class="btn btn-ghost btn-sm" href="notice.html" style="border-color: rgba(255,255,255,0.3); color: #fff; background: rgba(255,255,255,0.1);">공지 보기</a>
+          </div>
+
+          <!-- 셀프체크: PDF의 셀프체크 버튼 개념 -->
+          <section class="card card-pad card-reveal" aria-labelledby="selfcheck">
+            <h2 id="selfcheck" class="section-title" style="margin-bottom: 12px">셀프체크</h2>
+            <div class="self-check">
+              <label><input type="checkbox" checked /> 오늘 강의 노트 정리 완료</label>
+              <label><input type="checkbox" /> 복습 문제 1세트 풀기</label>
+              <label><input type="checkbox" /> 추가 과제 제출</label>
+            </div>
+          </section>
+
+          <!-- 랭킹·학습시간·진행도 요약 (PDF 우측/메인 요약) -->
+          <section class="rank-strip" aria-label="학습 요약">
+            <div class="rank-pill card-reveal">
+              <span>이번 주 학습 시간</span>
+              <strong>12.5h</strong>
+            </div>
+            <div class="rank-pill card-reveal">
+              <span>반 랭킹 (문제 풀이)</span>
+              <strong>3위</strong>
+            </div>
+            <div class="rank-pill card-reveal">
+              <span>반 랭킹 (학습 시간)</span>
+              <strong>5위</strong>
+            </div>
+            <div class="rank-pill card-reveal">
+              <span>전체 진행도</span>
+              <strong>58%</strong>
+            </div>
+            <div class="rank-pill card-reveal">
+              <span>추가 학습 과제 진행도</span>
+              <strong>75%</strong>
+            </div>
+            <div class="rank-pill card-reveal">
+              <span>복습 문제 진행도</span>
+              <strong>82%</strong>
+            </div>
+          </section>
+
+          <!-- 현재 수강 진행 + 프로그레스 바 + 최근 활동 타임라인 -->
+          <div class="dashboard-grid" style="grid-template-columns: 1fr 320px">
+            <section aria-labelledby="sec-progress">
+              <div class="section-head">
+                <h2 id="sec-progress" class="section-title">요일별 학습 진행도 (요약)</h2>
+                <a href="progress.html" class="btn btn-ghost btn-sm">전체 보기</a>
+              </div>
+              <div class="course-progress-list">
+                <article class="card course-progress-card card-reveal card-pad">
+                  <h3><a href="materials.html?week=3">3주차 · 웹 클라이언트 기초</a></h3>
+                  <p class="meta"><span>진행 중</span><span>다음: DOM 이벤트</span></p>
+                  <div class="progress-wrap">
+                    <div class="progress-label-row"><span>진도율</span><span>67%</span></div>
+                    <div class="progress-track" role="progressbar" aria-valuenow="67" aria-valuemin="0" aria-valuemax="100">
+                      <div class="progress-fill" data-progress="67"></div>
+                    </div>
+                  </div>
+                </article>
+                <article class="card course-progress-card card-reveal card-pad">
+                  <h3><a href="feedback.html">AI 피드백 · 복습 리포트</a></h3>
+                  <p class="meta"><span>최근 업데이트</span><span>4월 9일</span></p>
+                  <div class="progress-wrap">
+                    <div class="progress-label-row"><span>피드백 확인률</span><span>34%</span></div>
+                    <div class="progress-track" role="progressbar" aria-valuenow="34" aria-valuemin="0" aria-valuemax="100">
+                      <div class="progress-fill" data-progress="34"></div>
+                    </div>
+                  </div>
+                </article>
+              </div>
+            </section>
+
+            <aside class="card card-pad card-reveal timeline-compact" aria-labelledby="tl">
+              <h2 id="tl" class="section-title" style="margin-bottom: 16px">최근 학습 활동</h2>
+              <div class="timeline">
+                <div class="timeline-item">
+                  <span class="timeline-dot" aria-hidden="true"></span>
+                  <div class="timeline-body">
+                    <div class="timeline-time">오늘 14:32</div>
+                    <p class="timeline-text"><strong>AI 피드백</strong> — Q3 채점 완료</p>
+                  </div>
+                </div>
+                <div class="timeline-item">
+                  <span class="timeline-dot" aria-hidden="true"></span>
+                  <div class="timeline-body">
+                    <div class="timeline-time">어제</div>
+                    <p class="timeline-text"><strong>출석</strong> — 출석완료 처리</p>
+                  </div>
+                </div>
+                <div class="timeline-item">
+                  <span class="timeline-dot" aria-hidden="true"></span>
+                  <div class="timeline-body">
+                    <div class="timeline-time">4월 9일</div>
+                    <p class="timeline-text"><strong>수업 자료</strong> — 3주차 PDF 다운로드</p>
+                  </div>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </main>
+
+      <footer class="site-footer">
+        <p>© 2026 Learn Bridge · 피그마 화면구성(학생 플로우) 기반 데모</p>
+      </footer>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

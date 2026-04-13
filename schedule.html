@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>스케줄 · 타임라인 | Learn Bridge</title>
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="layout-body">
+      <!-- 피그마: 학생 스케줄 화면, 학생 타임라인 — 주/달, 오늘 이동 -->
+      <header class="site-header">
+        <div class="header-inner">
+          <a class="logo" href="index.html"><span class="logo-mark">LB</span> Learn Bridge</a>
+          <nav class="nav-main" aria-label="주요 이동">
+            <a class="nav-link" href="index.html">학생 홈</a>
+            <a class="nav-link is-active" href="schedule.html">스케줄</a>
+          </nav>
+          <div class="header-actions">
+            <a class="btn btn-ghost btn-sm" href="login.html">로그아웃</a>
+          </div>
+        </div>
+      </header>
+
+      <main class="page-wrap">
+        <div class="toolbar-back"><a href="index.html">← 학생 홈</a></div>
+        <h1 class="page-title">학생 스케줄</h1>
+        
+        <!-- 달력 네비게이션 -->
+        <div class="calendar-nav card-reveal">
+          <div class="calendar-header">
+            <button class="nav-arrow" aria-label="이전">‹</button>
+            <div class="calendar-display">
+              <span class="month-year">2026년 4월</span>
+              <span class="date-display">11일 금요일</span>
+            </div>
+            <button class="nav-arrow" aria-label="다음">›</button>
+          </div>
+          <div class="calendar-actions">
+            <button class="today-btn">오늘</button>
+            <div class="view-toggles">
+              <button class="view-toggle active">주</button>
+              <button class="view-toggle">달</button>
+              <button class="view-toggle">전체</button>
+              <button class="view-toggle">타임라인</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 수업 관련 섹션 -->
+        <section class="schedule-section card-reveal">
+          <h2 class="section-title">수업 관련</h2>
+          <div class="schedule-table">
+            <div class="table-header">
+              <span class="col-date">날짜</span>
+              <span class="col-time">시간</span>
+              <span class="col-subject">수업 주제</span>
+              <span class="col-details">상세</span>
+            </div>
+            <div class="table-row">
+              <span class="col-date">4/11</span>
+              <span class="col-time">19:00</span>
+              <span class="col-subject">바이브 코딩 실전반</span>
+              <span class="col-details">1. 변수와 자료형</span>
+            </div>
+            <div class="table-row">
+              <span class="col-date">4/13</span>
+              <span class="col-time">15:00</span>
+              <span class="col-subject">바이브 코딩 실전반</span>
+              <span class="col-details">2. 조건문과 반복문</span>
+            </div>
+            <div class="table-row">
+              <span class="col-date">4/15</span>
+              <span class="col-time">19:00</span>
+              <span class="col-subject">바이브 코딩 실전반</span>
+              <span class="col-details">3. 함수와 모듈</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- 복습 섹션 -->
+        <section class="schedule-section card-reveal">
+          <h2 class="section-title">복습</h2>
+          <div class="schedule-table">
+            <div class="table-header">
+              <span class="col-date">날짜</span>
+              <span class="col-time">시간</span>
+              <span class="col-subject">복습 자료</span>
+              <span class="col-details">상세</span>
+            </div>
+            <div class="table-row">
+              <span class="col-date">4/8</span>
+              <span class="col-time">-</span>
+              <span class="col-subject">복습 문제 1</span>
+              <span class="col-details">기초 문법 테스트</span>
+            </div>
+            <div class="table-row">
+              <span class="col-date">4/10</span>
+              <span class="col-time">-</span>
+              <span class="col-subject">복습 문제 2</span>
+              <span class="col-details">배열과 객체</span>
+            </div>
+            <div class="table-row">
+              <span class="col-date">4/12</span>
+              <span class="col-time">-</span>
+              <span class="col-subject">복습 문제 3</span>
+              <span class="col-details">DOM 조작</span>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer"><p>© 2026 Learn Bridge</p></footer>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

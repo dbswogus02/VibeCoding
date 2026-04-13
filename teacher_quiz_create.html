@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>퀴즈 생성 | Learn Bridge</title>
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="layout-body">
+      <!-- 교사 퀴즈 생성 페이지 -->
+      <header class="site-header">
+        <div class="header-inner">
+          <a class="logo" href="teacher.html"><span class="logo-mark">LB</span> Learn Bridge</a>
+          <nav class="nav-main" aria-label="teacher navigation">
+            <a class="nav-link" href="teacher.html">교사 홈</a>
+            <a class="nav-link" href="teacher_attendance.html">출석체크</a>
+            <a class="nav-link" href="teacher_materials.html">수업자료</a>
+            <a class="nav-link" href="teacher_review.html">복습문제</a>
+          </nav>
+          <div class="header-actions">
+            <a class="btn btn-ghost btn-sm" href="login.html">로그아웃</a>
+          </div>
+        </div>
+      </header>
+
+      <main class="page-wrap">
+        <div class="toolbar-back"><a href="teacher_review.html">퀴즈 목록</a></div>
+        <h1 class="page-title">퀴즈 생성</h1>
+        
+        <section class="card card-reveal">
+          <div class="card-header">
+            <h2>퀴즈 상세 정보</h2>
+            <div class="quiz-actions">
+              <button class="btn btn-secondary" id="save-draft">임시 저장</button>
+              <button class="btn btn-primary" id="publish-quiz">퀴즈 발행</button>
+            </div>
+          </div>
+          
+          <div class="quiz-form">
+            <div class="form-group">
+              <label for="quiz-title" class="form-label">퀴즈 제목</label>
+              <input type="text" id="quiz-title" class="form-input" placeholder="퀴즈 제목을 입력하세요...">
+            </div>
+            
+            <div class="form-group">
+              <label for="quiz-description" class="form-label">설명</label>
+              <textarea id="quiz-description" class="form-input" rows="4" placeholder="퀴즈 설명을 입력하세요..."></textarea>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="quiz-class" class="form-label">반</label>
+                <select id="quiz-class" class="form-select">
+                  <option value="math">수학</option>
+                  <option value="english">영어</option>
+                  <option value="science">과학</option>
+                </select>
+              </div>
+              
+              <div class="form-group">
+                <label for="quiz-difficulty" class="form-label">난이도</label>
+                <select id="quiz-difficulty" class="form-select">
+                  <option value="beginner">초급</option>
+                  <option value="intermediate">중급</option>
+                  <option value="advanced">고급</option>
+                </select>
+              </div>
+              
+              <div class="form-group">
+                <label for="quiz-time-limit" class="form-label">시간 제한 (분)</label>
+                <input type="number" id="quiz-time-limit" class="form-input" placeholder="30" min="5" max="180">
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="quiz-instructions" class="form-label">퀴즈 지시사항</label>
+              <div class="editor-toolbar">
+                <button class="editor-btn" data-command="bold"><strong>B</strong></button>
+                <button class="editor-btn" data-command="italic"><em>I</em></button>
+                <button class="editor-btn" data-command="underline"><u>U</u></button>
+                <button class="editor-btn" data-command="insertOrderedList">1.</button>
+                <button class="editor-btn" data-command="insertUnorderedList">·</button>
+                <button class="editor-btn" data-command="createLink">링크</button>
+              </div>
+              <div class="editor-content" id="quiz-instructions" contenteditable="true" placeholder="상세한 퀴즈 지시사항을 입력하세요..."></div>
+            </div>
+          </div>
+        </section>
+        
+        <section class="card card-reveal">
+          <div class="card-header">
+            <h2>퀴즈 질문</h2>
+            <div class="question-actions">
+              <button class="btn btn-primary" id="add-question">질문 추가</button>
+            </div>
+          </div>
+          
+          <div class="questions-container" id="questions-container">
+            <!-- questions will be added here dynamically -->
+          </div>
+        </section>
+        
+        <section class="card card-reveal">
+          <div class="card-header">
+            <h2>퀴즈 설정</h2>
+          </div>
+          
+          <div class="quiz-settings">
+            <div class="form-group">
+              <label class="form-label">퀴즈 옵션</label>
+              <div class="checkbox-group">
+                <label class="checkbox-label">
+                  <input type="checkbox" id="randomize-questions" class="checkbox-input">
+                  <span class="checkbox-text">질문 순서 무작위</span>
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" id="show-results" class="checkbox-input" checked>
+                  <span class="checkbox-text">완료 후 즉시 결과 표시</span>
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" id="allow-review" class="checkbox-input" checked>
+                  <span class="checkbox-text">학생들이 답변 검토 허용</span>
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" id="email-notifications" class="checkbox-input" checked>
+                  <span class="checkbox-text">학생에게 이메일 알림 전송</span>
+                </label>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="passing-score" class="form-label">합격 점수 (%)</label>
+              <input type="number" id="passing-score" class="form-input" placeholder="70" min="0" max="100">
+            </div>
+            
+            <div class="form-group">
+              <label for="max-attempts" class="form-label">최대 시도 횟수</label>
+              <input type="number" id="max-attempts" class="form-input" placeholder="1" min="1" max="10">
+            </div>
+          </div>
+        </section>
+        
+        <div class="form-actions">
+          <button class="btn btn-ghost" id="cancel-btn">취소</button>
+          <button class="btn btn-secondary" id="preview-btn">퀴즈 미리보기</button>
+          <button class="btn btn-primary" id="create-btn">퀴즈 생성</button>
+        </div>
+      </main>
+
+      <footer class="site-footer"><p>© 2026 Learn Bridge</p></footer>
+    </div>
+    
+    <script>
+      // quiz creation functionality
+      document.addEventListener('DOMContentLoaded', function() {
+        const saveDraftBtn = document.getElementById('save-draft');
+        const publishBtn = document.getElementById('publish-quiz');
+        const cancelBtn = document.getElementById('cancel-btn');
+        const previewBtn = document.getElementById('preview-btn');
+        const createBtn = document.getElementById('create-btn');
+        const addQuestionBtn = document.getElementById('add-question');
+        const questionsContainer = document.getElementById('questions-container');
+        const editorContent = document.getElementById('quiz-instructions');
+        
+        let questionCount = 0;
+        
+        // add question functionality
+        addQuestionBtn.addEventListener('click', function() {
+          addNewQuestion();
+        });
+        
+        function addNewQuestion() {
+          questionCount++;
+          const questionDiv = document.createElement('div');
+          questionDiv.className = 'question-item';
+          questionDiv.innerHTML = `
+            <div class="question-header">
+              <h3>질문 ${questionCount}</h3>
+              <div class="question-controls">
+                <button class="btn btn-sm btn-ghost move-up" onclick="moveQuestion(${questionCount}, -1)">위로</button>
+                <button class="btn btn-sm btn-ghost move-down" onclick="moveQuestion(${questionCount}, 1)">아래로</button>
+                <button class="btn btn-sm btn-danger remove-question" onclick="removeQuestion(${questionCount})">삭제</button>
+              </div>
+            </div>
+            <div class="question-content">
+              <div class="form-group">
+                <label class="form-label">질문 유형</label>
+                <select class="form-select question-type" onchange="updateQuestionType(${questionCount})">
+                  <option value="multiple-choice">객관식</option>
+                  <option value="true-false">참/거짓</option>
+                  <option value="short-answer">단답형</option>
+                  <option value="essay">서술형</option>
+                </select>
+              </div>
+              
+              <div class="form-group">
+                <label class="form-label">질문 내용</label>
+                <textarea class="form-input question-text" rows="3" placeholder="질문을 입력하세요..."></textarea>
+              </div>
+              
+              <div class="form-group question-options">
+                <label class="form-label">답변 옵션</label>
+                <div class="options-container">
+                  <div class="option-item">
+                    <input type="radio" name="correct-${questionCount}" value="0" class="option-radio">
+                    <input type="text" class="form-input option-text" placeholder="옵션 1">
+                    <button class="btn btn-sm btn-danger remove-option" onclick="removeOption(this)">remove</button>
+                  </div>
+                  <div class="option-item">
+                    <input type="radio" name="correct-${questionCount}" value="1" class="option-radio">
+                    <input type="text" class="form-input option-text" placeholder="옵션 2">
+                    <button class="btn btn-sm btn-danger remove-option" onclick="removeOption(this)">remove</button>
+                  </div>
+                  <div class="option-item">
+                    <input type="radio" name="correct-${questionCount}" value="2" class="option-radio">
+                    <input type="text" class="form-input option-text" placeholder="옵션 3">
+                    <button class="btn btn-sm btn-danger remove-option" onclick="removeOption(this)">remove</button>
+                  </div>
+                  <div class="option-item">
+                    <input type="radio" name="correct-${questionCount}" value="3" class="option-radio">
+                    <input type="text" class="form-input option-text" placeholder="옵션 4">
+                    <button class="btn btn-sm btn-danger remove-option" onclick="removeOption(this)">remove</button>
+                  </div>
+                </div>
+                <button class="btn btn-sm btn-secondary add-option" onclick="addOption(${questionCount})">옵션 추가</button>
+              </div>
+              
+              <div class="form-group">
+                <label class="form-label">점수</label>
+                <input type="number" class="form-input question-points" placeholder="10" min="1" max="100">
+              </div>
+              
+              <div class="form-group">
+                <label class="form-label">설명 (선택사항)</label>
+                <textarea class="form-input question-explanation" rows="2" placeholder="정답에 대한 설명을 입력하세요..."></textarea>
+              </div>
+            </div>
+          `;
+          
+          questionsContainer.appendChild(questionDiv);
+        }
+        
+        // remove question
+        window.removeQuestion = function(questionId) {
+          if (confirm('이 질문을 삭제하시겠습니까?')) {
+            const questionItem = event.target.closest('.question-item');
+            questionItem.remove();
+            updateQuestionNumbers();
+          }
+        };
+        
+        // move question up/down
+        window.moveQuestion = function(questionId, direction) {
+          const questionItem = event.target.closest('.question-item');
+          const allQuestions = Array.from(questionsContainer.children);
+          const currentIndex = allQuestions.indexOf(questionItem);
+          
+          if (direction === -1 && currentIndex > 0) {
+            questionsContainer.insertBefore(questionItem, allQuestions[currentIndex - 1]);
+          } else if (direction === 1 && currentIndex < allQuestions.length - 1) {
+            questionsContainer.insertBefore(allQuestions[currentIndex + 1], questionItem);
+          }
+          
+          updateQuestionNumbers();
+        };
+        
+        // update question numbers
+        function updateQuestionNumbers() {
+          const questions = questionsContainer.querySelectorAll('.question-item');
+          questions.forEach((question, index) => {
+            const header = question.querySelector('.question-header h3');
+            header.textContent = `질문 ${index + 1}`;
+          });
+        }
+        
+        // add option
+        window.addOption = function(questionId) {
+          const optionsContainer = event.target.previousElementSibling;
+          const optionCount = optionsContainer.children.length;
+          
+          const optionDiv = document.createElement('div');
+          optionDiv.className = 'option-item';
+          optionDiv.innerHTML = `
+            <input type="radio" name="correct-${questionId}" value="${optionCount}" class="option-radio">
+            <input type="text" class="form-input option-text" placeholder="option ${optionCount + 1}">
+            <button class="btn btn-sm btn-danger remove-option" onclick="removeOption(this)">remove</button>
+          `;
+          
+          optionsContainer.appendChild(optionDiv);
+        };
+        
+        // remove option
+        window.removeOption = function(button) {
+          const optionItem = button.parentElement;
+          const optionsContainer = optionItem.parentElement;
+          
+          if (optionsContainer.children.length > 2) {
+            optionItem.remove();
+            updateOptionNumbers(optionsContainer);
+          } else {
+            alert('최소 2개 옵션이 필요합니다');
+          }
+        };
+        
+        // update option numbers
+        function updateOptionNumbers(optionsContainer) {
+          const options = optionsContainer.querySelectorAll('.option-item');
+          options.forEach((option, index) => {
+            const radio = option.querySelector('.option-radio');
+            const input = option.querySelector('.option-text');
+            radio.value = index;
+            input.placeholder = `옵션 ${index + 1}`;
+          });
+        }
+        
+        // update question type
+        window.updateQuestionType = function(questionId) {
+          const questionItem = event.target.closest('.question-item');
+          const questionType = event.target.value;
+          const optionsGroup = questionItem.querySelector('.question-options');
+          
+          if (questionType === 'true-false') {
+            optionsGroup.style.display = 'block';
+            const optionsContainer = optionsGroup.querySelector('.options-container');
+            optionsContainer.innerHTML = `
+              <div class="option-item">
+                <input type="radio" name="correct-${questionId}" value="0" class="option-radio">
+                <label class="form-label">참</label>
+              </div>
+              <div class="option-item">
+                <input type="radio" name="correct-${questionId}" value="1" class="option-radio">
+                <label class="form-label">거짓</label>
+              </div>
+            `;
+          } else if (questionType === 'short-answer' || questionType === 'essay') {
+            optionsGroup.style.display = 'none';
+          } else {
+            optionsGroup.style.display = 'block';
+            // restore default multiple choice options
+            const optionsContainer = optionsGroup.querySelector('.options-container');
+            if (optionsContainer.children.length === 0) {
+              optionsContainer.innerHTML = `
+                <div class="option-item">
+                  <input type="radio" name="correct-${questionId}" value="0" class="option-radio">
+                  <input type="text" class="form-input option-text" placeholder="option 1">
+                  <button class="btn btn-sm btn-danger remove-option" onclick="removeOption(this)">remove</button>
+                </div>
+                <div class="option-item">
+                  <input type="radio" name="correct-${questionId}" value="1" class="option-radio">
+                  <input type="text" class="form-input option-text" placeholder="option 2">
+                  <button class="btn btn-sm btn-danger remove-option" onclick="removeOption(this)">remove</button>
+                </div>
+              `;
+            }
+          }
+        };
+        
+        // editor functionality
+        document.querySelectorAll('.editor-btn').forEach(btn => {
+          btn.addEventListener('click', function() {
+            const command = this.getAttribute('data-command');
+            if (command === 'createLink') {
+              const url = prompt('URL을 입력하세요:');
+              if (url) {
+                document.execCommand(command, false, url);
+              }
+            } else {
+              document.execCommand(command, false, null);
+            }
+            editorContent.focus();
+          });
+        });
+        
+        // save draft functionality
+        saveDraftBtn.addEventListener('click', function() {
+          saveQuiz('draft');
+        });
+        
+        // publish quiz functionality
+        publishBtn.addEventListener('click', function() {
+          if (validateQuiz()) {
+            saveQuiz('published');
+          }
+        });
+        
+        // cancel functionality
+        cancelBtn.addEventListener('click', function() {
+          if (confirm('취소하시겠습니까? 저장되지 않은 모든 변경사항이 손실됩니다.')) {
+            window.location.href = 'teacher_review.html';
+          }
+        });
+        
+        // preview functionality
+        previewBtn.addEventListener('click', function() {
+          if (validateQuiz()) {
+            alert('미리보기 기능은 학생들이 보는 퀴즈를 표시합니다');
+          }
+        });
+        
+        // create quiz functionality
+        createBtn.addEventListener('click', function() {
+          if (validateQuiz()) {
+            saveQuiz('published');
+          }
+        });
+        
+        function validateQuiz() {
+          const title = document.getElementById('quiz-title').value.trim();
+          const description = document.getElementById('quiz-description').value.trim();
+          const questions = questionsContainer.querySelectorAll('.question-item');
+          
+          if (!title) {
+            alert('퀴즈 제목을 입력하세요');
+            return false;
+          }
+          
+          if (!description) {
+            alert('퀴즈 설명을 입력하세요');
+            return false;
+          }
+          
+          if (questions.length === 0) {
+            alert('최소 하나의 질문을 추가하세요');
+            return false;
+          }
+          
+          // validate each question
+          for (let question of questions) {
+            const questionText = question.querySelector('.question-text').value.trim();
+            if (!questionText) {
+              alert('모든 질문에 대한 내용을 입력하세요');
+              return false;
+            }
+          }
+          
+          return true;
+        }
+        
+        function saveQuiz(status) {
+          const questions = [];
+          questionsContainer.querySelectorAll('.question-item').forEach((questionItem, index) => {
+            const questionType = questionItem.querySelector('.question-type').value;
+            const questionText = questionItem.querySelector('.question-text').value;
+            const questionPoints = questionItem.querySelector('.question-points').value;
+            const questionExplanation = questionItem.querySelector('.question-explanation').value;
+            
+            const question = {
+              type: questionType,
+              text: questionText,
+              points: questionPoints,
+              explanation: questionExplanation,
+              options: []
+            };
+            
+            if (questionType === 'multiple-choice' || questionType === 'true-false') {
+              const options = questionItem.querySelectorAll('.option-item');
+              options.forEach((option, optionIndex) => {
+                const optionText = option.querySelector('.option-text')?.value || option.querySelector('label')?.textContent;
+                const isCorrect = option.querySelector('.option-radio')?.checked;
+                question.options.push({
+                  text: optionText,
+                  correct: isCorrect
+                });
+              });
+            }
+            
+            questions.push(question);
+          });
+          
+          const quizData = {
+            title: document.getElementById('quiz-title').value,
+            description: document.getElementById('quiz-description').value,
+            class: document.getElementById('quiz-class').value,
+            difficulty: document.getElementById('quiz-difficulty').value,
+            timeLimit: document.getElementById('quiz-time-limit').value,
+            instructions: editorContent.innerHTML,
+            questions: questions,
+            randomizeQuestions: document.getElementById('randomize-questions').checked,
+            showResults: document.getElementById('show-results').checked,
+            allowReview: document.getElementById('allow-review').checked,
+            emailNotifications: document.getElementById('email-notifications').checked,
+            passingScore: document.getElementById('passing-score').value,
+            maxAttempts: document.getElementById('max-attempts').value,
+            status: status
+          };
+          
+          // save to localStorage (in real app, this would be sent to server)
+          localStorage.setItem('currentQuiz', JSON.stringify(quizData));
+          
+          if (status === 'published') {
+            alert('퀴즈가 성공적으로 발행되었습니다!');
+            window.location.href = 'teacher_review.html';
+          } else {
+            alert('임시 저장이 성공적으로 완료되었습니다!');
+          }
+        }
+        
+        // add first question by default
+        addNewQuestion();
+      });
+    </script>
+    <script src="main.js"></script>
+  </body>
+</html>

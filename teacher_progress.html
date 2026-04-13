@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>교사 학습 진행도 | Learn Bridge</title>
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="layout-body">
+      <!-- Teacher Learning Progress Page -->
+      <header class="site-header">
+        <div class="header-inner">
+          <a class="logo" href="teacher.html"><span class="logo-mark">LB</span> Learn Bridge</a>
+          <nav class="nav-main" aria-label="교사 내비게이션">
+            <a class="nav-link" href="teacher.html">교사 홈</a>
+            <a class="nav-link" href="teacher_attendance.html">출석체크</a>
+            <a class="nav-link" href="teacher_materials.html">수업자료</a>
+            <a class="nav-link" href="teacher_review.html">복습문제</a>
+          </nav>
+          <div class="header-actions">
+            <a class="btn btn-ghost btn-sm" href="login.html">로그아웃</a>
+          </div>
+        </div>
+      </header>
+
+      <main class="page-wrap">
+        <div class="toolbar-back"><a href="teacher.html">교사 홈으로</a></div>
+        <h1 class="page-title">학습 진행도 추적</h1>
+        
+        <div class="progress-controls card-reveal">
+          <div class="class-selector">
+            <label for="progress-class">반 선택:</label>
+            <select id="progress-class" class="form-select">
+              <option value="math">수학</option>
+              <option value="english">영어</option>
+              <option value="science">과학</option>
+            </select>
+          </div>
+          <div class="period-selector">
+            <label for="progress-period">기간 선택:</label>
+            <select id="progress-period" class="form-select">
+              <option value="week">이번 주</option>
+              <option value="month">이번 달</option>
+              <option value="semester">이번 학기</option>
+            </select>
+          </div>
+          <div class="export-section">
+            <button class="btn btn-secondary" id="export-progress">보고서 내보내기</button>
+          </div>
+        </div>
+
+        <section class="card card-list-group card-reveal">
+          <div class="card-list-group-header">
+            <span class="text-muted">학생</span>
+            <span class="text-muted">전체 진행도</span>
+            <span class="text-muted">퀴즈 평균</span>
+            <span class="text-muted">과제 완료율</span>
+            <span class="text-muted">상태</span>
+          </div>
+          <ul class="card-list-group-body">
+
+        <section class="card card-reveal">
+          <div class="card-header">
+            <h2>개별 학생 진행도</h2>
+            <div class="student-filter">
+              <input type="text" id="student-search" class="form-input" placeholder="학생 검색...">
+            </div>
+          </div>
+          
+          <div class="student-progress-list">
+            <li class="card-list-group-item">
+              <div class="student-progress-item">
+                <span class="student-name text-strong">김민준</span>
+                <span class="student-id text-muted">ID: 2021001</span>
+                <span class="overall-progress text-muted">85%</span>
+                <span class="quiz-average text-muted">92%</span>
+                <span class="assignment-rate text-muted">88%</span>
+                <div class="student-actions">
+                  <button class="btn btn-sm btn-ghost">상세 보기</button>
+                  <button class="btn btn-sm btn-primary">메시지</button>
+                </div>
+              </div>
+            </li>
+            
+            <li class="card-list-group-item">
+              <div class="student-progress-item">
+                <span class="student-name text-strong">이서아</span>
+                <span class="student-id text-muted">ID: 2021002</span>
+                <span class="overall-progress text-muted">76%</span>
+                <span class="quiz-average text-muted">81%</span>
+                <span class="assignment-rate text-muted">79%</span>
+                <div class="student-actions">
+                  <button class="btn btn-sm btn-ghost">상세 보기</button>
+                  <button class="btn btn-sm btn-primary">메시지</button>
+                </div>
+              </div>
+            </li>
+            
+            <li class="card-list-group-item at-risk">
+              <div class="student-progress-item">
+                <span class="student-name text-strong warning">박도윤</span>
+                <span class="student-id text-muted">ID: 2021003</span>
+                <span class="overall-progress text-muted warning">45%</span>
+                <span class="quiz-average text-muted warning">52%</span>
+                <span class="assignment-rate text-muted warning">38%</span>
+                <div class="student-actions">
+                  <button class="btn btn-sm btn-warning">개입</button>
+                  <button class="btn btn-sm btn-primary">메시지</button>
+                </div>
+              </div>
+            </li>
+            
+            <li class="card-list-group-item">
+              <div class="student-progress-item">
+                <span class="student-name text-strong">최지현</span>
+                <span class="student-id text-muted">ID: 2021004</span>
+                <span class="overall-progress text-muted">91%</span>
+                <span class="quiz-average text-muted">95%</span>
+                <span class="assignment-rate text-muted">93%</span>
+                <div class="student-actions">
+                  <button class="btn btn-sm btn-ghost">상세 보기</button>
+                  <button class="btn btn-sm btn-primary">메시지</button>
+                </div>
+              </div>
+            </li>
+          </div>
+        </section>
+
+        <div class="progress-actions">
+          <button class="btn btn-secondary" id="generate-reports">개별 보고서 생성</button>
+          <button class="btn btn-warning" id="identify-at-risk">위험 학생 식별</button>
+        </div>
+      </main>
+
+      <footer class="site-footer"><p>© 2026 Learn Bridge</p></footer>
+    </div>
+    
+    <script>
+      // Learning progress management functionality
+      document.addEventListener('DOMContentLoaded', function() {
+        const classSelect = document.getElementById('progress-class');
+        const periodSelect = document.getElementById('progress-period');
+        const exportBtn = document.getElementById('export-progress');
+        const studentSearch = document.getElementById('student-search');
+        const generateReportsBtn = document.getElementById('generate-reports');
+        const identifyAtRiskBtn = document.getElementById('identify-at-risk');
+        
+        // Handle class selection
+        classSelect.addEventListener('change', function() {
+          const selectedClass = this.value;
+          console.log('Loading progress for class:', selectedClass);
+          
+          // In a real application, this would load progress data for selected class
+          updateProgressDisplay(selectedClass);
+        });
+        
+        // Handle period selection
+        periodSelect.addEventListener('change', function() {
+          const selectedPeriod = this.value;
+          console.log('Loading progress for period:', selectedPeriod);
+          
+          // In a real application, this would load progress data for selected period
+          updateProgressDisplay(selectedPeriod);
+        });
+        
+        // Handle student search
+        studentSearch.addEventListener('input', function() {
+          const searchTerm = this.value.toLowerCase();
+          console.log('Searching students:', searchTerm);
+          
+          // In a real application, this would filter the student list
+          filterStudents(searchTerm);
+        });
+        
+        // Handle export progress
+        exportBtn.addEventListener('click', function() {
+          console.log('Exporting progress report');
+          
+          // In a real application, this would generate and download a progress report
+          this.textContent = 'Exporting...';
+          this.disabled = true;
+          
+          setTimeout(() => {
+            this.textContent = 'Export Report';
+            this.disabled = false;
+            showNotification('Progress report exported successfully!');
+          }, 2000);
+        });
+        
+        // Handle generate reports
+        generateReportsBtn.addEventListener('click', function() {
+          console.log('Generating individual reports');
+          
+          // In a real application, this would generate individual student reports
+          this.textContent = 'Generating...';
+          this.disabled = true;
+          
+          setTimeout(() => {
+            this.textContent = 'Generate Individual Reports';
+            this.disabled = false;
+            showNotification('Individual reports generated!');
+          }, 3000);
+        });
+        
+        // Handle identify at-risk students
+        identifyAtRiskBtn.addEventListener('click', function() {
+          console.log('Identifying at-risk students');
+          
+          // In a real application, this would highlight at-risk students
+          this.textContent = 'Analyzing...';
+          this.disabled = true;
+          
+          setTimeout(() => {
+            this.textContent = 'Identify At-Risk Students';
+            this.disabled = false;
+            
+            // Highlight at-risk students
+            document.querySelectorAll('.student-progress-item').forEach(item => {
+              if (item.classList.contains('at-risk')) {
+                item.style.border = '2px solid var(--color-warning)';
+                item.style.backgroundColor = 'var(--color-warning-soft)';
+              }
+            });
+            
+            showNotification('At-risk students identified!');
+          }, 1500);
+        });
+        
+        // Handle student actions
+        document.querySelectorAll('.student-actions button').forEach(button => {
+          button.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const action = this.textContent.toLowerCase();
+            const studentItem = this.closest('.student-progress-item');
+            const studentName = studentItem.querySelector('.student-name').textContent;
+            
+            console.log(`${action} for student:`, studentName);
+            
+            if (action === 'view details') {
+              showNotification(`Viewing details for: ${studentName}`);
+            } else if (action === 'message') {
+              showNotification(`Opening message for: ${studentName}`);
+            } else if (action === 'intervene') {
+              showNotification(`Creating intervention plan for: ${studentName}`);
+            }
+          });
+        });
+        
+        // Update progress display
+        function updateProgressDisplay(filter) {
+          const progressItems = document.querySelectorAll('.student-progress-item');
+          
+          progressItems.forEach(item => {
+            item.style.opacity = '0.5';
+          });
+          
+          setTimeout(() => {
+            progressItems.forEach(item => {
+              item.style.opacity = '1';
+            });
+          }, 300);
+        }
+        
+        // Filter students
+        function filterStudents(searchTerm) {
+          const studentItems = document.querySelectorAll('.student-progress-item');
+          
+          studentItems.forEach(item => {
+            const studentName = item.querySelector('.student-name').textContent.toLowerCase();
+            const studentId = item.querySelector('.student-id').textContent.toLowerCase();
+            
+            if (studentName.includes(searchTerm) || studentId.includes(searchTerm)) {
+              item.style.display = 'block';
+            } else {
+              item.style.display = 'none';
+            }
+          });
+        }
+        
+        // Show notification
+        function showNotification(message) {
+          const notification = document.createElement('div');
+          notification.className = 'notification';
+          notification.textContent = message;
+          notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--color-primary);
+            color: white;
+            padding: 12px 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+          `;
+          
+          document.body.appendChild(notification);
+          
+          setTimeout(() => {
+            notification.style.animation = 'slideOut 0.3s ease';
+            setTimeout(() => {
+              notification.remove();
+            }, 300);
+          }, 3000);
+        }
+      });
+    </script>
+    <script src="main.js"></script>
+  </body>
+</html>
