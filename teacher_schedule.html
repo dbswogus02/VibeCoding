@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>교사 스케줄 | Learn Bridge</title>
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="layout-body">
+      <!-- Teacher Schedule Page -->
+      <header class="site-header">
+        <div class="header-inner">
+          <a class="logo" href="teacher.html"><span class="logo-mark">LB</span> Learn Bridge</a>
+          <nav class="nav-main" aria-label="교사 내비게이션">
+            <a class="nav-link" href="teacher.html">교사 홈</a>
+            <a class="nav-link" href="teacher_attendance.html">출석체크</a>
+            <a class="nav-link" href="teacher_materials.html">수업자료</a>
+            <a class="nav-link" href="teacher_review.html">복습문제</a>
+          </nav>
+          <div class="header-actions">
+            <a class="btn btn-ghost btn-sm" href="login.html">로그아웃</a>
+          </div>
+        </div>
+      </header>
+
+      <main class="page-wrap">
+        <div class="toolbar-back"><a href="teacher.html">교사 홈으로</a></div>
+        <h1 class="page-title">교사 스케줄</h1>
+        
+        <!-- Calendar Navigation -->
+        <div class="calendar-nav">
+          <div class="calendar-header">
+            <button class="nav-arrow" id="prev-month">◀</button>
+            <div class="calendar-display">
+              <div class="month-year">2026년 4월</div>
+              <div class="date-display">2026-04-13 월요일</div>
+            </div>
+            <button class="nav-arrow" id="next-month">▶</button>
+          </div>
+          
+          <div class="calendar-actions">
+            <button class="today-btn" id="today-btn">오늘</button>
+            <div class="view-toggles">
+              <button class="view-toggle active" data-view="week">주</button>
+              <button class="view-toggle" data-view="month">월</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Schedule Sections -->
+        <div class="schedule-section">
+          <div class="section-title">오늘의 수업</div>
+          <div class="schedule-table">
+            <div class="table-header">
+              <div class="col-date">날짜</div>
+              <div class="col-time">시간</div>
+              <div class="col-subject">과목</div>
+              <div class="col-details">상세 정보</div>
+            </div>
+            
+            <div class="table-row">
+              <div class="col-date">4월 13일</div>
+              <div class="col-time">09:00-10:30</div>
+              <div class="col-subject">수학</div>
+              <div class="col-details">중학교 2학년 - 대수학</div>
+            </div>
+            
+            <div class="table-row">
+              <div class="col-date">4월 13일</div>
+              <div class="col-time">11:00-12:30</div>
+              <div class="col-subject">수학</div>
+              <div class="col-details">고등학교 1학년 - 기하학</div>
+            </div>
+            
+            <div class="table-row">
+              <div class="col-date">4월 13일</div>
+              <div class="col-time">14:00-15:30</div>
+              <div class="col-subject">영어</div>
+              <div class="col-details">중학교 3학년 - 문법</div>
+            </div>
+            
+            <div class="table-row">
+              <div class="col-date">4월 13일</div>
+              <div class="col-time">16:00-17:30</div>
+              <div class="col-subject">과학</div>
+              <div class="col-details">중학교 2학년 - 물리</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Week Schedule -->
+        <div class="schedule-section">
+          <div class="section-title">이번 주 스케줄</div>
+          <div class="schedule-table">
+            <div class="table-header">
+              <div class="col-date">요일</div>
+              <div class="col-time">시간</div>
+              <div class="col-subject">과목</div>
+              <div class="col-details">상세 정보</div>
+            </div>
+            
+            <div class="table-row">
+              <div class="col-date">월요일</div>
+              <div class="col-time">09:00-10:30</div>
+              <div class="col-subject">수학</div>
+              <div class="col-details">중학교 2학년 - 대수학</div>
+            </div>
+            
+            <div class="table-row">
+              <div class="col-date">화요일</div>
+              <div class="col-time">11:00-12:30</div>
+              <div class="col-subject">수학</div>
+              <div class="col-details">고등학교 1학년 - 기하학</div>
+            </div>
+            
+            <div class="table-row">
+              <div class="col-date">수요일</div>
+              <div class="col-time">14:00-15:30</div>
+              <div class="col-subject">영어</div>
+              <div class="col-details">중학교 3학년 - 문법</div>
+            </div>
+            
+            <div class="table-row">
+              <div class="col-date">목요일</div>
+              <div class="col-time">16:00-17:30</div>
+              <div class="col-subject">과학</div>
+              <div class="col-details">중학교 2학년 - 물리</div>
+            </div>
+            
+            <div class="table-row">
+              <div class="col-date">금요일</div>
+              <div class="col-time">09:00-10:30</div>
+              <div class="col-subject">수학</div>
+              <div class="col-details">중학교 3학년 - 통계</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Schedule Management -->
+        <div class="schedule-management">
+          <button class="btn btn-primary" id="add-schedule">수업 추가</button>
+          <button class="btn btn-secondary" id="edit-schedule">스케줄 편집</button>
+          <button class="btn btn-ghost" id="export-schedule">내보내기</button>
+        </div>
+      </main>
+
+      <footer class="site-footer"><p>© 2026 Learn Bridge</p></footer>
+    </div>
+    
+    <script>
+      // Schedule management functionality
+      document.addEventListener('DOMContentLoaded', function() {
+        const prevMonthBtn = document.getElementById('prev-month');
+        const nextMonthBtn = document.getElementById('next-month');
+        const todayBtn = document.getElementById('today-btn');
+        const viewToggles = document.querySelectorAll('.view-toggle');
+        const addScheduleBtn = document.getElementById('add-schedule');
+        const editScheduleBtn = document.getElementById('edit-schedule');
+        const exportScheduleBtn = document.getElementById('export-schedule');
+        
+        // Handle month navigation
+        prevMonthBtn.addEventListener('click', function() {
+          console.log('Previous month');
+          updateCalendarDisplay('prev');
+        });
+        
+        nextMonthBtn.addEventListener('click', function() {
+          console.log('Next month');
+          updateCalendarDisplay('next');
+        });
+        
+        // Handle today button
+        todayBtn.addEventListener('click', function() {
+          console.log('Go to today');
+          updateCalendarDisplay('today');
+        });
+        
+        // Handle view toggles
+        viewToggles.forEach(toggle => {
+          toggle.addEventListener('click', function() {
+            viewToggles.forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+            const view = this.dataset.view;
+            console.log('Switching to view:', view);
+            toggleScheduleView(view);
+          });
+        });
+        
+        // Handle schedule management
+        addScheduleBtn.addEventListener('click', function() {
+          console.log('Add new schedule');
+          this.textContent = '추가 중...';
+          this.disabled = true;
+          
+          setTimeout(() => {
+            this.textContent = '수업 추가';
+            this.disabled = false;
+            showNotification('수업 추가 창이 열렸습니다!');
+          }, 1000);
+        });
+        
+        editScheduleBtn.addEventListener('click', function() {
+          console.log('Edit schedule');
+          this.textContent = '편집 중...';
+          this.disabled = true;
+          
+          setTimeout(() => {
+            this.textContent = '스케줄 편집';
+            this.disabled = false;
+            showNotification('스케줄 편집 모드가 활성화되었습니다!');
+          }, 1000);
+        });
+        
+        exportScheduleBtn.addEventListener('click', function() {
+          console.log('Export schedule');
+          this.textContent = '내보내기 중...';
+          this.disabled = true;
+          
+          setTimeout(() => {
+            this.textContent = '내보내기';
+            this.disabled = false;
+            showNotification('스케줄이 내보내기 되었습니다!');
+          }, 1500);
+        });
+        
+        // Update calendar display
+        function updateCalendarDisplay(action) {
+          const monthYear = document.querySelector('.month-year');
+          const dateDisplay = document.querySelector('.date-display');
+          
+          // In a real application, this would update the actual calendar
+          if (action === 'prev') {
+            monthYear.textContent = '2026년 3월';
+          } else if (action === 'next') {
+            monthYear.textContent = '2026년 5월';
+          } else if (action === 'today') {
+            monthYear.textContent = '2026년 4월';
+            dateDisplay.textContent = '2026-04-13 월요일';
+          }
+        }
+        
+        // Toggle schedule view
+        function toggleScheduleView(view) {
+          const scheduleSections = document.querySelectorAll('.schedule-section');
+          
+          scheduleSections.forEach(section => {
+            if (view === 'week' && section.querySelector('.section-title').textContent === '이번 주 스케줄') {
+              section.style.display = 'block';
+            } else if (view === 'month' && section.querySelector('.section-title').textContent === '오늘의 수업') {
+              section.style.display = 'block';
+            } else {
+              section.style.display = 'block'; // Show both for demo
+            }
+          });
+        }
+        
+        // Show notification
+        function showNotification(message) {
+          const notification = document.createElement('div');
+          notification.className = 'notification';
+          notification.textContent = message;
+          notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--color-primary);
+            color: white;
+            padding: 12px 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+          `;
+          
+          document.body.appendChild(notification);
+          
+          setTimeout(() => {
+            notification.style.animation = 'slideOut 0.3s ease';
+            setTimeout(() => {
+              notification.remove();
+            }, 300);
+          }, 3000);
+        }
+      });
+    </script>
+    <script src="main.js"></script>
+  </body>
+</html>
