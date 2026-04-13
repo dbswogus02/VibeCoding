@@ -22,6 +22,7 @@
   var ROLE_STORAGE_KEY = "lb_role";
   var QA_STORAGE_KEY = "lb_qa_threads_v2";
   var NOTES_STORAGE_KEY = "lb_notes_v1";
+  var MESSAGES_STORAGE_KEY = "lb_messages_v1";
 
   /* ---------- 모든 페이지: 저장된 소속 학원을 라벨·hidden input에 반영 ---------- */
   function restoreAcademyFromStorage() {
@@ -294,6 +295,110 @@
     } catch (e) {}
   }
 
+  /* ---------- 메시지 알림 시스템 ---------- */
+  function saveMessages(messages) {
+    try {
+      localStorage.setItem(MESSAGES_STORAGE_KEY, JSON.stringify(messages));
+    } catch (e) {}
+  }
+
+  function loadMessages() {
+    try {
+      var raw = localStorage.getItem(MESSAGES_STORAGE_KEY);
+      if (raw) {
+        var arr = JSON.parse(raw);
+        if (Array.isArray(arr)) return arr;
+      }
+    } catch (e) {}
+    return [];
+  }
+
+  function addMessage(message) {
+    var messages = loadMessages();
+    messages.unshift(message);
+    saveMessages(messages);
+    
+    // Show notification badge
+    updateMessageBadge();
+  }
+
+  function updateMessageBadge() {
+    var messages = loadMessages();
+    var unreadCount = messages.filter(function(m) {
+      return !m.read && m.recipient === getQaUser().id;
+    }).length;
+    
+    var badge = document.querySelector("[data-message-badge]");
+    if (badge) {
+      badge.textContent = unreadCount > 0 ? `쪽지 (${unreadCount})` : "쪽지";
+      badge.style.display = unreadCount > 0 ? "inline-block" : "none";
+    }
+  }
+
+  /* ---------- Q&A 편집/삭제 기능 ---------- */
+  function editThread(id) {
+    var threads = loadQaThreads();
+    var thread = threads.filter(function (x) {
+      return x.id === id;
+    })[0];
+    if (!thread) return;
+    
+    // Allow editing of all student posts (not just own posts)
+    var user = getQaUser();
+    if (user.role !== "student") {
+      alert("학생만 편집할 수 있습니다.");
+      return;
+    }
+    
+    var newTitle = prompt("질문 제목을 수정하세요:", thread.title);
+    var newContent = prompt("질문 내용을 수정하세요:", thread.messages && thread.messages[0] ? thread.messages[0].body : "");
+    
+    if (newTitle !== null && newTitle.trim() !== "") {
+      thread.title = newTitle.trim();
+    }
+    if (newContent !== null && newContent.trim() !== "") {
+      if (thread.messages && thread.messages[0]) {
+        thread.messages[0].body = newContent.trim();
+      }
+    }
+    
+    saveQaThreads(threads);
+    renderThreadList(threads);
+    if (currentThreadId === id) {
+      var detailTitle = document.querySelector("[data-qa-detail-title]");
+      if (detailTitle) detailTitle.textContent = thread.title;
+      
+      // Update content in detail view if currently viewing this thread
+      var firstMessage = document.querySelector(".qa-msg--student");
+      if (firstMessage) {
+        firstMessage.querySelector(".qa-msg-body").textContent = thread.messages[0].body;
+      }
+    }
+  }
+
+  function deleteThread(id) {
+    var threads = loadQaThreads();
+    var thread = threads.filter(function (x) {
+      return x.id === id;
+    })[0];
+    if (!thread || thread.author !== getQaUser().id) return;
+    
+    threads = threads.filter(function (x) {
+      return x.id !== id;
+    });
+    saveQaThreads(threads);
+    renderThreadList(threads);
+    
+    if (currentThreadId === id) {
+      // Go back to list view if deleting current thread
+      var listView = document.querySelector("[data-qa-list-view]");
+      var detailView = document.querySelector("[data-qa-detail-view]");
+      if (listView) listView.hidden = false;
+      if (detailView) detailView.hidden = true;
+      currentThreadId = null;
+    }
+  }
+
   /* ---------- Q&A 페이지: 목록·상세·작성·답글·익명·관련 문제 ---------- */
   function initQAForum() {
     var root = document.querySelector("[data-qa-root]");
@@ -337,6 +442,38 @@
       relatedNoteRow.hidden = relSel.value !== "custom";
     }
 
+    renderThreadList(loadQaThreads());
+
+    root.addEventListener("click", function (e) {
+      var threadBtn = e.target.closest("[data-thread-id]");
+      if (threadBtn) {
+        var id = threadBtn.getAttribute("data-thread-id");
+        openThread(id);
+        return;
+      }
+
+      var editBtn = e.target.closest("[data-thread-edit]");
+      if (editBtn) {
+        var id = editBtn.getAttribute("data-thread-edit");
+        editThread(id);
+        return;
+      }
+
+      var deleteBtn = e.target.closest("[data-thread-delete]");
+      if (deleteBtn) {
+        var id = deleteBtn.getAttribute("data-thread-delete");
+        deleteThread(id);
+        return;
+      }
+
+      if (e.target.closest("[data-qa-back-list]")) {
+        currentThreadId = null;
+        if (listView) listView.hidden = false;
+        if (detailView) detailView.hidden = true;
+        renderThreadList(loadQaThreads());
+      }
+    });
+
     function renderThreadList(threads) {
       if (!threadListEl) return;
       threadListEl.innerHTML = "";
@@ -359,9 +496,48 @@
         var sn = document.createElement("p");
         sn.className = "qa-thread-snippet";
         sn.textContent = first ? first.body : "";
+        
+        // Add edit/delete buttons for all student posts
+        var actions = document.createElement("div");
+        actions.className = "qa-thread-actions";
+        actions.style.marginTop = "8px";
+        actions.style.display = "flex";
+        actions.style.gap = "8px";
+        
+        // Show edit button for all student posts
+        var editBtn = document.createElement("button");
+        editBtn.type = "button";
+        editBtn.className = "btn btn-ghost btn-xs";
+        editBtn.textContent = "편집";
+        editBtn.setAttribute("data-thread-edit", t.id);
+        editBtn.addEventListener("click", function(e) {
+          e.stopPropagation();
+          editThread(t.id);
+        });
+        
+        // Show delete button only for own posts
+        if (t.author === getQaUser().id) {
+          var deleteBtn = document.createElement("button");
+          deleteBtn.type = "button";
+          deleteBtn.className = "btn btn-ghost btn-xs btn-danger";
+          deleteBtn.textContent = "삭제";
+          deleteBtn.setAttribute("data-thread-delete", t.id);
+          deleteBtn.addEventListener("click", function(e) {
+            e.stopPropagation();
+            if (confirm("정말 삭제하시겠습니까?")) {
+              deleteThread(t.id);
+            }
+          });
+          
+          actions.appendChild(deleteBtn);
+        }
+        
+        actions.appendChild(editBtn);
+        
         btn.appendChild(meta);
         btn.appendChild(h);
         btn.appendChild(sn);
+        btn.appendChild(actions);
         threadListEl.appendChild(btn);
       });
     }
@@ -511,6 +687,24 @@
           ],
         });
         saveQaThreads(threads);
+        
+        // Send notification to teacher if student replies
+        if (user.role === "student") {
+          var teacherMessage = {
+            id: "msg-" + uid(),
+            sender: getQaUser().id,
+            recipient: "teacher",
+            subject: "Q&A 답변 알림",
+            body: `학생 ${getQaUser().id}이(가) "${title}" 질문에 답변을 달았습니다.`,
+            timestamp: new Date().toISOString(),
+            read: false
+          };
+          
+          var messages = loadMessages();
+          messages.unshift(teacherMessage);
+          saveMessages(messages);
+          updateMessageBadge();
+        }
         if (titleIn) titleIn.value = "";
         if (bodyIn) bodyIn.value = "";
         if (anonCb) anonCb.checked = false;
@@ -554,6 +748,68 @@
     }
 
     showList();
+  }
+
+  /* ---------- 쪽지함 메시지 목록 표시 ---------- */
+  function renderMessageList() {
+    var messages = loadMessages();
+    var messageListEl = document.querySelector("[data-notes-list]");
+    if (!messageListEl) return;
+    
+    messageListEl.innerHTML = "";
+    
+    // Group messages by date
+    var groupedMessages = {};
+    messages.forEach(function(msg) {
+      var date = new Date(msg.timestamp).toLocaleDateString('ko-KR');
+      if (!groupedMessages[date]) {
+        groupedMessages[date] = [];
+      }
+      groupedMessages[date].push(msg);
+    });
+    
+    // Render messages
+    Object.keys(groupedMessages).sort().reverse().forEach(function(date) {
+      var dateGroup = document.createElement("div");
+      dateGroup.className = "message-date-group";
+      
+      var dateHeader = document.createElement("div");
+      dateHeader.className = "message-date-header";
+      dateHeader.textContent = date;
+      dateGroup.appendChild(dateHeader);
+      
+      groupedMessages[date].forEach(function(msg) {
+        var messageEl = document.createElement("div");
+        messageEl.className = "message-item";
+        
+        var senderInfo = document.createElement("div");
+        senderInfo.className = "message-sender";
+        senderInfo.innerHTML = `
+          <span class="message-sender-name">${msg.sender === getQaUser().id ? '나' : '강사'}</span>
+          <span class="message-time">${formatTime(msg.timestamp)}</span>
+        `;
+        
+        var contentEl = document.createElement("div");
+        contentEl.className = "message-content";
+        
+        var subjectEl = document.createElement("div");
+        subjectEl.className = "message-subject";
+        subjectEl.textContent = msg.subject;
+        
+        var bodyEl = document.createElement("div");
+        bodyEl.className = "message-body";
+        bodyEl.textContent = msg.body;
+        
+        contentEl.appendChild(subjectEl);
+        contentEl.appendChild(bodyEl);
+        
+        messageEl.appendChild(senderInfo);
+        messageEl.appendChild(contentEl);
+        dateGroup.appendChild(messageEl);
+      });
+      
+      messageListEl.appendChild(dateGroup);
+    });
   }
 
   /* ---------- 쪽지함: 개인 메시지(localStorage) ---------- */
