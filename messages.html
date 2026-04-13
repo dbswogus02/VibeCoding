@@ -22,7 +22,6 @@
             <a class="nav-link is-active" href="messages.html">쪽지함</a>
             <a class="nav-link" href="qa.html">Q&amp;A</a>
             <a class="nav-link" href="index.html">학생 홈</a>
-            <a class="nav-link" href="teacher.html">교사 홈</a>
           </nav>
           <div class="header-actions">
             <a class="btn btn-ghost btn-sm" href="login.html">로그아웃</a>
@@ -42,7 +41,7 @@
           <div data-notes-list class="notes-thread"></div>
         </section>
 
-        <section class="card card-pad card-reveal" aria-labelledby="compose-h">
+        <section class="card card-pad card-reveal" style="margin-bottom: 20px">
           <h2 id="compose-h" class="section-title" style="margin-bottom: 12px; font-size: 1.05rem">쪽지 보내기</h2>
           <form data-notes-compose>
             <div class="form-field">
@@ -56,19 +55,28 @@
             <div class="form-field" data-notes-anon-row>
               <label style="display: flex; align-items: center; gap: 8px; font-weight: 500; cursor: pointer">
                 <input type="checkbox" name="notes_anonymous" value="1" />
-                익명으로 보내기 (학생만)
+                익명으로 보내기 (교사만)
               </label>
             </div>
             <div class="form-field">
-              <label for="notes_body">내용</label>
+              <label class="visually-hidden" for="notes_body">내용</label>
               <textarea id="notes_body" name="notes_body" placeholder="개인적으로 전달할 내용을 적어 주세요." required></textarea>
             </div>
             <button type="submit" class="btn btn-primary btn-sm">보내기</button>
           </form>
         </section>
+
+        <section class="card card-pad card-reveal" aria-labelledby="inbox-h">
+          <h2 id="inbox-h" class="section-title" style="margin-bottom: 12px; font-size: 1.05rem">받은 쪽지</h2>
+          <div class="message-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <span style="font-weight: 600;">최근 메시지</span>
+            <span class="message-badge" data-message-badge style="display: none;">쪽지</span>
+          </div>
+          <div data-notes-list class="notes-thread"></div>
+        </section>
       </main>
 
-      <footer class="site-footer"><p>© 2026 Learn Bridge</p></footer>
+      <footer class="site-footer"><p> 2026 Learn Bridge</p></footer>
     </div>
     <script src="main.js"></script>
   </body>
