@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>교사 프로필 | Learn Bridge</title>
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="layout-body">
+      <!-- Teacher Profile Page -->
+      <header class="site-header">
+        <div class="header-inner">
+          <a class="logo" href="teacher.html"><span class="logo-mark">LB</span> Learn Bridge</a>
+          <nav class="nav-main" aria-label="Teacher Navigation">
+            <a class="nav-link" href="teacher.html">교사 홈</a>
+            <a class="nav-link" href="teacher_attendance.html">출석체크</a>
+            <a class="nav-link" href="teacher_materials.html">수업자료</a>
+            <a class="nav-link" href="teacher_review.html">복습문제</a>
+          </nav>
+          <div class="header-actions">
+            <a class="btn btn-ghost btn-sm" href="login.html">로그아웃</a>
+          </div>
+        </div>
+      </header>
+
+      <main class="page-wrap">
+        <div class="toolbar-back"><a href="teacher.html">교사 홈으로</a></div>
+        <h1 class="page-title">프로필</h1>
+        
+        <!-- Profile Header -->
+        <div class="profile-header">
+          <div class="profile-avatar">
+            <div class="avatar-circle">
+              <span class="avatar-text">T</span>
+            </div>
+            <button class="avatar-edit-btn">편집</button>
+          </div>
+          <div class="profile-info">
+            <h2 class="profile-name">교사 이름</h2>
+            <p class="profile-email">teacher@example.com</p>
+            <div class="profile-stats">
+              <div class="stat-item">
+                <span class="stat-label">학생 수</span>
+                <span class="stat-value">120</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label">클래스 수</span>
+                <span class="stat-value">8</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label">경력</span>
+                <span class="stat-value">5년</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Profile Sections -->
+        <div class="profile-sections">
+          <!-- Personal Information -->
+          <section class="card card-reveal">
+            <div class="card-header">
+              <h3>개인 정보</h3>
+              <button class="btn btn-sm btn-ghost">편집</button>
+            </div>
+            <div class="card-body">
+              <div class="info-grid">
+                <div class="info-item">
+                  <span class="info-label">전체 이름</span>
+                  <span class="info-value">김교사</span>
+                </div>
+                <div class="info-item">
+                  <span class="info-label">이메일</span>
+                  <span class="info-value">teacher@example.com</span>
+                </div>
+                <div class="info-item">
+                  <span class="info-label">전화번호</span>
+                  <span class="info-value">010-1234-5678</span>
+                </div>
+                <div class="info-item">
+                  <span class="info-label">부서</span>
+                  <span class="info-value">수학</span>
+                </div>
+                <div class="info-item">
+                  <span class="info-label">입사일</span>
+                  <span class="info-value">2021-03-15</span>
+                </div>
+                <div class="info-item">
+                  <span class="info-label">상태</span>
+                  <span class="info-value status-active">활성</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Teaching Information -->
+          <section class="card card-reveal">
+            <div class="card-header">
+              <h3>교육 정보</h3>
+              <button class="btn btn-sm btn-ghost">편집</button>
+            </div>
+            <div class="card-body">
+              <div class="info-grid">
+                <div class="info-item">
+                  <span class="info-label">교과목</span>
+                  <span class="info-value">수학, 대수학, 기하학</span>
+                </div>
+                <div class="info-item">
+                  <span class="info-label">학년</span>
+                  <span class="info-value">중학교, 고등학교</span>
+                </div>
+                <div class="info-item">
+                  <span class="info-label">수업 시간</span>
+                  <span class="info-value">월-금 9:00-18:00</span>
+                </div>
+                <div class="info-item">
+                  <span class="info-label">강의실</span>
+                  <span class="info-value">301호</span>
+                </div>
+                <div class="info-item">
+                  <span class="info-label">최대 학생 수</span>
+                  <span class="info-value">클래스당 30명</span>
+                </div>
+                <div class="info-item">
+                  <span class="info-label">교육 스타일</span>
+                  <span class="info-value">상호작용, 문제 해결 중심</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Account Settings -->
+          <section class="card card-reveal">
+            <div class="card-header">
+              <h3>계정 설정</h3>
+            </div>
+            <div class="card-body">
+              <div class="settings-list">
+                <button class="settings-item">
+                  <span class="settings-label">비밀번호 변경</span>
+                  <span class="settings-arrow">></span>
+                </button>
+                <button class="settings-item">
+                  <span class="settings-label">알림 설정</span>
+                  <span class="settings-arrow">></span>
+                </button>
+                <button class="settings-item">
+                  <span class="settings-label">개인정보 보호 설정</span>
+                  <span class="settings-arrow">></span>
+                </button>
+                <button class="settings-item">
+                  <span class="settings-label">2단계 인증</span>
+                  <span class="settings-arrow">></span>
+                </button>
+                <button class="settings-item">
+                  <span class="settings-label">데이터 내보내기</span>
+                  <span class="settings-arrow">></span>
+                </button>
+                <button class="settings-item danger">
+                  <span class="settings-label">계정 삭제</span>
+                  <span class="settings-arrow">></span>
+                </button>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+
+      <footer class="site-footer"><p>© 2026 Learn Bridge</p></footer>
+    </div>
+    
+    <script>
+      // Profile page functionality
+      document.addEventListener('DOMContentLoaded', function() {
+        // Handle avatar edit button
+        const avatarEditBtn = document.querySelector('.avatar-edit-btn');
+        if (avatarEditBtn) {
+          avatarEditBtn.addEventListener('click', function() {
+            console.log('Edit avatar clicked');
+            showNotification('아바타 편집 기능이 곧 추가됩니다!');
+          });
+        }
+        
+        // Handle section edit buttons
+        document.querySelectorAll('.card-header .btn-ghost').forEach(btn => {
+          btn.addEventListener('click', function() {
+            const sectionTitle = this.closest('.card-header').querySelector('h3').textContent;
+            console.log('Edit section:', sectionTitle);
+            showNotification(`${sectionTitle} 편집 중...`);
+          });
+        });
+        
+        // Handle settings items
+        document.querySelectorAll('.settings-item').forEach(item => {
+          item.addEventListener('click', function() {
+            const settingLabel = this.querySelector('.settings-label').textContent;
+            console.log('Settings item clicked:', settingLabel);
+            
+            if (settingLabel === '계정 삭제') {
+              if (confirm('정말로 계정을 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.')) {
+                showNotification('계정 삭제 프로세스가 시작되었습니다...');
+              }
+            } else {
+              showNotification(`${settingLabel} 설정이 곧 추가됩니다!`);
+            }
+          });
+        });
+        
+        // Show notification
+        function showNotification(message) {
+          const notification = document.createElement('div');
+          notification.className = 'notification';
+          notification.textContent = message;
+          notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--color-primary);
+            color: white;
+            padding: 12px 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+          `;
+          
+          document.body.appendChild(notification);
+          
+          setTimeout(() => {
+            notification.style.animation = 'slideOut 0.3s ease';
+            setTimeout(() => {
+              notification.remove();
+            }, 300);
+          }, 3000);
+        }
+      });
+    </script>
+    <script src="main.js"></script>
+  </body>
+</html>
