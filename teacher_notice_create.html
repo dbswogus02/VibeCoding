@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>공지사항 작성 | Learn Bridge</title>
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="layout-body">
+      <!-- 교사 공지사항 작성 페이지 -->
+      <header class="site-header">
+        <div class="header-inner">
+          <a class="logo" href="teacher.html"><span class="logo-mark">LB</span> Learn Bridge</a>
+          <nav class="nav-main" aria-label="교사 내비게이션">
+            <a class="nav-link" href="teacher.html">교사 홈</a>
+            <a class="nav-link" href="teacher_attendance.html">출석체크</a>
+            <a class="nav-link" href="teacher_materials.html">수업자료</a>
+            <a class="nav-link" href="teacher_review.html">복습문제</a>
+          </nav>
+          <div class="header-actions">
+            <a class="btn btn-ghost btn-sm" href="login.html">로그아웃</a>
+          </div>
+        </div>
+      </header>
+
+      <main class="page-wrap">
+        <div class="toolbar-back"><a href="teacher_notices.html">공지사항 목록</a></div>
+        <h1 class="page-title">공지사항 작성</h1>
+        
+        <section class="card card-reveal">
+          <div class="card-header">
+            <h2>공지사항 상세 정보</h2>
+            <div class="notice-actions">
+              <button class="btn btn-secondary" id="save-draft">임시 저장</button>
+              <button class="btn btn-primary" id="publish-notice">공지사항 발행</button>
+            </div>
+          </div>
+          
+          <div class="notice-form">
+            <div class="form-group">
+              <label for="notice-title" class="form-label">공지사항 제목</label>
+              <input type="text" id="notice-title" class="form-input" placeholder="공지사항 제목을 입력하세요...">
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="notice-category" class="form-label">분류</label>
+                <select id="notice-category" class="form-select">
+                  <option value="general">일반</option>
+                  <option value="assignment">과제</option>
+                  <option value="exam">시험</option>
+                  <option value="schedule">일정</option>
+                  <option value="emergency">긴급</option>
+                </select>
+              </div>
+              
+              <div class="form-group">
+                <label for="notice-priority" class="form-label">우선순위</label>
+                <select id="notice-priority" class="form-select">
+                  <option value="low">낮음</option>
+                  <option value="medium">보통</option>
+                  <option value="high">높음</option>
+                  <option value="urgent">긴급</option>
+                </select>
+              </div>
+              
+              <div class="form-group">
+                <label for="notice-target" class="form-label">대상</label>
+                <select id="notice-target" class="form-select">
+                  <option value="all">모든 학생</option>
+                  <option value="math">수학반</option>
+                  <option value="english">영어반</option>
+                  <option value="science">과학반</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="publish-date" class="form-label">발행일</label>
+                <input type="date" id="publish-date" class="form-input">
+              </div>
+              
+              <div class="form-group">
+                <label for="publish-time" class="form-label">발행 시간</label>
+                <input type="time" id="publish-time" class="form-input">
+              </div>
+              
+              <div class="form-group">
+                <label for="expire-date" class="form-label">만료일 (선택사항)</label>
+                <input type="date" id="expire-date" class="form-input">
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="notice-content" class="form-label">공지사항 내용</label>
+              <div class="editor-toolbar">
+                <button class="editor-btn" data-command="bold"><strong>B</strong></button>
+                <button class="editor-btn" data-command="italic"><em>I</em></button>
+                <button class="editor-btn" data-command="underline"><u>U</u></button>
+                <button class="editor-btn" data-command="insertOrderedList">1.</button>
+                <button class="editor-btn" data-command="insertUnorderedList">·</button>
+                <button class="editor-btn" data-command="createLink">링크</button>
+                <button class="editor-btn" data-command="insertImage">이미지</button>
+              </div>
+              <div class="editor-content" id="notice-content" contenteditable="true" placeholder="공지사항 내용을 입력하세요..."></div>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label">첨부파일</label>
+              <div class="file-upload-area" id="file-upload-area">
+                <div class="file-upload-content">
+                  <div class="file-upload-icon">+</div>
+                  <p>클릭하여 파일 업로드 또는 드래그 앤 드롭</p>
+                  <p class="file-upload-hint">pdf, doc, docx, xls, xlsx, ppt, pptx, jpg, png (최대 10mb)</p>
+                </div>
+                <input type="file" id="notice-files" class="file-input" multiple accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.jpg,.jpeg,.png">
+              </div>
+              <div class="uploaded-files" id="uploaded-files"></div>
+            </div>
+          </div>
+        </section>
+        
+        <section class="card card-reveal">
+          <div class="card-header">
+            <h2>공지사항 설정</h2>
+          </div>
+          
+          <div class="notice-settings">
+            <div class="form-group">
+              <label class="form-label">알림 옵션</label>
+              <div class="checkbox-group">
+                <label class="checkbox-label">
+                  <input type="checkbox" id="email-notification" class="checkbox-input" checked>
+                  <span class="checkbox-text">학생에게 이메일 알림 전송</span>
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" id="sms-notification" class="checkbox-input">
+                  <span class="checkbox-text">SMS 알림 전송</span>
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" id="push-notification" class="checkbox-input" checked>
+                  <span class="checkbox-text">푸시 알림 전송</span>
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" id="allow-comments" class="checkbox-input" checked>
+                  <span class="checkbox-text">학생 댓글 허용</span>
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" id="pin-notice" class="checkbox-input">
+                  <span class="checkbox-text">공지사항 상단 고정</span>
+                </label>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="reminder-time" class="form-label">리마인더 시간 (시간 전)</label>
+              <input type="number" id="reminder-time" class="form-input" placeholder="24" min="0" max="168">
+            </div>
+          </div>
+        </section>
+        
+        <div class="form-actions">
+          <button class="btn btn-ghost" id="cancel-btn">취소</button>
+          <button class="btn btn-secondary" id="preview-btn">공지사항 미리보기</button>
+          <button class="btn btn-primary" id="create-btn">공지사항 생성</button>
+        </div>
+      </main>
+
+      <footer class="site-footer"><p>© 2026 Learn Bridge</p></footer>
+    </div>
+    
+    <script>
+      // notice creation functionality
+      document.addEventListener('DOMContentLoaded', function() {
+        const fileUploadArea = document.getElementById('file-upload-area');
+        const fileInput = document.getElementById('notice-files');
+        const uploadedFiles = document.getElementById('uploaded-files');
+        const saveDraftBtn = document.getElementById('save-draft');
+        const publishBtn = document.getElementById('publish-notice');
+        const cancelBtn = document.getElementById('cancel-btn');
+        const previewBtn = document.getElementById('preview-btn');
+        const createBtn = document.getElementById('create-btn');
+        const editorContent = document.getElementById('notice-content');
+        
+        // file upload functionality
+        fileUploadArea.addEventListener('click', function() {
+          fileInput.click();
+        });
+        
+        fileUploadArea.addEventListener('dragover', function(e) {
+          e.preventDefault();
+          this.classList.add('dragover');
+        });
+        
+        fileUploadArea.addEventListener('dragleave', function(e) {
+          e.preventDefault();
+          this.classList.remove('dragover');
+        });
+        
+        fileUploadArea.addEventListener('drop', function(e) {
+          e.preventDefault();
+          this.classList.remove('dragover');
+          handleFiles(e.dataTransfer.files);
+        });
+        
+        fileInput.addEventListener('change', function(e) {
+          handleFiles(e.target.files);
+        });
+        
+        function handleFiles(files) {
+          Array.from(files).forEach(file => {
+            if (file.size > 10 * 1024 * 1024) {
+              alert('파일 크기가 10mb 제한을 초과했습니다');
+              return;
+            }
+            
+            addFileToList(file);
+          });
+        }
+        
+        function addFileToList(file) {
+          const fileItem = document.createElement('div');
+          fileItem.className = 'file-item';
+          fileItem.innerHTML = `
+            <span class="file-name">${file.name}</span>
+            <span class="file-size">${formatFileSize(file.size)}</span>
+            <button class="file-remove" data-file="${file.name}">×</button>
+          `;
+          
+          uploadedFiles.appendChild(fileItem);
+        }
+        
+        function formatFileSize(bytes) {
+          if (bytes === 0) return '0 bytes';
+          const k = 1024;
+          const sizes = ['bytes', 'kb', 'mb', 'gb'];
+          const i = Math.floor(Math.log(bytes) / Math.log(k));
+          return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+        
+        // remove file functionality
+        uploadedFiles.addEventListener('click', function(e) {
+          if (e.target.classList.contains('file-remove')) {
+            e.target.parentElement.remove();
+          }
+        });
+        
+        // editor functionality
+        document.querySelectorAll('.editor-btn').forEach(btn => {
+          btn.addEventListener('click', function() {
+            const command = this.getAttribute('data-command');
+            if (command === 'createLink') {
+              const url = prompt('URL을 입력하세요:');
+              if (url) {
+                document.execCommand(command, false, url);
+              }
+            } else if (command === 'insertImage') {
+              const url = prompt('이미지 URL을 입력하세요:');
+              if (url) {
+                document.execCommand(command, false, url);
+              }
+            } else {
+              document.execCommand(command, false, null);
+            }
+            editorContent.focus();
+          });
+        });
+        
+        // save draft functionality
+        saveDraftBtn.addEventListener('click', function() {
+          saveNotice('draft');
+        });
+        
+        // publish notice functionality
+        publishBtn.addEventListener('click', function() {
+          if (validateNotice()) {
+            saveNotice('published');
+          }
+        });
+        
+        // cancel functionality
+        cancelBtn.addEventListener('click', function() {
+          if (confirm('취소하시겠습니까? 저장되지 않은 모든 변경사항이 손실됩니다.')) {
+            window.location.href = 'teacher_notices.html';
+          }
+        });
+        
+        // preview functionality
+        previewBtn.addEventListener('click', function() {
+          if (validateNotice()) {
+            alert('미리보기 기능은 학생들이 보는 공지사항을 표시합니다');
+          }
+        });
+        
+        // create notice functionality
+        createBtn.addEventListener('click', function() {
+          if (validateNotice()) {
+            saveNotice('published');
+          }
+        });
+        
+        function validateNotice() {
+          const title = document.getElementById('notice-title').value.trim();
+          const content = editorContent.innerHTML.trim();
+          const publishDate = document.getElementById('publish-date').value;
+          const publishTime = document.getElementById('publish-time').value;
+          
+          if (!title) {
+            alert('공지사항 제목을 입력하세요');
+            return false;
+          }
+          
+          if (!content || content === '<br>') {
+            alert('공지사항 내용을 입력하세요');
+            return false;
+          }
+          
+          if (!publishDate) {
+            alert('발행일을 선택하세요');
+            return false;
+          }
+          
+          if (!publishTime) {
+            alert('발행 시간을 선택하세요');
+            return false;
+          }
+          
+          return true;
+        }
+        
+        function saveNotice(status) {
+          const noticeData = {
+            title: document.getElementById('notice-title').value,
+            category: document.getElementById('notice-category').value,
+            priority: document.getElementById('notice-priority').value,
+            target: document.getElementById('notice-target').value,
+            publishDate: document.getElementById('publish-date').value,
+            publishTime: document.getElementById('publish-time').value,
+            expireDate: document.getElementById('expire-date').value,
+            content: editorContent.innerHTML,
+            emailNotification: document.getElementById('email-notification').checked,
+            smsNotification: document.getElementById('sms-notification').checked,
+            pushNotification: document.getElementById('push-notification').checked,
+            allowComments: document.getElementById('allow-comments').checked,
+            pinNotice: document.getElementById('pin-notice').checked,
+            reminderTime: document.getElementById('reminder-time').value,
+            status: status,
+            files: Array.from(uploadedFiles.children).map(item => item.querySelector('.file-name').textContent)
+          };
+          
+          // save to localStorage (in real app, this would be sent to server)
+          localStorage.setItem('currentNotice', JSON.stringify(noticeData));
+          
+          if (status === 'published') {
+            alert('공지사항이 성공적으로 발행되었습니다!');
+            window.location.href = 'teacher_notices.html';
+          } else {
+            alert('임시 저장이 성공적으로 완료되었습니다!');
+          }
+        }
+        
+        // set default publish date to today
+        const today = new Date();
+        document.getElementById('publish-date').value = today.toISOString().split('T')[0];
+        
+        // set default publish time to current time
+        document.getElementById('publish-time').value = today.toTimeString().slice(0, 5);
+      });
+    </script>
+    <script src="main.js"></script>
+  </body>
+</html>
