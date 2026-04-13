@@ -48,7 +48,7 @@
           <div class="header-right">
             <div class="profile-section">
               <button class="profile-btn">프로필</button>
-              <a class="schedule-link" href="#">스케쥴</a>
+              <a class="schedule-link" href="teacher_schedule.html">스케줄</a>
             </div>
           </div>
         </div>
@@ -99,11 +99,12 @@
       <footer class="site-footer"><p>© 2026 Learn Bridge · 교사 모드 데모</p></footer>
     </div>
     <script>
-      // Dropdown functionality
+      // Enhanced dropdown functionality for teacher.html navigation
       document.addEventListener('DOMContentLoaded', function() {
-        const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+        // Handle navigation dropdowns with enhanced functionality
+        const navDropdownToggles = document.querySelectorAll('.nav-dropdown .dropdown-toggle');
         
-        dropdownToggles.forEach(toggle => {
+        navDropdownToggles.forEach(toggle => {
           toggle.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
@@ -124,6 +125,29 @@
               const isShowing = dropdownMenu.classList.contains('show');
               dropdownMenu.classList.toggle('show');
               this.setAttribute('aria-expanded', !isShowing);
+              
+              // Add functionality for dropdown items
+              if (!isShowing) {
+                setTimeout(() => {
+                  const dropdownItems = dropdownMenu.querySelectorAll('.dropdown-item');
+                  dropdownItems.forEach(item => {
+                    item.addEventListener('click', function(e) {
+                      e.preventDefault();
+                      const href = this.getAttribute('href');
+                      const text = this.textContent;
+                      console.log(`Navigating to: ${href}`);
+                      
+                      // Show notification before navigation
+                      showNotification(`${text} 페이지로 이동합니다.`);
+                      
+                      // Navigate to the page
+                      setTimeout(() => {
+                        window.location.href = href;
+                      }, 500);
+                    });
+                  });
+                }, 100);
+              }
             }
           });
         });
@@ -147,6 +171,34 @@
             });
           }
         });
+        
+        // Show notification
+        function showNotification(message) {
+          const notification = document.createElement('div');
+          notification.className = 'notification';
+          notification.textContent = message;
+          notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--color-primary);
+            color: white;
+            padding: 12px 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+          `;
+          
+          document.body.appendChild(notification);
+          
+          setTimeout(() => {
+            notification.style.animation = 'slideOut 0.3s ease';
+            setTimeout(() => {
+              notification.remove();
+            }, 300);
+          }, 3000);
+        }
       });
     </script>
     <script src="main.js"></script>
