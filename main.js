@@ -1213,6 +1213,114 @@
     });
   }
 
+  
+  /* ---------- 학습 시간 랭킹 시스템 ---------- */
+  function initLearningTimeRanking() {
+    var rankPills = document.querySelectorAll('.rank-pill');
+    if (!rankPills.length) return;
+
+    // 학습 시간 데이터 로드
+    function loadLearningData() {
+      try {
+        return JSON.parse(localStorage.getItem("lb_learning_time_data") || "{}");
+      } catch (e) {
+        return {};
+      }
+    }
+
+    // 학습 시간 저장
+    function saveLearningData(data) {
+      try {
+        localStorage.setItem("lb_learning_time_data", JSON.stringify(data));
+      } catch (e) {
+        console.error("Failed to save learning time data:", e);
+      }
+    }
+
+    // 학습 시간 업데이트
+    function updateLearningTime() {
+      var data = loadLearningData();
+      var today = new Date().toDateString();
+      
+      if (!data[today]) {
+        data[today] = 0;
+      }
+      
+      // 세션 시간 계산 (데모용으로 5분마다 0.1시간 추가)
+      data[today] += 0.1;
+      saveLearningData(data);
+      
+      return data;
+    }
+
+    // 학습 시간 랭킹 계산
+    function calculateLearningTimeRanking() {
+      var data = loadLearningData();
+      var thisWeek = {};
+      var totalHours = 0;
+      
+      // 이번 주 학습 시간 계산
+      Object.keys(data).forEach(function(date) {
+        var dateObj = new Date(date);
+        var today = new Date();
+        var weekDiff = Math.floor((today - dateObj) / (7 * 24 * 60 * 60 * 1000));
+        
+        if (weekDiff <= 0) {
+          thisWeek[date] = data[date];
+          totalHours += data[date];
+        }
+      });
+      
+      return {
+        weeklyHours: totalHours.toFixed(1),
+        learningTimeRank: Math.floor(Math.random() * 10) + 1, // 데모용 학습 시간 랭킹
+        assignmentProgress: Math.floor(Math.random() * 40) + 60, // 데모용 추가 학습 과제 진행도
+        reviewProgress: Math.floor(Math.random() * 30) + 70, // 데모용 복습 문제 진행도
+        totalProgress: Math.floor(Math.random() * 30) + 50 // 데모용 전체 진행도
+      };
+    }
+
+    // 랭킹 표시 업데이트
+    function updateLearningTimeRankingDisplay() {
+      var ranking = calculateLearningTimeRanking();
+      
+      rankPills.forEach(function(pill, index) {
+        var strong = pill.querySelector('strong');
+        if (!strong) return;
+        
+        switch(index) {
+          case 0: // 이번 주 학습 시간
+            strong.textContent = ranking.weeklyHours + 'h';
+            break;
+          case 1: // 반 랭킹 (문제 풀이)
+            strong.textContent = '3th'; 
+            break;
+          case 2: // 반 랭킹 (학습 시간)
+            strong.textContent = ranking.learningTimeRank + 'th';
+            break;
+          case 3: // 전체 진행도
+            strong.textContent = ranking.totalProgress + '%';
+            break;
+          case 4: // 추가 학습 과제 진행도
+            strong.textContent = ranking.assignmentProgress + '%';
+            break;
+          case 5: // 복습 문제 진행도
+            strong.textContent = ranking.reviewProgress + '%';
+            break;
+        }
+      });
+    }
+
+    // 초기 표시
+    updateLearningTimeRankingDisplay();
+    
+    // 5분마다 업데이트 (데모용)
+    setInterval(function() {
+      updateLearningTime();
+      updateLearningTimeRankingDisplay();
+    }, 5 * 60 * 1000);
+  }
+
   /* ---------- 출석 체크방 데모 ---------- */
   function initAttendanceDemo() {
     var root = document.querySelector("[data-attendance-root]");
@@ -1306,5 +1414,6 @@
     initAttendanceDemo();
     initNoticeList();
     initMaterialsWeekView();
+    initLearningTimeRanking();
   });
 })();
