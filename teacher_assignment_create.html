@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>과제 생성 | Learn Bridge</title>
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="layout-body">
+      <!-- 교사 과제 생성 페이지 -->
+      <header class="site-header">
+        <div class="header-inner">
+          <a class="logo" href="teacher.html"><span class="logo-mark">LB</span> Learn Bridge</a>
+          <nav class="nav-main" aria-label="teacher navigation">
+            <a class="nav-link" href="teacher.html">교사 홈</a>
+            <a class="nav-link" href="teacher_attendance.html">출석체크</a>
+            <a class="nav-link" href="teacher_materials.html">수업자료</a>
+            <a class="nav-link" href="teacher_review.html">복습문제</a>
+          </nav>
+          <div class="header-actions">
+            <a class="btn btn-ghost btn-sm" href="login.html">로그아웃</a>
+          </div>
+        </div>
+      </header>
+
+      <main class="page-wrap">
+        <div class="toolbar-back"><a href="teacher_assignments.html">과제 목록</a></div>
+        <h1 class="page-title">과제 생성</h1>
+        
+        <section class="card card-reveal">
+          <div class="card-header">
+            <h2>과제 상세 정보</h2>
+            <div class="assignment-actions">
+              <button class="btn btn-secondary" id="save-draft">임시 저장</button>
+              <button class="btn btn-primary" id="publish-assignment">과제 발행</button>
+            </div>
+          </div>
+          
+          <div class="assignment-form">
+            <div class="form-group">
+              <label for="assignment-title" class="form-label">과제 제목</label>
+              <input type="text" id="assignment-title" class="form-input" placeholder="과제 제목을 입력하세요...">
+            </div>
+            
+            <div class="form-group">
+              <label for="assignment-description" class="form-label">설명</label>
+              <textarea id="assignment-description" class="form-input" rows="4" placeholder="과제 설명을 입력하세요..."></textarea>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="assignment-class" class="form-label">반</label>
+                <select id="assignment-class" class="form-select">
+                  <option value="math">수학</option>
+                  <option value="english">영어</option>
+                  <option value="science">과학</option>
+                </select>
+              </div>
+              
+              <div class="form-group">
+                <label for="assignment-due-date" class="form-label">마감일</label>
+                <input type="date" id="assignment-due-date" class="form-input">
+              </div>
+              
+              <div class="form-group">
+                <label for="assignment-due-time" class="form-label">마감 시간</label>
+                <input type="time" id="assignment-due-time" class="form-input">
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="assignment-points" class="form-label">총점</label>
+              <input type="number" id="assignment-points" class="form-input" placeholder="100" min="1" max="1000">
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label">과제 파일</label>
+              <div class="file-upload-area" id="file-upload-area">
+                <div class="file-upload-content">
+                  <div class="file-upload-icon">+</div>
+                  <p>클릭하여 파일 업로드 또는 드래그 앤 드롭</p>
+                  <p class="file-upload-hint">pdf, doc, docx, xls, xlsx, ppt, pptx (최대 10mb)</p>
+                </div>
+                <input type="file" id="assignment-files" class="file-input" multiple accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx">
+              </div>
+              <div class="uploaded-files" id="uploaded-files"></div>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label">과제 지시사항</label>
+              <div class="editor-toolbar">
+                <button class="editor-btn" data-command="bold"><strong>B</strong></button>
+                <button class="editor-btn" data-command="italic"><em>I</em></button>
+                <button class="editor-btn" data-command="underline"><u>U</u></button>
+                <button class="editor-btn" data-command="insertOrderedList">1.</button>
+                <button class="editor-btn" data-command="insertUnorderedList">·</button>
+                <button class="editor-btn" data-command="createLink">링크</button>
+              </div>
+              <div class="editor-content" id="assignment-instructions" contenteditable="true" placeholder="상세한 과제 지시사항을 입력하세요..."></div>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label">제출 설정</label>
+              <div class="checkbox-group">
+                <label class="checkbox-label">
+                  <input type="checkbox" id="allow-late" class="checkbox-input">
+                  <span class="checkbox-text">지각 제출 허용</span>
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" id="email-notifications" class="checkbox-input" checked>
+                  <span class="checkbox-text">학생에게 이메일 알림 전송</span>
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" id="auto-grade" class="checkbox-input">
+                  <span class="checkbox-text">자동 채점 활성화</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        <div class="form-actions">
+          <button class="btn btn-ghost" id="cancel-btn">취소</button>
+          <button class="btn btn-secondary" id="preview-btn">과제 미리보기</button>
+          <button class="btn btn-primary" id="create-btn">과제 생성</button>
+        </div>
+      </main>
+
+      <footer class="site-footer"><p>© 2026 Learn Bridge</p></footer>
+    </div>
+    
+    <script>
+      // assignment creation functionality
+      document.addEventListener('DOMContentLoaded', function() {
+        const fileUploadArea = document.getElementById('file-upload-area');
+        const fileInput = document.getElementById('assignment-files');
+        const uploadedFiles = document.getElementById('uploaded-files');
+        const saveDraftBtn = document.getElementById('save-draft');
+        const publishBtn = document.getElementById('publish-assignment');
+        const cancelBtn = document.getElementById('cancel-btn');
+        const previewBtn = document.getElementById('preview-btn');
+        const createBtn = document.getElementById('create-btn');
+        const editorContent = document.getElementById('assignment-instructions');
+        
+        // file upload functionality
+        fileUploadArea.addEventListener('click', function() {
+          fileInput.click();
+        });
+        
+        fileUploadArea.addEventListener('dragover', function(e) {
+          e.preventDefault();
+          this.classList.add('dragover');
+        });
+        
+        fileUploadArea.addEventListener('dragleave', function(e) {
+          e.preventDefault();
+          this.classList.remove('dragover');
+        });
+        
+        fileUploadArea.addEventListener('drop', function(e) {
+          e.preventDefault();
+          this.classList.remove('dragover');
+          handleFiles(e.dataTransfer.files);
+        });
+        
+        fileInput.addEventListener('change', function(e) {
+          handleFiles(e.target.files);
+        });
+        
+        function handleFiles(files) {
+          Array.from(files).forEach(file => {
+            if (file.size > 10 * 1024 * 1024) {
+              alert('파일 크기가 10mb 제한을 초과했습니다');
+              return;
+            }
+            
+            addFileToList(file);
+          });
+        }
+        
+        function addFileToList(file) {
+          const fileItem = document.createElement('div');
+          fileItem.className = 'file-item';
+          fileItem.innerHTML = `
+            <span class="file-name">${file.name}</span>
+            <span class="file-size">${formatFileSize(file.size)}</span>
+            <button class="file-remove" data-file="${file.name}">×</button>
+          `;
+          
+          uploadedFiles.appendChild(fileItem);
+        }
+        
+        function formatFileSize(bytes) {
+          if (bytes === 0) return '0 bytes';
+          const k = 1024;
+          const sizes = ['bytes', 'kb', 'mb', 'gb'];
+          const i = Math.floor(Math.log(bytes) / Math.log(k));
+          return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+        
+        // remove file functionality
+        uploadedFiles.addEventListener('click', function(e) {
+          if (e.target.classList.contains('file-remove')) {
+            e.target.parentElement.remove();
+          }
+        });
+        
+        // editor functionality
+        document.querySelectorAll('.editor-btn').forEach(btn => {
+          btn.addEventListener('click', function() {
+            const command = this.getAttribute('data-command');
+            if (command === 'createLink') {
+              const url = prompt('URL을 입력하세요:');
+              if (url) {
+                document.execCommand(command, false, url);
+              }
+            } else {
+              document.execCommand(command, false, null);
+            }
+            editorContent.focus();
+          });
+        });
+        
+        // save draft functionality
+        saveDraftBtn.addEventListener('click', function() {
+          saveAssignment('draft');
+        });
+        
+        // publish assignment functionality
+        publishBtn.addEventListener('click', function() {
+          if (validateAssignment()) {
+            saveAssignment('published');
+          }
+        });
+        
+        // cancel functionality
+        cancelBtn.addEventListener('click', function() {
+          if (confirm('취소하시겠습니까? 저장되지 않은 모든 변경사항이 손실됩니다.')) {
+            window.location.href = 'teacher_assignments.html';
+          }
+        });
+        
+        // preview functionality
+        previewBtn.addEventListener('click', function() {
+          if (validateAssignment()) {
+            // open preview in new window or modal
+            alert('미리보기 기능은 학생들이 보는 과제를 표시합니다');
+          }
+        });
+        
+        // create assignment functionality
+        createBtn.addEventListener('click', function() {
+          if (validateAssignment()) {
+            saveAssignment('published');
+          }
+        });
+        
+        function validateAssignment() {
+          const title = document.getElementById('assignment-title').value.trim();
+          const description = document.getElementById('assignment-description').value.trim();
+          const dueDate = document.getElementById('assignment-due-date').value;
+          const dueTime = document.getElementById('assignment-due-time').value;
+          
+          if (!title) {
+            alert('과제 제목을 입력하세요');
+            return false;
+          }
+          
+          if (!description) {
+            alert('과제 설명을 입력하세요');
+            return false;
+          }
+          
+          if (!dueDate) {
+            alert('마감일을 선택하세요');
+            return false;
+          }
+          
+          if (!dueTime) {
+            alert('마감 시간을 선택하세요');
+            return false;
+          }
+          
+          return true;
+        }
+        
+        function saveAssignment(status) {
+          const assignmentData = {
+            title: document.getElementById('assignment-title').value,
+            description: document.getElementById('assignment-description').value,
+            class: document.getElementById('assignment-class').value,
+            dueDate: document.getElementById('assignment-due-date').value,
+            dueTime: document.getElementById('assignment-due-time').value,
+            points: document.getElementById('assignment-points').value,
+            instructions: editorContent.innerHTML,
+            allowLate: document.getElementById('allow-late').checked,
+            emailNotifications: document.getElementById('email-notifications').checked,
+            autoGrade: document.getElementById('auto-grade').checked,
+            status: status,
+            files: Array.from(uploadedFiles.children).map(item => item.querySelector('.file-name').textContent)
+          };
+          
+          // save to localStorage (in real app, this would be sent to server)
+          localStorage.setItem('currentAssignment', JSON.stringify(assignmentData));
+          
+          if (status === 'published') {
+            alert('과제가 성공적으로 발행되었습니다!');
+            window.location.href = 'teacher_assignments.html';
+          } else {
+            alert('임시 저장이 성공적으로 완료되었습니다!');
+          }
+        }
+        
+        // set default due date to 1 week from now
+        const defaultDueDate = new Date();
+        defaultDueDate.setDate(defaultDueDate.getDate() + 7);
+        document.getElementById('assignment-due-date').value = defaultDueDate.toISOString().split('T')[0];
+        
+        // set default due time to 11:59 pm
+        document.getElementById('assignment-due-time').value = '23:59';
+      });
+    </script>
+    <script src="main.js"></script>
+  </body>
+</html>
